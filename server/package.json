@@ -1,0 +1,41 @@
+{
+  "name": "surfline-project-server",
+  "version": "0.0.1",
+  "license": "MIT",
+  "description": "Source code for the server side code of the surfline project",
+  "repository": "https://github.com/monsonjeremy/Surfline-Project",
+  "private": false,
+  "scripts": {
+    "start": "node ./bin/www",
+    "build:server:prod": "npx babel --presets env --ignore node_modules ./ -d ./",
+    "start:server:dev":
+      "./node_modules/.bin/nodemon --inspect=0.0.0.0:5858 --ignore node_modules/ --exec ./node_modules/.bin/babel-node --ignore node_modules ./bin/www.js",
+    "start:server:prod": "./node_modules/.bin/forever ./bin/www.js"
+  },
+  "dependencies": {
+    "axios": "^0.17.1",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "bcrypt": "^1.0.3",
+    "body-parser": "~1.18.2",
+    "connect-mongo": "^2.0.0",
+    "cookie-parser": "~1.4.3",
+    "cors": "^2.8.4",
+    "debug": "~2.6.9",
+    "express": "~4.15.5",
+    "express-session": "^1.15.6",
+    "moment": "^2.19.2",
+    "mongoose": "^4.13.7",
+    "morgan": "~1.9.0"
+  },
+  "devDependencies": {
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "forever": "^0.15.3",
+    "nodemon": "^1.12.1"
+  },
+  "babel": {
+    "presets": ["env"],
+    "plugins": ["transform-object-rest-spread"],
+    "ignore": ["/node_modules/"]
+  }
+}

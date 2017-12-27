@@ -1,0 +1,33 @@
+{
+  "extends": ["airbnb", "plugin:flowtype/recommended", "prettier"],
+  "plugins": ["flowtype", "compat", "prettier"],
+  "env": {
+    "es6": true,
+    "node": true,
+    "browser": true,
+    "jest": true
+  },
+  "rules": {
+    "semi": [2, "always"],
+    "compat/compat": 2,
+    "no-param-reassign": 0,
+    "jsx-a11y/interactive-supports-focus": 0,
+    "flowtype/define-flow-type": 2,
+    "import/prefer-default-export": 1,
+    "no-underscore-dangle": 1,
+    "comma-dangle": [
+      "error",
+      {
+        "arrays": "never",
+        "objects": "always",
+        "imports": "never",
+        "exports": "never",
+        "functions": "never"
+      }
+    ]
+  },
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "sourceType": "module"
+  }
+}

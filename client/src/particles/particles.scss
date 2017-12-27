@@ -1,0 +1,185 @@
+/**
+ ----------- Imports ----------- 
+**/
+@import url('https://fonts.googleapis.com/css?family=Crimson+Text');
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+/**
+ ----------- Variables ----------- 
+**/
+$dark-grey-bg: #24292e;
+$main-blue: #108ee9;
+$nav-border: 1px solid #e9e9e9;
+
+/**
+ ----------- Resets ----------- 
+**/
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  outline: 0 none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+}
+
+/**
+ ----------- General Styles ----------- 
+**/
+
+h1,
+.h1,
+h2,
+.h2,
+h3,
+.h3,
+h4,
+.h4,
+h5,
+.h5,
+h6,
+.h6 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 24px;
+  line-height: 24px;
+  font-weight: 300;
+}
+
+h3,
+.h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 18px;
+  font-weight: 300;
+}
+
+p,
+a,
+text,
+span {
+  color: inherit;
+  text-decoration: none;
+  font-family: 'Crimson Text', sans-serif;
+  font-size: 16px;
+}
+
+.sp-flex {
+  display: flex;
+}
+
+.sp-nav-link {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 18px;
+  font-weight: 300;
+}
+
+.sp-main-container {
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.sp-flex-align-left {
+  margin-right: auto;
+}
+
+.sp-flex-align-right {
+  margin-left: auto;
+}
+
+.sp-flex-align-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.inline-blk {
+  display: inline-block;
+}

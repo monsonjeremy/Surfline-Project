@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  forecast-me:
+    build:
+      context: ../
+      dockerfile: docker-compose/dockerfiles/Dockerfile-prod
+    image: forecastme-prod:latest
+    environment:
+      - NODE_ENV=production
+      - BABEL_ENV=production
+    ports:
+      - "80:80"
+    env_file:
+      - ./prod.env
+    links:
+      - redis
+    depends_on:
+      - redis
+  redis:
+    image: redis:4.0.2-alpine
+    ports:
+      - "6379:6379"

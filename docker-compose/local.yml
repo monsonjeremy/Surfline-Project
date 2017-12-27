@@ -1,0 +1,46 @@
+version: "3"
+
+services:
+  react:
+    build:
+      context: ../
+      dockerfile: docker-compose/dockerfiles/Dockerfile-client-dev
+    env_file:
+      - ./local.env
+    volumes:
+      - ../client/src:/src/src/
+      - ../client/src/components:/src/src/components/
+      - ../client/config:/src/config/
+      - ../client/public:/src/public/
+    ports:
+      - "3005:3005"
+    links:
+      - server
+    depends_on:
+      - server
+  server:
+    build:
+      context: ../
+      dockerfile: docker-compose/dockerfiles/Dockerfile-server-dev
+    env_file:
+      - ./local.env
+    volumes:
+      - ../server/bin:/server/bin/
+      - ../server/controllers:/server/controllers/
+      - ../server/models:/server/models/
+      - ../server/lib:/server/lib/
+      - ../server/routes:/server/routes/
+      - ../server/services:/server/services/
+    ports:
+      - "5858:5858"
+      - "3006:3006"
+    links:
+      - db
+    depends_on:
+      - db
+  db:
+    image: mongo
+    volumes:
+      - ../server/mongo/:/data/db
+    ports:
+      - "27017:27017"

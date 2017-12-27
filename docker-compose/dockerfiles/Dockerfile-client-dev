@@ -1,0 +1,14 @@
+FROM node:8.8.1-alpine
+LABEL name="React Surfline Project Dev Container"
+LABEL version="1.0"
+
+# Create app directory
+RUN mkdir -p /src
+WORKDIR /src
+
+# Copy dependencies and install
+COPY ./client/ ./
+RUN npm install
+
+EXPOSE 3006
+CMD ["npm", "start"]

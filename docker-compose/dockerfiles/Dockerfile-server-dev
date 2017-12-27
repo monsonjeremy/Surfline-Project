@@ -1,0 +1,21 @@
+FROM node:8.8.1-alpine
+LABEL name="Surfline Project API Container"
+LABEL version="1.0"
+
+# Setup working directory for the server container
+RUN mkdir /server
+WORKDIR /server
+
+# Copy server files over and install dependencies
+COPY ./server/ ./
+RUN apk --no-cache add --virtual native-deps \
+  git g++ gcc libgcc libstdc++ linux-headers make python && \
+  npm install node-gyp -g &&\
+  npm install &&\
+  npm rebuild bcrypt --build-from-source && \
+  npm cache clean --force &&\
+  apk del native-deps
+
+EXPOSE 3006
+EXPOSE 5858
+CMD ["npm", "run", "start:server:dev"]
