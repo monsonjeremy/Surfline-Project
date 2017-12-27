@@ -2,7 +2,8 @@ import express from 'express';
 import {
   controllerHandler,
   createUserController as createUser,
-  loginUserController as loginUser
+  loginUserController as loginUser,
+  logoutUserController as logoutUser
 } from '../controllers';
 
 const router = express.Router();
@@ -24,16 +25,6 @@ router.post(
 );
 
 // GET /logout
-router.get('/logout', (req, res) => {
-  if (req.session) {
-    // delete session object
-    req.session.destroy(err => {
-      if (err) {
-        return 'Something went wrong destroying the session';
-      }
-      return res.redirect('/');
-    });
-  }
-});
+router.get('/logout', controllerHandler(logoutUser, req => [req], true));
 
 export default router;

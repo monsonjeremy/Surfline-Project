@@ -29,6 +29,7 @@ app.use(cors(corsOptions));
  * Instantiate the DB connection
  */
 
+mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://db/test');
 const dbConn = mongoose.connection;
 dbConn.on('error', console.error.bind(console, 'Could not connect to MongoDB :('));

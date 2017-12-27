@@ -11,7 +11,7 @@ export const controllerHandler = (promise, params, withAuth = false) => async (r
   const boundParams = params ? params(req, res, next) : [];
   try {
     if (withAuth) {
-      if (!req.session) {
+      if (!req.session.userId) {
         res.status(403);
         res.write('You must be logged in to access this feature.');
         return res.end();
@@ -20,6 +20,7 @@ export const controllerHandler = (promise, params, withAuth = false) => async (r
     const result = await promise(...boundParams);
     return res.json(result);
   } catch (error) {
+    console.log(error);
     res.status(error.statusCode || 500);
     res.write(`Error Message: ${error.message}. `);
     res.write(`Stack Trace: ${error.stack}`);

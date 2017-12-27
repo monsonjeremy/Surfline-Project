@@ -38,7 +38,15 @@ export const validatePasswordService = (password, dbPassword) =>
  * @param {string} username The username for the given user
  * @return {Promise} Promise to lookup the user in the database
  */
-export const findUserService = username => findUser(username);
+export const findUserService = username =>
+  findUser(username).then(user => {
+    if (!user) {
+      const error = new Error('User not found');
+      error.statusCode = 404;
+      throw error;
+    }
+    return user;
+  });
 
 /**
  * Service to login a user and create a session
@@ -57,3 +65,20 @@ export const createUserService = (username, password) => {
     .then(user => user)
     .catch(err => err);
 };
+
+/**
+ * Service to destroy a session
+ * @param {object} req The request object
+ * @param {object} req.session The request session object which has info about the current session
+ * @param {function} req.session.destroy Function given by express-session to kill the session
+ * @return {Promise} Promise to destroy the session
+ */
+export const destroySessionService = req =>
+  new Promise((resolve, reject) =>
+    req.session.destroy(err => {
+      if (err) {
+        return reject('Something went wrong destroying the session');
+      }
+      return resolve('Session successfully nuked.');
+    })
+  );
