@@ -1,6 +1,10 @@
-import { makeActionCreator, hydrateUserSession } from '../../../lib';
-// helpers
-import { signInUser, signOutUser, createUser } from '../../../lib/Client';
+import {
+  makeActionCreator,
+  hydrateUserSession,
+  signInUser,
+  signOutUser,
+  createUser
+} from '../../../lib';
 
 export const LOG_IN_REQUEST = 'LOG_IN_REQUEST';
 export const logInRequest = makeActionCreator(LOG_IN_REQUEST);
