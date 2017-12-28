@@ -8,7 +8,7 @@ const Dashboard = ({
   dispatchShowFavBuoys,
   children,
   filterFavorites,
-  user,
+  loggedIn,
   dispatchShowModal,
 }) => (
   <div className={'sp-main-container sp-gray-bg sp-full-height'}>
@@ -21,20 +21,20 @@ const Dashboard = ({
         All Buoys
       </button>
       <button
-        disabled
+        disabled={!loggedIn}
         className={`sp-btn ${filterFavorites ? 'sp-btn-selected' : ''}`}
         onClick={dispatchShowFavBuoys}
       >
         Favorites
       </button>
     </div>
-    {!user && (
+    {!loggedIn && (
       <p>
         <a role="button" onClick={() => dispatchShowModal('SIGN_IN')}>
           Sign in
         </a>{' '}
         or{' '}
-        <a role="button" onClick={() => dispatchShowModal('SIGN_IN')}>
+        <a role="button" onClick={() => dispatchShowModal('CREATE_ACCOUNT')}>
           create an account
         </a>{' '}
         to favorite buoys
@@ -50,7 +50,7 @@ Dashboard.propTypes = {
   dispatchShowFavBuoys: PropTypes.func.isRequired,
   dispatchShowModal: PropTypes.func.isRequired,
   filterFavorites: PropTypes.bool.isRequired,
-  user: PropTypes.instanceOf(Object),
+  loggedIn: PropTypes.bool.isRequired,
 };
 
 Dashboard.defaultProps = {

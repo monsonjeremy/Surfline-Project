@@ -1,33 +1,8 @@
 @import '../variables.scss';
 
-.sp-navbar-container {
-  background-color: $dark-grey-bg;
-  color: white;
-  border-bottom: 1px solid whitesmoke;
-  .sp-navbar {
-    width: 90%;
-    margin: auto;
-    padding: 0;
-    line-height: 65px;
-  }
-  .sp-nav-divider {
-    display: inline-block;
-    vertical-align: middle;
-  }
-  .sp-nav-item {
-    position: relative;
-    padding: 0 15px;
-    height: 100%;
-    vertical-align: middle;
-    transition: border-bottom-color 0.5s ease;
-    box-sizing: border-box;
-    border-bottom: 1.5px solid transparent;
-    &:hover {
-      border-bottom: 1.5px solid $main-blue;
-    }
-    * {
-      display: inline-block;
-      vertical-align: middle;
-    }
-  }
+.auth-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }

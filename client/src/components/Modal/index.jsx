@@ -9,9 +9,7 @@ const ModalWrapper = props => (
       <header>
         <h1>{props.title}</h1>
       </header>
-
       {props.children}
-
       <button onClick={props.dispatchHideModal}>Close</button>
     </div>
   </div>
