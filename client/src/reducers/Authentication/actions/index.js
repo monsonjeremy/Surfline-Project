@@ -1,6 +1,6 @@
-import { makeActionCreator } from '../../../lib';
+import { makeActionCreator, hydrateUserSession } from '../../../lib';
 // helpers
-import { signInUser, signOutUser } from '../../../lib/Client';
+import { signInUser, signOutUser, createUser } from '../../../lib/Client';
 
 export const LOG_IN_REQUEST = 'LOG_IN_REQUEST';
 export const logInRequest = makeActionCreator(LOG_IN_REQUEST);
@@ -20,18 +20,28 @@ export const logOutSuccess = makeActionCreator(LOG_OUT_SUCCESS);
 export const LOG_OUT_FAILURE = 'LOG_OUT_FAILURE';
 export const logOutFailure = makeActionCreator(LOG_OUT_FAILURE, 'errorMsg');
 
+export const CREATE_USER_REQUEST = 'CREATE_USER_REQUEST';
+export const createUserRequest = makeActionCreator(CREATE_USER_REQUEST);
+
+export const CREATE_USER_SUCCESS = 'CREATE_USER_SUCCESS';
+export const createUserSuccess = makeActionCreator(CREATE_USER_SUCCESS, 'user', 'loggedIn');
+
+export const CREATE_USER_FAILURE = 'CREATE_USER_FAILURE';
+export const createUserFailure = makeActionCreator(CREATE_USER_FAILURE, 'errorMsg');
+
 /**
  * Function for dispatching the log in requests
  *
  * @param {Object} data
- * @param {function} data.get Get a value given in the form by key
+ * @param {function} data.get Get a value given in the form by its key
+ * @return {function} dispatcher
  */
 export function logInUser(data) {
   return dispatch => {
     dispatch(logInRequest());
 
     const params = {
-      email: data.get('email'),
+      username: data.get('username'),
       password: data.get('password'),
     };
     // Attempt to sign in user with given information
@@ -45,7 +55,55 @@ export function logInUser(data) {
 }
 
 /**
+ * Function for dispatching the a request to hydrate the session
+ *
+ * @param {function} data.get Get a value given in the form by its key
+ * @return {function} dispatcher
+ */
+export function hydrateSession() {
+  return dispatch => {
+    // If we have a session cookie, making this request will succeed and return a user that we can hydrate the store with
+    hydrateUserSession()
+      .then(response => {
+        // hydrating session succeeded dispatch an action to set the user in the store
+        dispatch(logInSuccess(response.data, true));
+      })
+      .catch(() => {
+        // Don't need to do anything here. Initial state is already logged out so we can ignore errors
+      });
+  };
+}
+
+/**
+ * Function for dispatching the create user requests
+ *
+ * @param {Object} data
+ * @param {function} data.get Get a value given in the form by its key
+ * @return {function} dispatcher
+ */
+export function createNewUser(data) {
+  return dispatch => {
+    dispatch(createUserRequest());
+
+    const params = {
+      username: data.get('username'),
+      password: data.get('password'),
+    };
+
+    // Attempt to sign in user with given information
+    createUser(params)
+      .then(response => {
+        const user = response.data;
+        // Login succeeded dispatch an action to set the user in the store
+        dispatch(createUserSuccess(user, true));
+      })
+      .catch(err => dispatch(createUserFailure(err)));
+  };
+}
+
+/**
  * Function for dispatching log out requests
+ * @return {function} dispatcher
  */
 export function logOutUser() {
   return dispatch => {

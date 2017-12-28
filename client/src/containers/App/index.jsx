@@ -5,6 +5,9 @@ import PropTypes from 'prop-types';
 // components
 import AppView from '../../components/App';
 
+// actions
+import { hydrateSession } from '../../reducers/Authentication/actions';
+
 /**
  * @description App container handles logic when mounting the application and
  *              hydrating the application state
@@ -16,8 +19,9 @@ import AppView from '../../components/App';
  * @returns {<App />}
  */
 class App extends Component {
-  componentDidMount() {
-    // Perform actions on mount here
+  componentWillMount() {
+    // Make a call to the session reload API to hydrate the session if a session cookie is present
+    this.props.dispatchHydrateSession();
   }
 
   render() {
@@ -41,6 +45,7 @@ App.propTypes = {
     Symbol: PropTypes.func,
   }).isRequired,
   isLoading: PropTypes.bool.isRequired,
+  dispatchHydrateSession: PropTypes.func.isRequired,
 };
 
 App.defaultProps = {
@@ -48,8 +53,11 @@ App.defaultProps = {
   isLoading: false,
 };
 
-// eslint-disable-next-line
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = dispatch => ({
+  dispatchHydrateSession: () => {
+    dispatch(hydrateSession());
+  },
+});
 
 // eslint-disable-next-line
 const mapStateToProps = state => ({});

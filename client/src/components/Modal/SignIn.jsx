@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const SignIn = props => (
   <div className={props.styles}>
     <form onSubmit={props.signIn}>
-      <input type="email" placeholder="Email" name="email" autoComplete="username email" />
+      <input type="username" placeholder="Username" name="username" autoComplete="username" />
       <br />
       <input
         type="password"

@@ -8,6 +8,7 @@ import SignInView from '../../components/Modal/SignIn';
 
 // actions
 import { hideModal, dispatchShowModal } from '../../reducers/Modal/actions';
+import { logInUser } from '../../reducers/Authentication/actions/index';
 
 /**
  * @description SignIn handles logic for Signing a user in from the SignIn Modal
@@ -28,8 +29,10 @@ class SignIn extends PureComponent {
 
   // Grab the form data and send a request to sign the user in
   signIn(event) {
+    event.preventDefault();
+    event.stopPropagation();
     const data = new FormData(event.target);
-    this.props.dispatchSignInUser(data);
+    this.props.dispatchSignIn(data);
     this.props.dispatchHideModal();
   }
 
@@ -53,7 +56,7 @@ SignIn.propTypes = {
   handleBackgroundClick: PropTypes.func.isRequired,
   dispatchShowModal: PropTypes.func.isRequired,
   dispatchHideModal: PropTypes.func.isRequired,
-  dispatchSignInUser: PropTypes.func.isRequired,
+  dispatchSignIn: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -62,6 +65,9 @@ const mapDispatchToProps = dispatch => ({
   },
   dispatchShowModal: modalType => {
     dispatch(dispatchShowModal(modalType));
+  },
+  dispatchSignIn: data => {
+    dispatch(logInUser(data));
   },
 });
 

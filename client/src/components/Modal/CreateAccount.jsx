@@ -3,17 +3,19 @@ import PropTypes from 'prop-types';
 
 const CreateAccount = props => (
   <div className={props.styles}>
-    <form onSubmit={props.createAccount}>
-      <input type="text" placeholder="Your Name" name="name" autoComplete="name" />
-      <br />
-      <input type="email" placeholder="Email" name="email" autoComplete="username email" />
+    <form onSubmit={props.createUser}>
+      <input
+        type="username"
+        placeholder="Enter a username"
+        name="username"
+        autoComplete="username"
+      />
       <br />
       <input type="password" placeholder="Password" name="password" autoComplete="new-password" />
       <br />
       <button>Create account</button>
     </form>
     <hr />
-    {console.log(props)}
     Already have an account?{' '}
     <button
       className="bt-nav-link"
@@ -27,7 +29,7 @@ const CreateAccount = props => (
 
 CreateAccount.propTypes = {
   styles: PropTypes.string,
-  createAccount: PropTypes.func.isRequired,
+  createUser: PropTypes.func.isRequired,
   dispatchShowModal: PropTypes.func.isRequired,
   // dispatchHideModal: PropTypes.func.isRequired,
 };

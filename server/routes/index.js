@@ -20,7 +20,7 @@ app.use(logger('dev'));
 
 // Define the CORS options
 const corsOptions = {
-  origin: 'http://localhost:3005',
+  origin: ['http://localhost:3005', 'http://localhost:3006'],
   credentials: true,
 };
 app.use(cors(corsOptions));
@@ -37,15 +37,16 @@ dbConn.once('open', () => {
   console.log('Connected to MongoDB successfully.');
 });
 
+const sessionStore = new MongoStore({
+  mongooseConnection: dbConn,
+});
 // Create session tracking with secret and config
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
     resave: true,
     saveUninitialized: false,
-    store: new MongoStore({
-      mongooseConnection: dbConn,
-    }),
+    store: sessionStore,
   })
 );
 

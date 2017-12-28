@@ -4,8 +4,8 @@ import axios from 'axios';
  * Function that returns a promise to hit the sign-in endpoint
  *
  * @param {Object} params
- * @param {function} params.get
- * @param {function} cb
+ * @param {string} params.username
+ * @param {string} params.password
  * @returns {Promise} promise
  */
 export function signInUser(params) {
@@ -15,7 +15,25 @@ export function signInUser(params) {
   };
 
   // Return axios promise
-  return axios.post('http://localhost:5000/api/auth/login', params, config);
+  return axios.post('http://localhost:3006/auth/login', params, config);
+}
+
+/**
+ * Function that returns a promise to hit the create user endpoint
+ *
+ * @param {Object} params
+ * @param {string} params.username
+ * @param {string} params.password
+ * @returns {Promise} promise
+ */
+export function createUser(params) {
+  // Set withCredentials to allow for session tokens
+  const config = {
+    withCredentials: true,
+  };
+
+  // Return axios promise
+  return axios.post('http://localhost:3006/auth/create', params, config);
 }
 
 /**
@@ -31,5 +49,21 @@ export function signOutUser() {
   };
 
   // Return axios promise
-  return axios.post('http://localhost:5000/api/auth/logout', null, config);
+  return axios.get('http://localhost:3006/auth/logout', config);
+}
+
+/**
+ * Function that returns a promise to hydrate a session.
+ * Returns 200 response if there is a session cookie.
+ *
+ * @returns {Promise} promise
+ */
+export function hydrateUserSession() {
+  // Set withCredentials to allow for session tokens
+  const config = {
+    withCredentials: true,
+  };
+
+  // Return axios promise
+  return axios.get('http://localhost:3006/auth/reload', config);
 }

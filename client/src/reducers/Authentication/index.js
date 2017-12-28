@@ -4,7 +4,10 @@ import {
   LOG_IN_FAILURE,
   LOG_OUT_REQUEST,
   LOG_OUT_FAILURE,
-  LOG_OUT_SUCCESS
+  LOG_OUT_SUCCESS,
+  CREATE_USER_FAILURE,
+  CREATE_USER_REQUEST,
+  CREATE_USER_SUCCESS
 } from './actions';
 
 const Authentication = (
@@ -57,6 +60,28 @@ const Authentication = (
         logoutLoading: false,
         user: null,
         loggedIn: false,
+      };
+    case CREATE_USER_REQUEST:
+      return {
+        ...state,
+        loginLoading: true,
+        loginRequested: true,
+      };
+    case CREATE_USER_SUCCESS:
+      return {
+        ...state,
+        user: action.user,
+        loggedIn: action.loggedIn,
+        loginLoading: false,
+      };
+    case CREATE_USER_FAILURE:
+      return {
+        ...state,
+        user: null,
+        loggedIn: false,
+        loginRequested: false,
+        loginLoading: false,
+        error: action.errMsg,
       };
     default:
       return state;

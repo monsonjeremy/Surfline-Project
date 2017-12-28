@@ -8,6 +8,7 @@ import CreateAccountView from '../../components/Modal/CreateAccount';
 
 // actions
 import { hideModal, dispatchShowModal } from '../../reducers/Modal/actions';
+import { createNewUser } from '../../reducers/Authentication/actions/index';
 
 /**
  * @description CreateAccount handles logic for Creating An Account from the CreateAccount Modal
@@ -23,19 +24,22 @@ class CreateAccount extends PureComponent {
   constructor(props) {
     super(props);
 
-    this.create = this.create.bind(this);
+    this.createUser = this.createUser.bind(this);
   }
 
-  create(event) {
+  createUser(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    const data = new FormData(event.target);
+    this.props.dispatchCreateUser(data);
     this.props.dispatchHideModal();
-    this.props.createAccount(event);
   }
 
   render() {
     // Define props to pass to <CreateAccountView />
     const createAccountProps = {
       ...this.props,
-      createAccount: this.create,
+      createUser: this.createUser,
       handleBackgroundClick: this.props.handleBackgroundClick,
     };
 
@@ -49,10 +53,9 @@ class CreateAccount extends PureComponent {
 
 CreateAccount.propTypes = {
   handleBackgroundClick: PropTypes.func.isRequired,
-  hideModal: PropTypes.func.isRequired,
-  createAccount: PropTypes.func.isRequired,
   dispatchShowModal: PropTypes.func.isRequired,
   dispatchHideModal: PropTypes.func.isRequired,
+  dispatchCreateUser: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -61,6 +64,9 @@ const mapDispatchToProps = dispatch => ({
   },
   dispatchShowModal: modalType => {
     dispatch(dispatchShowModal(modalType));
+  },
+  dispatchCreateUser: data => {
+    dispatch(createNewUser(data));
   },
 });
 

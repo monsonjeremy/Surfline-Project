@@ -7,6 +7,7 @@ import { NavBarView, NavItem, NavDivider } from '../../components/NavBar';
 
 // actions
 import { hideModal, dispatchShowModal } from '../../reducers/Modal/actions';
+import { logOutUser } from '../../reducers/Authentication/actions';
 
 /**
  * @description NavBar handles logic for buttons on the NavBar and their text
@@ -36,7 +37,7 @@ class NavBar extends PureComponent {
 
     return (
       <NavItem onClick={handleClick}>
-        {this.props.loggedIn ? `Logged in as ${this.props.loggedInUser.firstName}` : 'Login'}
+        {this.props.loggedIn ? `Logged in as ${this.props.user.username}` : 'Login'}
       </NavItem>
     );
   }
@@ -66,21 +67,20 @@ class NavBar extends PureComponent {
 
 NavBar.propTypes = {
   loggedIn: PropTypes.bool,
-  loggedInUser: PropTypes.shape({
-    firstName: PropTypes.string,
-    lastName: PropTypes.string,
+  user: PropTypes.shape({
+    username: PropTypes.string,
   }),
   dispatchShowModal: PropTypes.func.isRequired,
   dispatchLogoutUser: PropTypes.func.isRequired,
 };
 
 NavBar.defaultProps = {
-  loggedInUser: {},
+  user: {},
   loggedIn: false,
 };
 
 const mapStateToProps = state => ({
-  ...state.Modal.Authentication,
+  ...state.Authentication,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -89,6 +89,9 @@ const mapDispatchToProps = dispatch => ({
   },
   dispatchShowModal: modalType => {
     dispatch(dispatchShowModal(modalType));
+  },
+  dispatchLogoutUser: () => {
+    dispatch(logOutUser());
   },
 });
 

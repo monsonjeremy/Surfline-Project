@@ -24,13 +24,20 @@ export const hashPasswordService = password =>
  * @param {string} dbPassword The password from the db
  * @return {boolean} result
  */
-export const validatePasswordService = (password, dbPassword) =>
-  bcrypt
+export const validatePasswordService = (password, dbPassword) => {
+  if (!password) {
+    const error = new Error('Please provide a password.');
+    error.statusCode = 400;
+    throw error;
+  }
+
+  return bcrypt
     .compare(password, dbPassword)
     .then(result => result)
     .catch(err => {
       throw err;
     });
+};
 
 /**
  * Service to find a user by username
@@ -62,8 +69,13 @@ export const createUserService = (username, password) => {
   };
   // use schema.create to insert data into the db
   return User.create(userData)
-    .then(user => user)
-    .catch(err => err);
+    .then(user => ({
+      username: user.username,
+      userId: user._id,
+    }))
+    .catch(err => {
+      throw err;
+    });
 };
 
 /**
@@ -80,5 +92,25 @@ export const destroySessionService = req =>
         return reject('Something went wrong destroying the session');
       }
       return resolve('Session successfully nuked.');
+    })
+  );
+
+/**
+ * Service to reload a session when the user navigates back to the page
+ * @param {object} req The request object
+ * @param {object} req.session The request session object which has info about the current session
+ * @param {function} req.session.reload Function given by express-session to reload the session
+ * @return {Promise} Promise to reload the session
+ */
+export const reloadSessionService = req =>
+  new Promise((resolve, reject) =>
+    req.session.reload(err => {
+      if (err) {
+        reject(err);
+        const error = new Error(err);
+        err.statusCode = 403;
+        throw error;
+      }
+      return resolve('Session successfully reloaded');
     })
   );
