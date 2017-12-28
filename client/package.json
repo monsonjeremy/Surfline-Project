@@ -97,6 +97,7 @@
     },
     "rules": {
       "semi": [2, "always"],
+      "linebreak-style": 0,
       "compat/compat": 2,
       "no-param-reassign": 0,
       "jsx-a11y/interactive-supports-focus": 0,
