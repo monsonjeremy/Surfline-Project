@@ -4,6 +4,7 @@ import session from 'express-session';
 import mongoose from 'mongoose';
 import { version } from '../package.json';
 import authApi from './auth';
+import buoyApi from './buoy';
 
 const logger = require('morgan');
 const cors = require('cors');
@@ -64,6 +65,8 @@ app.get('/__status__/node', (req, res) => {
 
 // Create endpoint for authentication API
 app.use('/auth', authApi);
+// Create endpoint for buoy API
+app.use('/buoy', buoyApi);
 
 if (!isLocalDev) {
   // If we're not on local dev, then we use Express for routing to the bundle

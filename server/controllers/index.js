@@ -1,4 +1,5 @@
 export * from './auth';
+export * from './buoy';
 
 /**
  * A handler for controllers to apply the params and execute the controller within a try
@@ -11,7 +12,6 @@ export const controllerHandler = (promise, params, withAuth = false) => async (r
   const boundParams = params ? params(req, res, next) : [];
   try {
     if (withAuth) {
-      console.log(req.session.user);
       if (!req.session.user.userId) {
         res.status(403);
         res.write('You must be logged in to access this feature.');

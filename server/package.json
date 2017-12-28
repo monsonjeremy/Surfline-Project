@@ -8,8 +8,7 @@
   "scripts": {
     "start": "node ./bin/www",
     "build:server:prod": "npx babel --presets env --ignore node_modules ./ -d ./",
-    "start:server:dev":
-      "./node_modules/.bin/nodemon --inspect=0.0.0.0:5858 --ignore node_modules/ --exec ./node_modules/.bin/babel-node --ignore node_modules ./bin/www.js",
+    "start:server:dev": "./node_modules/.bin/nodemon --inspect=0.0.0.0:5858 --ignore node_modules/ --exec ./node_modules/.bin/babel-node --ignore node_modules ./bin/www.js",
     "start:server:prod": "./node_modules/.bin/forever ./bin/www.js"
   },
   "dependencies": {
@@ -26,7 +25,8 @@
     "express-session": "^1.15.6",
     "moment": "^2.19.2",
     "mongoose": "^4.13.7",
-    "morgan": "~1.9.0"
+    "morgan": "~1.9.0",
+    "xml2js": "^0.4.19"
   },
   "devDependencies": {
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
@@ -34,8 +34,14 @@
     "nodemon": "^1.12.1"
   },
   "babel": {
-    "presets": ["env"],
-    "plugins": ["transform-object-rest-spread"],
-    "ignore": ["/node_modules/"]
+    "presets": [
+      "env"
+    ],
+    "plugins": [
+      "transform-object-rest-spread"
+    ],
+    "ignore": [
+      "/node_modules/"
+    ]
   }
 }

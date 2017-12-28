@@ -107,10 +107,11 @@ export const reloadSessionService = req =>
     req.session.reload(err => {
       if (err) {
         reject(err);
-        const error = new Error(err);
-        err.statusCode = 403;
-        throw error;
       }
       return resolve('Session successfully reloaded');
     })
-  );
+  ).catch(err => {
+    const error = new Error(err);
+    error.statusCode = 418;
+    throw error;
+  });

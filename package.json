@@ -48,7 +48,7 @@
     "docker:open:local":
       "echo Trying to launch on MacOS && sleep 2 && URL=http://localhost:3005 && open $URL",
     "docker:build:local":
-      "docker-compose -f ./docker-compose/local.yml -p surfline-proj-dev up --force-recreate --build && sleep 2 && npm run docker:open:local",
+      "docker-compose -f ./docker-compose/local.yml -p surfline-proj-dev up --force-recreate --build",
     "docker:build:prod":
       "docker-compose -f ./docker-compose/prod.yml -p forecast-me-prod up --force-recreate --build",
     "docker:build:deploy":
