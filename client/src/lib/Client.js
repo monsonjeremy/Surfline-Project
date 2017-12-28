@@ -67,3 +67,13 @@ export function hydrateUserSession() {
   // Return axios promise
   return axios.get('http://localhost:3006/auth/reload', config);
 }
+
+/**
+ * Function that returns a promise to fetch the buoy data form the NDBC rss feed
+ *
+ * @returns {Promise} promise
+ */
+export function fetchBuoyData() {
+  // Return axios promise
+  return axios.get('http://localhost:3006/buoy/data');
+}
