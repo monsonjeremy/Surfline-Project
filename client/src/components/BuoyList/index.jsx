@@ -1,20 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import '../../particles/Modal/Modal.css';
+import '../../styles/BuoyList/BuoyList.css';
 
 const BuoyList = props => (
-  <div className={props.styles}>
-    <h1>Here will lie a list of buoys</h1>
-  </div>
+  <div className={'buoy-list-container sp-container'}>{props.children}</div>
 );
 
 BuoyList.propTypes = {
-  styles: PropTypes.string,
+  children: PropTypes.node,
 };
 
 BuoyList.defaultProps = {
-  styles: '',
+  children: null,
 };
 
 export default BuoyList;
