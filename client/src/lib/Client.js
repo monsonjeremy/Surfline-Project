@@ -15,7 +15,7 @@ export function signInUser(params) {
   };
 
   // Return axios promise
-  return axios.post('http://localhost:3006/auth/login', params, config);
+  return axios.post('http://localhost:3006/user/login', params, config);
 }
 
 /**
@@ -33,7 +33,25 @@ export function createUser(params) {
   };
 
   // Return axios promise
-  return axios.post('http://localhost:3006/auth/create', params, config);
+  return axios.post('http://localhost:3006/user/create', params, config);
+}
+
+/**
+ * Function that returns a promise to hit the add a favorite to the users favorites
+ *
+ * @param {Object} params
+ * @param {string} params.userId
+ * @param {string} params.buoyId
+ * @returns {Promise} promise
+ */
+export function addFavoriteToUser(params) {
+  // Set withCredentials to allow for session tokens
+  const config = {
+    withCredentials: true,
+  };
+
+  // Return axios promise
+  return axios.post('http://localhost:3006/buoy/favorite', params, config);
 }
 
 /**
@@ -49,7 +67,7 @@ export function signOutUser() {
   };
 
   // Return axios promise
-  return axios.get('http://localhost:3006/auth/logout', config);
+  return axios.get('http://localhost:3006/user/logout', config);
 }
 
 /**
@@ -65,7 +83,7 @@ export function hydrateUserSession() {
   };
 
   // Return axios promise
-  return axios.get('http://localhost:3006/auth/reload', config);
+  return axios.get('http://localhost:3006/user/reload', config);
 }
 
 /**
@@ -76,4 +94,19 @@ export function hydrateUserSession() {
 export function fetchBuoyData() {
   // Return axios promise
   return axios.get('http://localhost:3006/buoy/data');
+}
+
+/**
+ * Function that returns a promise to fetch the user data
+ *
+ * @returns {Promise} promise
+ */
+export function fetchUserData(userId) {
+  // Set withCredentials to allow for session tokens
+  const config = {
+    withCredentials: true,
+  };
+
+  // Return axios promise
+  return axios.get(`http://localhost:3006/user/${userId}`, config);
 }

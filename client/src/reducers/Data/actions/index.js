@@ -23,6 +23,7 @@ export const showFavBuoys = makeActionCreator(SHOW_FAV_BUOYS);
  */
 export function hydrateBuoyData() {
   return dispatch => {
+    dispatch(buoyDataRequest());
     // Make a request to the endpoint for the buoy data
     fetchBuoyData()
       .then(response => {
