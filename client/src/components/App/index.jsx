@@ -15,7 +15,7 @@ import { ErrorBoundary, Header, Modal, BuoyList, Dashboard } from '../../contain
 const App = ({ store, }) => (
   <Provider store={store}>
     <ErrorBoundary>
-      <div className="app" style={{ backgroundColor: '#ebebeb', }}>
+      <div className="app">
         <Modal />
         <Header />
         <Dashboard>
