@@ -1,0 +1,24 @@
+.buoy-list-container {
+  padding-top: 15px;
+}
+
+.buoy-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 0px;
+  border-bottom: 1px solid black;
+
+  &:first-child {
+    border-top: 1px solid black;
+  }
+  &:last-child {
+    border-bottom: 0px;
+  }
+}
+
+.buoy-readings {
+  width: 85%;
+  margin: 10px;
+}
