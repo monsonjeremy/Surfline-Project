@@ -40,13 +40,17 @@ export const validatePasswordService = (password, dbPassword) => {
 };
 
 /**
- * Service to find a user by username
+ * Service to find a user by username or userId. The service takes an object as the argument, and defaults
+ * username and userId to null if they are not passed. That was using this one service function, a user can query
+ * by either
  * 
- * @param {string} username The username for the given user
+ * @param {object} arg - the object containing either the username or the userId
+ * @param {string} arg.username - a username
+ * @param {string} arg.userId - a userId
  * @return {Promise} Promise to lookup the user in the database
  */
-export const findUserService = username =>
-  findUser(username).then(user => {
+export const findUserService = ({ username, userId, } = { username: null, userId: null, }) =>
+  findUser(username, userId).then(user => {
     if (!user) {
       const error = new Error('User not found');
       error.statusCode = 404;
@@ -72,6 +76,7 @@ export const createUserService = (username, password) => {
     .then(user => ({
       username: user.username,
       userId: user._id,
+      favorites: user.favorites,
     }))
     .catch(err => {
       throw err;

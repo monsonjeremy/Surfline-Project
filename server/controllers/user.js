@@ -20,7 +20,7 @@ import {
  */
 export const loginUserController = async (username, password, req) => {
   // Check for the user in the DB
-  const user = await findUserService(username);
+  const user = await findUserService({ username, });
 
   // Validate that password match
   const isPasswordValid = await validatePasswordService(password, user.password);
@@ -30,6 +30,7 @@ export const loginUserController = async (username, password, req) => {
     const userObject = {
       userId: user._id,
       username: user.username,
+      favorites: user.favorites,
     };
     req.session.user = userObject;
     return userObject;
@@ -65,6 +66,22 @@ export const reloadSessionController = async req => {
 
   // Return the user information to be put into the redux store
   return req.session.user;
+};
+
+/**
+ * @description Find User Controller gets user information from the database for a given user id
+ * @param {string} userId The userId to find
+ * @return {object} user The user information to be used
+ */
+export const getUserController = async userId => {
+  const user = await findUserService({ userId, });
+
+  // Return the user information
+  return {
+    userId: user._id,
+    username: user.username,
+    favorites: user.favorites,
+  };
 };
 
 /**

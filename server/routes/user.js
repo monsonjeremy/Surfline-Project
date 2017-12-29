@@ -4,7 +4,8 @@ import {
   createUserController as createUser,
   loginUserController as loginUser,
   logoutUserController as logoutUser,
-  reloadSessionController as reloadSession
+  reloadSessionController as reloadSession,
+  getUserController as getUser
 } from '../controllers';
 
 const router = express.Router();
@@ -30,7 +31,14 @@ router.post(
  */
 router.get('/reload', controllerHandler(reloadSession, req => [req]));
 
-// GET /logout
+/**
+ * Endpoint to handle logging out and destroying a session
+ */
 router.get('/logout', controllerHandler(logoutUser, req => [req], true));
+
+/**
+ * Endpoint to handle getting user information by userId 
+ */
+router.get('/:userId', controllerHandler(getUser, req => [req.params.userId], true));
 
 export default router;

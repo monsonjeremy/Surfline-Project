@@ -3,7 +3,7 @@ import path from 'path';
 import session from 'express-session';
 import mongoose from 'mongoose';
 import { version } from '../package.json';
-import authApi from './auth';
+import authApi from './user';
 import buoyApi from './buoy';
 
 const logger = require('morgan');
@@ -64,7 +64,7 @@ app.get('/__status__/node', (req, res) => {
 });
 
 // Create endpoint for authentication API
-app.use('/auth', authApi);
+app.use('/user', authApi);
 // Create endpoint for buoy API
 app.use('/buoy', buoyApi);
 

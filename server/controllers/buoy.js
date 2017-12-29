@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 
-import { getBuoyDataService, parseXmlService } from '../services';
+import { getBuoyDataService, parseXmlService, addFavoriteService } from '../services';
 
 /**
  * @description Get Buoy Data Controller will retrieve the buoy data from the endpoint,
@@ -19,15 +19,18 @@ export const getBuoyDataController = async () => {
   const data = parsedXml.rss.channel[0];
   const buoys = data.item.map(buoy => {
     // Parsing the different strings in the XML to create a clean JSON object
-    const title = buoy.title[0];
-    const lastUpdated = buoy.pubDate[0];
-    const buoyId = title
-      .split('-')[0]
-      .trim()
-      .split(' ')[1];
+    const splitTitle = buoy.title[0].split('-');
+
+    // Parse out the station ID and keep the rest as the title
+    const [id, title] = [splitTitle[0], splitTitle.slice(1).join(' - ')];
+    const buoyId = id.trim().split(' ')[1];
+
+    // Get rid of all the '\n      ' strings in the reading
     const readings = buoy.description[0].replace(/\n {8}/g, '');
+
+    const lastUpdated = buoy.pubDate[0];
     const link = buoy.link[0];
-    const geoPoint = buoy['georss:point'][0];
+    const [lat, long] = buoy['georss:point'][0].split(' ');
 
     return {
       title,
@@ -35,7 +38,8 @@ export const getBuoyDataController = async () => {
       buoyId,
       readings,
       link,
-      geoPoint,
+      lat,
+      long,
     };
   });
 
@@ -44,3 +48,13 @@ export const getBuoyDataController = async () => {
     buoys,
   };
 };
+
+/**
+ * @description Add Favorite Controller will take a given user ID and buoy ID and then add the buoyID 
+ * to the users favorites
+ * 
+ * @param {string} userId - The user ID to update
+ * @param {string} buoyId - The buoy ID to add to favorites
+ * @returns {object} response - The response object
+ */
+export const addFavoriteController = async (userId, buoyId) => addFavoriteService(userId, buoyId);

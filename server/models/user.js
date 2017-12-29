@@ -11,6 +11,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  favorites: {
+    type: [String],
+    default: [],
+  },
 });
 
 export const User = mongoose.model('User', UserSchema);
@@ -22,6 +26,19 @@ export const User = mongoose.model('User', UserSchema);
  * @param {string} username The username to find
  * @return {Promise} promise
  */
-export function findUser(username) {
+export function findUser(username, userId) {
+  if (!username) return User.findOne({ _id: userId, }).exec();
   return User.findOne({ username, }).exec();
+}
+
+/**
+ * @description This function takes a buoy ID and a user ID. Using the user schema defined above
+ * returns a promise to add a new favorite to the users favorites
+ * 
+ * @param {string} userId The user Id to find
+ * @param {string} buoyId The buoyId to push to the array
+ * @return {Promise} promise
+ */
+export function addNewFavorite(userId, buoyId) {
+  return User.update({ _id: userId, }, { $push: { favorites: buoyId, }, }).exec();
 }
