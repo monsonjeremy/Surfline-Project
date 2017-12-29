@@ -8,7 +8,7 @@ import CreateAccountView from '../../components/Modal/CreateAccount';
 
 // actions
 import { hideModal, dispatchShowModal } from '../../reducers/Modal/actions';
-import { createNewUser } from '../../reducers/Authentication/actions/index';
+import { createNewUser } from '../../reducers/User/actions/index';
 
 /**
  * @description CreateAccount handles logic for Creating An Account from the CreateAccount Modal

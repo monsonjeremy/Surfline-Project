@@ -12,7 +12,7 @@ import App from './containers/App';
 import { initStore } from './lib';
 
 // Styles
-import './particles/particles.css';
+import './styles/particles.css';
 
 const store = initStore();
 

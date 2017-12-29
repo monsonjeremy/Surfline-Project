@@ -8,7 +8,7 @@ import SignInView from '../../components/Modal/SignIn';
 
 // actions
 import { hideModal, dispatchShowModal } from '../../reducers/Modal/actions';
-import { logInUser } from '../../reducers/Authentication/actions/index';
+import { logInUser } from '../../reducers/User/actions/index';
 
 /**
  * @description SignIn handles logic for Signing a user in from the SignIn Modal

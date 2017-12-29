@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import AppView from '../../components/App';
 
 // actions
-import { hydrateSession } from '../../reducers/Authentication/actions';
+import { hydrateSession } from '../../reducers/User/actions';
 
 /**
  * @description App container handles logic when mounting the application and

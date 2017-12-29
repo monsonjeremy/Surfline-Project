@@ -7,11 +7,10 @@ import DashboardView from '../../components/Dashboard';
 
 // Actions
 import { showAllBuoys, showFavBuoys } from '../../reducers/Data/actions';
-import { dispatchShowModal } from '../../reducers/Modal/actions';
 
 /**
  * @description Dashboard contains the logic for dispatching actions regarding what list of buoys is displayed
- * (favorites or all) and enabling/disabling the buttons based on the users login state.
+ * (favorites or all) and passing users login state from the store for enabling/disabling the buttons.
  *
  * @param {object} props - Component props
  *
@@ -22,8 +21,6 @@ class Dashboard extends Component {
     super(props);
     this.state = {};
   }
-
-  componentDidMount() {}
 
   render() {
     return <DashboardView {...this.props}>{this.props.children}</DashboardView>;
@@ -45,14 +42,11 @@ const mapDispatchToProps = dispatch => ({
   dispatchShowFavBuoys: () => {
     dispatch(showFavBuoys());
   },
-  dispatchShowModal: modalType => {
-    dispatch(dispatchShowModal(modalType));
-  },
 });
 
 const mapStateToProps = state => ({
   ...state.Data,
-  ...state.Authentication,
+  ...state.User,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

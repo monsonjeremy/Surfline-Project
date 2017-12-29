@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import '../../particles/Modal/Modal.css';
+import '../../styles/Modal/Modal.css';
 
 const ModalWrapper = props => (
   <div role="button" className="sp-modal-bg" onClick={props.handleBackgroundClick}>
