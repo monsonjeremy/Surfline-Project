@@ -11,7 +11,10 @@ const Dashboard = ({
   loggedIn,
 }) => (
   <div className={'sp-container sp-gray-bg'}>
-    <h2 className={'sp-content-title sp-text-center'}>Buoy Readings</h2>
+    <h2 className={'text-center'}>Buoy Readings</h2>
+    <p className={'instruction-sub-text text-center'}>
+      Click a marker on the map, or click a box below to select a buoy and center it on the map.
+    </p>
     <div className={'sp-button-group'}>
       <button
         className={`sp-btn ${filterFavorites ? '' : 'sp-btn-selected'}`}
