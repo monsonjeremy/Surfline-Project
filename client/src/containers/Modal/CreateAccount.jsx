@@ -32,7 +32,6 @@ class CreateAccount extends PureComponent {
     event.stopPropagation();
     const data = new FormData(event.target);
     this.props.dispatchCreateUser(data);
-    this.props.dispatchHideModal();
   }
 
   render() {

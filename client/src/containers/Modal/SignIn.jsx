@@ -33,7 +33,6 @@ class SignIn extends PureComponent {
     event.stopPropagation();
     const data = new FormData(event.target);
     this.props.dispatchSignIn(data);
-    this.props.dispatchHideModal();
   }
 
   render() {

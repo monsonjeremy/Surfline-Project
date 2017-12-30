@@ -72,6 +72,7 @@ Modal.defaultProps = {
 
 const mapStateToProps = state => ({
   currentModal: state.Modal.currentModal,
+  modalError: state.User.modalError,
 });
 
 const mapDispatchToProps = dispatch => ({
