@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import PropTypes from 'prop-types';
 
 // Views
 import BuoyView from '../../components/Buoy';
@@ -11,8 +10,9 @@ import { selectBuoy } from '../../reducers/Data/actions';
 import { updateMapCenterAndZoom } from '../../reducers/Maps/actions';
 
 /**
- * @description Buoy contains the logic for individual buoy in the list. It has logic to dispatch actions
- * when a user favorites/unfavorites a buoy or when a user clicks the box to select the buoy on the map
+ * @description Buoy container connects the Buoy components to the store 
+ * and creates the dispatchers for when a user favorites/unfavorites a buoy or
+ * when a user clicks the box to select the buoy on the map
  *
  * @param {object} props - Component props
  *

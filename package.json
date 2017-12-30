@@ -1,18 +1,9 @@
 {
-  "name": "forecast-me",
-  "version": "0.0.3-beta",
-  "config": {
-    "imageRepo": "707941731089.dkr.ecr.us-west-2.amazonaws.com/forecastme-prod",
-    "imageName": "forecastme-prod",
-    "imagePort": "80",
-    "awsRegion": "us-west-2",
-    "awsEcsCluster": "prod-ecs-cluster",
-    "awsService": "forecastme"
-  },
+  "name": "surfline-project",
+  "version": "1.0.0",
   "license": "MIT",
-  "description": "Forecasting Aggregation Site",
-  "repository": "https://github.com/monsonjeremy/Forecast-Me",
-  "main": "index.js",
+  "description": "Project for Surfline",
+  "repository": "https://github.com/monsonjeremy/Surfline-Project",
   "author": "Jeremy Monson",
   "devDependencies": {
     "babel-eslint": "^8.1.2",
@@ -44,20 +35,11 @@
     "test": "npx eslint client/src server",
     "precommit": "npm run test",
     "prepush": "npm run test",
-    "docker:open:local": "echo Trying to launch on MacOS && sleep 2 && URL=http://localhost:3005 && open $URL",
-    "docker:build:local": "docker-compose -f ./docker-compose/local.yml -p surfline-proj-dev up --force-recreate --build",
-    "docker:build:prod": "docker-compose -f ./docker-compose/prod.yml -p forecast-me-prod up --force-recreate --build",
-    "docker:build:deploy": "docker image build . -t $npm_package_config_imageRepo:$npm_package_version",
-    "postdocker:build:deploy": "npm run docker:tag:deploy",
-    "docker:tag:deploy": "docker image tag $npm_package_config_imageRepo:$npm_package_version $npm_package_config_imageRepo:latest",
-    "predocker:publish": "echo Attention! Ensure `docker login` is correct.",
-    "docker:publish": "docker image push $npm_package_config_imageRepo:$npm_package_version",
-    "postdocker:publish": "docker image push $npm_package_config_imageRepo:latest",
-    "docker:clean": "docker rm -f $npm_package_config_imageName",
-    "docker:full:clean": "docker stop $(docker ps -aq) && docker rm $(docker ps -aq)",
-    "aws:login": "eval $(aws ecr get-login --no-include-email --region $npm_package_config_awsRegion)",
-    "aws:deploy": "docker run --env-file ./.aws silintl/ecs-deploy -c $npm_package_config_awsEcsCluster -n $npm_package_config_awsService -i $npm_package_config_imageRepo:latest -r $npm_package_config_awsRegion --timeout 1000",
-    "aws:release": "run-s aws:login docker:build:deploy docker:tag:deploy docker:publish aws:deploy"
+    "docker:build:local":
+      "docker-compose -f ./docker-compose/local.yml -p surfline-proj-dev up --force-recreate --build",
+    "docker:build:prod":
+      "docker-compose -f ./docker-compose/prod.yml -p forecast-me-prod up --force-recreate --build",
+    "docker:full:clean": "docker stop $(docker ps -aq) && docker rm $(docker ps -aq)"
   },
   "lint-staged": {
     "*.{js,jsx,json}": [
@@ -65,18 +47,11 @@
       "./node_modules/.bin/eslint --fix",
       "git add"
     ],
-    "*.{scss,css}": [
-      "./node_modules/.bin/prettier --write",
-      "git add"
-    ]
+    "*.{scss,css}": ["./node_modules/.bin/prettier --write", "git add"]
   },
   "jest": {
-    "collectCoverageFrom": [
-      "client/src/**/*.{js,jsx}"
-    ],
-    "setupFiles": [
-      "<rootDir>client/config/polyfills.js"
-    ],
+    "collectCoverageFrom": ["client/src/**/*.{js,jsx}"],
+    "setupFiles": ["<rootDir>client/config/polyfills.js"],
     "testMatch": [
       "<rootDir>/client/src/**/__tests__/**/*.js?(x)",
       "<rootDir>/client/src/**/?(*.)(spec|test).js?(x)"
@@ -88,9 +63,7 @@
       "^.+\\.css$": "<rootDir>/client/config/jest/cssTransform.js",
       "^(?!.*\\.(js|jsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
     },
-    "transformIgnorePatterns": [
-      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"
-    ],
+    "transformIgnorePatterns": ["[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"],
     "moduleNameMapper": {
       "^react-native$": "react-native-web"
     }

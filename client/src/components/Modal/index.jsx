@@ -3,6 +3,18 @@ import PropTypes from 'prop-types';
 
 import '../../styles/Modal/Modal.css';
 
+/**
+ * @description ModalWrapper component represents the base view for the Modals
+ * 
+ * @param {object} props - Props
+ * @param {string} props.title - Title of the modal
+ * @param {string} props.modalError - An error message to be shown on the modal
+ * @param {node} props.children - Children to render
+ * @param {function} props.handleBackgroundClick - Function to dispatch actions related to a click on the background of the modal
+ * @param {function} props.dispatchHideModal - Function to dispatch actions to hide the modal
+ * 
+ * @returns {<ModalWrapper />}
+ */
 const ModalWrapper = props => (
   <div role="button" className="sp-modal-bg" onClick={props.handleBackgroundClick}>
     <div className="sp-modal-content">

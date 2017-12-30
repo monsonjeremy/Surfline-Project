@@ -1,4 +1,4 @@
-FROM node:8.8.1-alpine
+FROM node:8.8.1
 LABEL name="ForecastMeProd"
 LABEL version="1.0"
 ENV NPM_CONFIG_LOGLEVEL verbose
@@ -18,11 +18,17 @@ RUN npm install
 
 # Copy client files over and install dependencies and build bundle
 COPY ./client /app/client
+COPY ./.eslintrc.json /app/client
 RUN cd client && npm install && npm run build
 
 # Copy server files over and install dependencies and compile server code
 COPY ./server/ /app/server
-RUN cd server && NODE_ENV=development npm install && npm run build:server:prod
+COPY ./.eslintrc.json /app/server
+RUN cd server && NODE_ENV=development npm install
+
+# Compile server code
+RUN npm run build:server:prod
+
 
 EXPOSE 80
 CMD ["npm", "run", "start:app:prod"]

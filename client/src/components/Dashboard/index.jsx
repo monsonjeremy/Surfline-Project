@@ -3,13 +3,20 @@ import PropTypes from 'prop-types';
 
 import '../../styles/Dashboard/Dashboard.css';
 
-const Dashboard = ({
-  dispatchShowAllBuoys,
-  dispatchShowFavBuoys,
-  children,
-  filterFavorites,
-  loggedIn,
-}) => (
+/**
+ * @description Dashboard component represents the view for the Dashboard component which 
+ * contains logic for change from ALL to FAV filters on the buoys
+ *
+ * @param {object} props - Props
+ * @param {any} props.children - The children to render as a child of this component
+ * @param {boolean} props.filterFavorites - Whether or not we are filtering favorite buoys
+ * @param {boolean} props.loggedIn - Users login status
+ * @param {function} props.dispatchShowAllBuoys - Function to dispatch an action to show all buoys
+ * @param {function} props.dispatchShowFavBuoys - Function to dispatch an action to show favorite buoys
+ * 
+ * @returns {<Dashboard />}
+ */
+const Dashboard = props => (
   <div className={'sp-container sp-gray-bg'}>
     <h2 className={'text-center'}>Buoy Readings</h2>
     <p className={'instruction-sub-text text-center'}>
@@ -17,20 +24,20 @@ const Dashboard = ({
     </p>
     <div className={'sp-button-group'}>
       <button
-        className={`sp-btn ${filterFavorites ? '' : 'sp-btn-selected'}`}
-        onClick={dispatchShowAllBuoys}
+        className={`sp-btn ${props.filterFavorites ? '' : 'sp-btn-selected'}`}
+        onClick={props.dispatchShowAllBuoys}
       >
         All Buoys
       </button>
       <button
-        disabled={!loggedIn}
-        className={`sp-btn ${filterFavorites ? 'sp-btn-selected' : ''}`}
-        onClick={dispatchShowFavBuoys}
+        disabled={!props.loggedIn}
+        className={`sp-btn ${props.filterFavorites ? 'sp-btn-selected' : ''}`}
+        onClick={props.dispatchShowFavBuoys}
       >
         Favorites
       </button>
     </div>
-    {children}
+    {props.children}
   </div>
 );
 

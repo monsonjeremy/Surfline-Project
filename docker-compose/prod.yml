@@ -4,8 +4,7 @@ services:
   forecast-me:
     build:
       context: ../
-      dockerfile: docker-compose/dockerfiles/Dockerfile-prod
-    image: forecastme-prod:latest
+      dockerfile: Dockerfile
     environment:
       - NODE_ENV=production
       - BABEL_ENV=production
@@ -14,10 +13,12 @@ services:
     env_file:
       - ./prod.env
     links:
-      - redis
+      - db
     depends_on:
-      - redis
-  redis:
-    image: redis:4.0.2-alpine
+      - db
+  db:
+    image: mongo
+    volumes:
+      - ../server/mongo/:/data/db
     ports:
-      - "6379:6379"
+      - "27017:27017"

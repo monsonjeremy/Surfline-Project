@@ -1,7 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const BuoyList = props => (
+/**
+ * @description Buoy component represents the view for the buoy info container in the sidebar.
+ *
+ * @param {object} props - Props
+ * @param {string} props.buoyId - The ID for the buoy
+ * @param {function} props.dispatchSelectBuoy - Click Handler for dispatching action to select a buoy
+ * @param {function} props.dispatchAddToFavorites - Click Handler for dispatching action to add a buoy to favorites
+ * @param {number} props.lat - Latitude of the buoy
+ * @param {number} props.lng - Longitude of the buoy
+ * @param {string} props.title - Title of the buoy
+ * @param {string} props.link - Link to the buoy webpage
+ * @param {string} props.readings - Readings on the buoy
+ * @param {boolean} props.showFavorites - Whether or not the application state is showing the favorite buoys only
+ * @param {boolean} props.isFavorite - Whether or not the current buoy is a favorite
+ * @param {object} props.user - The current user object
+ * @param {string} props.user.userId - The current user's userId
+ * 
+ * @returns {<Buoy />}
+ *
+ */
+const Buoy = props => (
   <div
     role="button"
     onClick={event =>
@@ -29,7 +49,7 @@ const BuoyList = props => (
   </div>
 );
 
-BuoyList.propTypes = {
+Buoy.propTypes = {
   title: PropTypes.string.isRequired,
   buoyId: PropTypes.string.isRequired,
   readings: PropTypes.string.isRequired,
@@ -43,10 +63,10 @@ BuoyList.propTypes = {
   user: PropTypes.instanceOf(Object),
 };
 
-BuoyList.defaultProps = {
+Buoy.defaultProps = {
   isFavorite: false,
   user: null,
   showFavorites: false,
 };
 
-export default BuoyList;
+export default Buoy;

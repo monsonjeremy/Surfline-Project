@@ -10,7 +10,7 @@ import { logOutUser } from '../../reducers/User/actions';
 import { showAllBuoys } from '../../reducers/Data/actions';
 
 /**
- * @description NavBar handles logic for buttons on the NavBar and their text
+ * @description Header handles logic for buttons on the NavBar and their text
  *
  * @param {object} props - Component props
  * @param {boolean} props.dataError - Error message for data actions
@@ -19,7 +19,7 @@ import { showAllBuoys } from '../../reducers/Data/actions';
  * @param {function} props.dispatchShowModal - Method for dispatching an action to show a specific modal.
  * @param {function} props.dispatchLogoutUser - Method for dispatching an action to kill a user session.
  *
- * @returns {<SignIn />}
+ * @returns {<Header />}
  */
 class Header extends PureComponent {
   constructor(props) {

@@ -9,10 +9,11 @@ import DashboardView from '../../components/Dashboard';
 import { showAllBuoys, showFavBuoys } from '../../reducers/Data/actions';
 
 /**
- * @description Dashboard contains the logic for dispatching actions regarding what list of buoys is displayed
- * (favorites or all) and passing users login state from the store for enabling/disabling the buttons.
+ * @description Dashboard container contains the dispatcher for filter between all and favorite 
+ *              buoys and passes them to the view
  *
  * @param {object} props - Component props
+ * @param {node} props.children - Children
  *
  * @returns {<Dashboard />}
  */

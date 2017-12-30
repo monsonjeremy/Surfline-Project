@@ -15,7 +15,7 @@ export function signInUser(params) {
   };
 
   // Return axios promise
-  return axios.post('http://localhost:3006/user/login', params, config);
+  return axios.post('/user/login', params, config);
 }
 
 /**
@@ -33,7 +33,7 @@ export function createUser(params) {
   };
 
   // Return axios promise
-  return axios.post('http://localhost:3006/user/create', params, config);
+  return axios.post('/user/create', params, config);
 }
 
 /**
@@ -51,7 +51,7 @@ export function addFavoriteToUser(params) {
   };
 
   // Return axios promise
-  return axios.post('http://localhost:3006/buoy/favorite', params, config);
+  return axios.post('/buoy/favorite', params, config);
 }
 
 /**
@@ -67,7 +67,7 @@ export function signOutUser() {
   };
 
   // Return axios promise
-  return axios.get('http://localhost:3006/user/logout', config);
+  return axios.get('/user/logout', config);
 }
 
 /**
@@ -83,7 +83,7 @@ export function hydrateUserSession() {
   };
 
   // Return axios promise
-  return axios.get('http://localhost:3006/user/reload', config);
+  return axios.get('/user/reload', config);
 }
 
 /**
@@ -93,7 +93,7 @@ export function hydrateUserSession() {
  */
 export function fetchBuoyData() {
   // Return axios promise
-  return axios.get('http://localhost:3006/buoy/data');
+  return axios.get('/buoy/data');
 }
 
 /**
@@ -108,5 +108,5 @@ export function fetchUserData(userId) {
   };
 
   // Return axios promise
-  return axios.get(`http://localhost:3006/user/${userId}`, config);
+  return axios.get(`/user/${userId}`, config);
 }

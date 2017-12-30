@@ -14,14 +14,17 @@ import { hydrateSession } from '../../reducers/User/actions';
  *              hydrating the application state
  *
  * @param {object} props - Component props
- * @param {object} store - The application state
+ * @param {object} props.store - The application state
+ * @param {function} props.dispatchHydrateSession - Function for hydrating the session and user data if a session cookie is present
+ * @param {object} props.Data - Data object from the store
+ * @param {object} props.User - User object from the store
+ * @param {object} props.Maps - Maps object from the store
  * @param {boolean} props.isLoading - True when the application is loading
  *
  * @returns {<App />}
  */
 class App extends Component {
   componentWillMount() {
-    // Make a call to the session reload API to hydrate the session if a session cookie is present
     this.props.dispatchHydrateSession();
   }
 

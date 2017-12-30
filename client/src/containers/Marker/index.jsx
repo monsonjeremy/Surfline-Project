@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import PropTypes from 'prop-types';
 
 // Views
 import MarkerView from '../../components/Marker';
 
-// Actions
-
 /**
- * @description Maps contains the logic for rendering single markers and handling the logic for the props of the specific marker
+ * @description Marker container connects the markers to the store and passes down relevant state
  * @param {object} props - Component props
  *
  * @returns {<Marker />}
@@ -24,13 +21,8 @@ class Marker extends Component {
   }
 }
 
-Marker.propTypes = {};
-
-// eslint-disable-next-line
-const mapDispatchToProps = dispatch => ({});
-
 const mapStateToProps = state => ({
   ...state.User,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Marker);
+export default connect(mapStateToProps)(Marker);

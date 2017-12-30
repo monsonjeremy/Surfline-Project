@@ -4,7 +4,21 @@ import PropTypes from 'prop-types';
 // Styles
 import '../../styles/Header/Header.css';
 
-const HeaderView = props => (
+/**
+ * @description Header component represents the view for the Header container which 
+ * contains logic for showing the login/create account modals and logging a user out.
+ *
+ * @param {object} props - Props
+ * @param {string} props.userError - User related error message to be displayed if not null
+ * @param {string} props.dataError - Data related error message to be displayed if not null
+ * @param {function} props.dispatchShowModal - Function to dispatch and action to show a modal
+ * @param {boolean} props.loggedIn - Users login status
+ * @param {object} props.user - User object
+ * @param {string} props.user.username - Current user's username
+ * 
+ * @returns {<Header />}
+ */
+const Header = props => (
   <div className="sp-container header-container">
     {(props.userError || props.dataError) && (
       <div className="sp-header-error">
@@ -42,7 +56,7 @@ const HeaderView = props => (
   </div>
 );
 
-HeaderView.propTypes = {
+Header.propTypes = {
   // Props
   loggedIn: PropTypes.bool.isRequired,
   userError: PropTypes.string,
@@ -56,10 +70,10 @@ HeaderView.propTypes = {
   dispatchLogoutUser: PropTypes.func.isRequired,
 };
 
-HeaderView.defaultProps = {
+Header.defaultProps = {
   userError: null,
   dataError: null,
   user: null,
 };
 
-export default HeaderView;
+export default Header;

@@ -9,7 +9,6 @@ services:
       - ./local.env
     volumes:
       - ../client/src:/src/src/
-      - ../client/src/components:/src/src/components/
       - ../client/config:/src/config/
       - ../client/public:/src/public/
     ports:

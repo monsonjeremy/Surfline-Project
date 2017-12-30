@@ -14,8 +14,9 @@ const googleMapsUrl =
   'https://maps.googleapis.com/maps/api/js?key=AIzaSyDDtJVfn4LB_ExnDJgqisAUR_8rf_XMbg4&v=3.exp&libraries=geometry,drawing,places';
 
 /**
- * @description Maps contains the logic for rendering and handling markers and state for the google map
- * component
+ * @description Maps container connects the map view to the store and contains various functions 
+ * for controlling the zoom and centering of the map. It also contains logic for rendering markers
+ * based on which buoy is selected and what the filter is
  * @param {object} props - Component props
  *
  * @returns {<Maps />}

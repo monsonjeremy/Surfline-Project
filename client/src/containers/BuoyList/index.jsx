@@ -16,7 +16,13 @@ import { hydrateBuoyData } from '../../reducers/Data/actions';
  * and then passing that data to the view
  *
  * @param {object} props - Component props
- * @param {object} props.dispatchFetchBuoyData - Function used to fetch the buoy data upon mounting the component
+ * @param {function} props.dispatchFetchBuoyData - Function used to fetch the buoy data upon mounting the component
+ * @param {object} props.buoy - The buoy data object from the store
+ * @param {object} props.user - The user object from the store
+ * @param {Array<string>} props.user.favorites - The user object from the store
+ * @param {boolean} props.filterFavorites - Whether or not to filter by favorites
+ * @param {boolean} props.buoy.isLoading - Flag for determining if the buoy data is loading
+ * @param {object} props.buoy.data - The buoy data object
  *
  * @returns {<BuoyList />}
  */

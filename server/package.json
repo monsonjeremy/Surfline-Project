@@ -1,14 +1,14 @@
 {
   "name": "surfline-project-server",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "license": "MIT",
   "description": "Source code for the server side code of the surfline project",
   "repository": "https://github.com/monsonjeremy/Surfline-Project",
-  "private": false,
   "scripts": {
     "start": "node ./bin/www",
     "build:server:prod": "npx babel --presets env --ignore node_modules ./ -d ./",
-    "start:server:dev": "./node_modules/.bin/nodemon --inspect=0.0.0.0:5858 --ignore node_modules/ --exec ./node_modules/.bin/babel-node --ignore node_modules ./bin/www.js",
+    "start:server:dev":
+      "./node_modules/.bin/nodemon --inspect=0.0.0.0:5858 --ignore node_modules/ --exec ./node_modules/.bin/babel-node --ignore node_modules ./bin/www.js",
     "start:server:prod": "./node_modules/.bin/forever ./bin/www.js"
   },
   "dependencies": {
@@ -34,14 +34,8 @@
     "nodemon": "^1.12.1"
   },
   "babel": {
-    "presets": [
-      "env"
-    ],
-    "plugins": [
-      "transform-object-rest-spread"
-    ],
-    "ignore": [
-      "/node_modules/"
-    ]
+    "presets": ["env"],
+    "plugins": ["transform-object-rest-spread"],
+    "ignore": ["/node_modules/"]
   }
 }

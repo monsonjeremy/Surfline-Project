@@ -1,6 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+/**
+ * @description CreateAccount component represents the view for the create account version of the Modal component
+ * 
+ * @param {object} props - Props
+ * @param {function} props.createUser - Function for dispatching actions to create a user
+ * @param {function} props.dispatchShowModal - Function to dispatch action to show a given modal
+ * 
+ * @returns {<CreateAccount />}
+ */
 const CreateAccount = props => (
   <div className="sp-modal-form">
     <form className="sp-form-container" onSubmit={props.createUser}>
@@ -47,8 +56,6 @@ CreateAccount.propTypes = {
   dispatchShowModal: PropTypes.func.isRequired,
 };
 
-CreateAccount.defaultProps = {
-  styles: '',
-};
+CreateAccount.defaultProps = {};
 
 export default CreateAccount;
