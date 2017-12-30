@@ -1,27 +1,17 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-const Loader = ({ className, }) => (
-  <div className={`loader-container ${className}`}>
-    <div className="loader">
-      <ul className="hexagon-container">
-        <li className="hexagon hex_1" />
-        <li className="hexagon hex_2" />
-        <li className="hexagon hex_3" />
-        <li className="hexagon hex_4" />
-        <li className="hexagon hex_5" />
-        <li className="hexagon hex_6" />
-        <li className="hexagon hex_7" />
-      </ul>
-    </div>
+import '../../styles/Loader/Loader.css';
+
+const Loader = () => (
+  <div className={`loader-container`}>
+    <span className="loader">
+      <span className="loader-inner" />
+    </span>
   </div>
 );
 
-Loader.propTypes = {
-  className: PropTypes.string,
-};
+Loader.propTypes = {};
 
-Loader.defaultProps = {
-  className: null,
-};
+Loader.defaultProps = {};
+
 export default Loader;
