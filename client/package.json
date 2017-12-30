@@ -52,6 +52,7 @@
     "react-dev-utils": "^4.1.0",
     "react-dom": "^16.0.0",
     "react-error-overlay": "^1.0.10",
+    "react-google-maps": "^9.4.3",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
     "react-router-redux": "^5.0.0-alpha.8",
@@ -77,46 +78,15 @@
     "build-js": "node scripts/build.js",
     "build": "npm-run-all build-css build-js",
     "test": "node scripts/test.js --env=jsdom",
-    "build-css":
-      "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
-    "watch-css":
-      "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive"
+    "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
+    "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive"
   },
-  "browserslist": ["> 1%"],
+  "browserslist": [
+    "> 1%"
+  ],
   "babel": {
-    "presets": ["react-app"]
-  },
-  "eslintConfig": {
-    "extends": ["airbnb", "plugin:flowtype/recommended", "prettier"],
-    "plugins": ["flowtype", "compat", "prettier"],
-    "env": {
-      "es6": true,
-      "node": true,
-      "browser": true,
-      "jest": true
-    },
-    "rules": {
-      "semi": [2, "always"],
-      "linebreak-style": 0,
-      "compat/compat": 2,
-      "no-param-reassign": 0,
-      "jsx-a11y/interactive-supports-focus": 0,
-      "flowtype/define-flow-type": 2,
-      "import/prefer-default-export": 1,
-      "comma-dangle": [
-        "error",
-        {
-          "arrays": "never",
-          "objects": "always",
-          "imports": "never",
-          "exports": "never",
-          "functions": "never"
-        }
-      ]
-    },
-    "parser": "babel-eslint",
-    "parserOptions": {
-      "sourceType": "module"
-    }
+    "presets": [
+      "react-app"
+    ]
   }
 }
