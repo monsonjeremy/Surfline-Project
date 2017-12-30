@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -29,22 +29,26 @@ class BuoyList extends Component {
   }
 
   componentDidMount() {
-    // this.props.dispatchFetchBuoyData();
+    this.props.dispatchFetchBuoyData();
   }
 
   renderBuoys() {
+    // If we aren't loading and there is data -> render buoys
     if (!this.props.buoy.isLoading && this.props.buoy.data) {
       const buoyData = this.props.buoy.data.buoys;
 
       return buoyData.map(buoy => {
         // Not logged in so we don't have to worry about checking favorites (small optimization)
         if (!this.props.user) return <Buoy key={buoy.buoyId} {...{ ...buoy, }} />;
+
         // If we are on the favorites tab filter out non favorite buoys
         const showFavorites = this.props.filterFavorites;
         const isFavorite = this.props.user.favorites.indexOf(buoy.buoyId) !== -1;
+
         if (!showFavorites || (showFavorites && isFavorite)) {
           return <Buoy key={buoy.buoyId} {...{ ...buoy, isFavorite, showFavorites, }} />;
         }
+
         return null;
       });
     }
@@ -52,12 +56,7 @@ class BuoyList extends Component {
   }
 
   render() {
-    return (
-      <Fragment>
-        {this.props.buoy.isLoading && 'Loading'}
-        <BuoyListView {...this.props}>{this.renderBuoys()}</BuoyListView>
-      </Fragment>
-    );
+    return <BuoyListView {...this.props}>{this.renderBuoys()}</BuoyListView>;
   }
 }
 

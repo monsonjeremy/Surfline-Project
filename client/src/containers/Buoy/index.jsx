@@ -7,10 +7,12 @@ import BuoyView from '../../components/Buoy';
 
 // Actions
 import { addFavorite } from '../../reducers/User/actions';
+import { selectBuoy } from '../../reducers/Data/actions';
+import { updateMapCenterAndZoom } from '../../reducers/Maps/actions';
 
 /**
  * @description Buoy contains the logic for individual buoy in the list. It has logic to dispatch actions
- * when a user favorites/unfavorites a buoy
+ * when a user favorites/unfavorites a buoy or when a user clicks the box to select the buoy on the map
  *
  * @param {object} props - Component props
  *
@@ -27,11 +29,15 @@ class Buoy extends Component {
   }
 }
 
-Buoy.propTypes = {};
-
 const mapDispatchToProps = dispatch => ({
-  dispatchAddToFavorites: (userId, buoyId) => {
+  dispatchAddToFavorites: (event, userId, buoyId) => {
+    event.stopPropagation();
     dispatch(addFavorite(userId, buoyId));
+  },
+  dispatchSelectBuoy: (event, buoyId, center, zoom) => {
+    event.stopPropagation();
+    dispatch(selectBuoy(buoyId));
+    dispatch(updateMapCenterAndZoom(center, zoom));
   },
 });
 
