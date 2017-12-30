@@ -2,5 +2,20 @@
 
 .header-container.sp-container {
   padding-bottom: 0px;
-  padding-top: 10px;
+  padding-top: 0px;
+}
+
+.sp-header-error {
+  background-color: #d304048c;
+  padding: 10px;
+  color: white;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.sp-error-msg {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  font-weight: 300;
 }
