@@ -8,6 +8,7 @@ WORKDIR /src
 
 # Copy dependencies and install
 COPY ./client/ ./
+COPY ./.eslintrc.json ./
 RUN npm install
 
 EXPOSE 3006
