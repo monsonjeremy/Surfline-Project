@@ -8,6 +8,12 @@ import {
   addFavoriteToUser
 } from '../../../lib';
 
+// Actions
+import { hideModal } from '../../Modal/actions';
+
+export const CLEAR_ERRORS = 'CLEAR_ERRORS';
+export const clearErrors = makeActionCreator(CLEAR_ERRORS);
+
 export const LOG_IN_REQUEST = 'LOG_IN_REQUEST';
 export const logInRequest = makeActionCreator(LOG_IN_REQUEST);
 
@@ -37,11 +43,12 @@ export function logInUser(data) {
     };
     // Attempt to sign in user with given information
     signInUser(params)
-      .then(response =>
+      .then(response => {
         // Login succeeded dispatch an action to set the user in the store
-        dispatch(logInSuccess(response.data, true))
-      )
-      .catch(err => dispatch(logInFailure(err)));
+        dispatch(logInSuccess(response.data, true));
+        dispatch(hideModal());
+      })
+      .catch(err => dispatch(logInFailure(err.response.data)));
   };
 }
 
@@ -60,14 +67,10 @@ export function hydrateSession() {
         dispatch(getUserRequest());
 
         fetchUserData(session.data.userId)
-          .then(user => {
-            // hydrating session and user succeeded dispatch an action to set the user in the store
-            dispatch(logInSuccess(user.data, true));
-          })
-          .catch(err => {
-            // Login failed even though the session was valid, throw the error to the client
-            dispatch(logInFailure(err));
-          });
+          // hydrating session and user succeeded dispatch an action to set the user in the store
+          .then(user => dispatch(logInSuccess(user.data, true)))
+          // Login failed even though the session was valid, throw the error to the client
+          .catch(err => dispatch(logInFailure(err.response.data)));
       })
       .catch(() => {
         // Don't need to do anything here. Initial state is already logged out so we can ignore errors
@@ -99,7 +102,7 @@ export function logOutUser() {
         dispatch(logOutSuccess())
       )
       // Log out failed for some reason, display an error
-      .catch(err => dispatch(logOutFailure(err)));
+      .catch(() => dispatch(logOutFailure('Something went wrong logging out, please try again.')));
   };
 }
 
@@ -134,8 +137,9 @@ export function createNewUser(data) {
         const user = response.data;
         // Login succeeded dispatch an action to set the user in the store
         dispatch(createUserSuccess(user, true));
+        dispatch(hideModal());
       })
-      .catch(err => dispatch(createUserFailure(err)));
+      .catch(err => dispatch(createUserFailure(err.response.data)));
   };
 }
 
@@ -171,6 +175,8 @@ export function addFavorite(userId, buoyId) {
         // Adding favorite succeeded, dispatch an action to update the store to match
         dispatch(addFavoriteSuccess(buoyId));
       })
-      .catch(err => dispatch(addFavoriteFailure(err)));
+      .catch(() =>
+        dispatch(addFavoriteFailure('Something went wrong adding the favorite, please try again'))
+      );
   };
 }

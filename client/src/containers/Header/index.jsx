@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 // View
@@ -14,10 +13,8 @@ import { showAllBuoys } from '../../reducers/Data/actions';
  * @description NavBar handles logic for buttons on the NavBar and their text
  *
  * @param {object} props - Component props
- * @param {boolean} props.loggedIn - Boolean flag for determining logged in status
- * @param {boolean} props.loggedInUser - Object for information about the current user
- * @param {boolean} props.loggedInUser.firstName - Current user's first name
- * @param {boolean} props.loggedInUser.lastName - Current user's last name
+ * @param {boolean} props.dataError - Error message for data actions
+ * @param {boolean} props.userError - Error message for user actions
  * @param {function} props.dispatchHideModal - Method for dispatching an action to hide the modal.
  * @param {function} props.dispatchShowModal - Method for dispatching an action to show a specific modal.
  * @param {function} props.dispatchLogoutUser - Method for dispatching an action to kill a user session.
@@ -36,22 +33,14 @@ class Header extends PureComponent {
   }
 }
 
-Header.propTypes = {
-  loggedIn: PropTypes.bool,
-  user: PropTypes.shape({
-    username: PropTypes.string,
-  }),
-  dispatchShowModal: PropTypes.func.isRequired,
-  dispatchLogoutUser: PropTypes.func.isRequired,
-};
+Header.propTypes = {};
 
-Header.defaultProps = {
-  user: {},
-  loggedIn: false,
-};
+Header.defaultProps = {};
 
 const mapStateToProps = state => ({
   ...state.User,
+  userError: state.User.baseError,
+  dataError: state.Data.baseError,
 });
 
 const mapDispatchToProps = dispatch => ({

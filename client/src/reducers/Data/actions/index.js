@@ -15,10 +15,12 @@ export const showAllBuoys = makeActionCreator(SHOW_ALL_BUOYS);
 export const SHOW_FAV_BUOYS = 'SHOW_FAV_BUOYS';
 export const showFavBuoys = makeActionCreator(SHOW_FAV_BUOYS);
 
+export const SELECT_BUOY = 'SELECT_BUOY';
+export const selectBuoy = makeActionCreator(SELECT_BUOY, 'buoyId');
+
 /**
  * Function for dispatching the a request to hydrate the session
  *
- * @param {function} data.get Get a value given in the form by its key
  * @return {function} dispatcher
  */
 export function hydrateBuoyData() {
@@ -30,8 +32,8 @@ export function hydrateBuoyData() {
         // Now that we are given an XML response, we need to parse it and send the relevant data to the store
         dispatch(buoyDataSuccess(response.data, true));
       })
-      .catch(e => {
-        dispatch(buoyDataFailure(e));
+      .catch(() => {
+        dispatch(buoyDataFailure('Something went wrong fetching the buoy data'));
       });
   };
 }

@@ -10,7 +10,8 @@ import {
   CREATE_USER_SUCCESS,
   ADD_FAVORITE_SUCCESS,
   ADD_FAVORITE_FAILURE,
-  ADD_FAVORITE_REQUEST
+  ADD_FAVORITE_REQUEST,
+  CLEAR_ERRORS
 } from './actions';
 
 const User = (
@@ -26,6 +27,7 @@ const User = (
         ...state,
         loading: true,
         loginRequested: true,
+        modalError: null,
       };
     case LOG_IN_SUCCESS:
       return {
@@ -33,7 +35,7 @@ const User = (
         user: action.user,
         loggedIn: action.loggedIn,
         loading: false,
-        error: null,
+        modalError: null,
       };
     case LOG_IN_FAILURE:
       return {
@@ -42,20 +44,21 @@ const User = (
         loggedIn: false,
         loginRequested: false,
         loading: false,
-        error: action.errMsg,
+        modalError: action.errorMsg,
       };
     case LOG_OUT_REQUEST:
       return {
         ...state,
         logoutRequested: true,
         loading: true,
+        baseError: null,
       };
     case LOG_OUT_FAILURE:
       return {
         ...state,
         logoutRequested: false,
         loading: false,
-        error: action.errMsg,
+        baseError: action.errorMsg,
       };
     case LOG_OUT_SUCCESS:
       return {
@@ -70,6 +73,7 @@ const User = (
         ...state,
         loginLoading: true,
         loginRequested: true,
+        modalError: null,
       };
     case CREATE_USER_SUCCESS:
       return {
@@ -77,7 +81,6 @@ const User = (
         user: action.user,
         loggedIn: action.loggedIn,
         loading: false,
-        error: null,
       };
     case CREATE_USER_FAILURE:
       return {
@@ -86,18 +89,18 @@ const User = (
         loggedIn: false,
         loginRequested: false,
         loading: false,
-        error: action.errMsg,
+        modalError: action.errorMsg,
       };
     case ADD_FAVORITE_REQUEST:
       return {
         ...state,
         loading: true,
+        baseError: null,
       };
     case ADD_FAVORITE_SUCCESS:
       return {
         ...state,
         loading: false,
-        error: null,
         user: {
           ...state.user,
           favorites: [...state.user.favorites, action.buoyId],
@@ -107,7 +110,13 @@ const User = (
       return {
         ...state,
         loading: false,
-        error: action.errMsg,
+        baseError: action.errorMsg,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        baseError: null,
+        modalError: null,
       };
     default:
       return state;
