@@ -1,0 +1,13 @@
+.maps-container {
+  height: 50vh;
+  position: absolute;
+  width: 100%;
+  left: 0;
+
+  @media (min-width: 1000px) {
+    height: 100%;
+    position: absolute;
+    width: 70%;
+    left: 30%;
+  }
+}
