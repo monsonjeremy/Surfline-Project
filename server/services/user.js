@@ -79,6 +79,12 @@ export const createUserService = (username, password) => {
       favorites: user.favorites,
     }))
     .catch(err => {
+      // Check if the error matches duplicate key error, if so return more specific message
+      if (err.message.indexOf('duplicate key error') !== -1) {
+        const error = new Error('Username is taken...');
+        error.statusCode = 400;
+        throw error;
+      }
       throw err;
     });
 };
@@ -117,6 +123,7 @@ export const reloadSessionService = req =>
     })
   ).catch(err => {
     const error = new Error(err);
+    // Easter Egg (Throw I'm a Teapot error status code :D)
     error.statusCode = 418;
     throw error;
   });

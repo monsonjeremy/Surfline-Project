@@ -36,9 +36,10 @@ export const loginUserController = async (username, password, req) => {
     return userObject;
   }
 
-  // We won't actually reach this here theoretically because errors should be caught by the services
-  // but it is a good fail safe
-  throw Error('Invalid password, please try again...');
+  // Password don't match, throw an error
+  const error = Error('Invalid username or password, please try again...');
+  error.statusCode = 403;
+  throw error;
 };
 
 /**

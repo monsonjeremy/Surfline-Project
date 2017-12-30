@@ -22,8 +22,8 @@ export const controllerHandler = (promise, params, withAuth = false) => async (r
     return res.json(result);
   } catch (error) {
     res.status(error.statusCode || 500);
-    res.write(`Error Message: ${error.message}. `);
-    if (process.env.NODE_ENV === 'development') res.write(`Stack Trace: ${error.stack}`);
+    res.write(`${error.message}`);
+    console.log({ message: error.message, stack: error.stackTrace, code: error.statusCode || 500, });
     return res.end();
   }
 };

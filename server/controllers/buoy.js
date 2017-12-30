@@ -38,8 +38,8 @@ export const getBuoyDataController = async () => {
       buoyId,
       readings,
       link,
-      lat,
-      long,
+      lat: parseFloat(lat),
+      lng: parseFloat(long),
     };
   });
 
