@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 // components
 import AppView from '../../components/App';
+import Loader from '../../components/Loader';
 
 // actions
 import { hydrateSession } from '../../reducers/User/actions';
@@ -25,13 +26,14 @@ class App extends Component {
   }
 
   render() {
-    const { store, isLoading, } = this.props;
+    const { store, Data, User, Maps, } = this.props;
+    const isLoading = Data.buoy.isLoading || Maps.isLoading || User.isLoading;
 
     return (
-      <div>
-        {isLoading && <div className="sp-app-loading" />}
+      <Fragment>
+        {isLoading && <Loader />}
         <AppView store={store} />
-      </div>
+      </Fragment>
     );
   }
 }
@@ -44,8 +46,18 @@ App.propTypes = {
     replaceReducer: PropTypes.func,
     Symbol: PropTypes.func,
   }).isRequired,
-  isLoading: PropTypes.bool.isRequired,
   dispatchHydrateSession: PropTypes.func.isRequired,
+  Data: PropTypes.shape({
+    buoy: PropTypes.shape({
+      isLoading: PropTypes.bool,
+    }),
+  }).isRequired,
+  User: PropTypes.shape({
+    isLoading: PropTypes.bool,
+  }).isRequired,
+  Maps: PropTypes.shape({
+    isLoading: PropTypes.bool,
+  }).isRequired,
 };
 
 App.defaultProps = {
@@ -59,7 +71,10 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-// eslint-disable-next-line
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  Data: state.Data,
+  User: state.User,
+  Maps: state.Maps,
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
