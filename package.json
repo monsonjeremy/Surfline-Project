@@ -35,10 +35,8 @@
     "test": "npx eslint client/src server",
     "precommit": "npm run test",
     "prepush": "npm run test",
-    "docker:build:local":
-      "docker-compose -f ./docker-compose/local.yml -p surfline-proj-dev up --force-recreate --build",
-    "docker:build:prod":
-      "docker-compose -f ./docker-compose/prod.yml -p surfline-prof-prod up --force-recreate --build",
+    "docker:build:local": "docker-compose -f ./docker-compose/local.yml -p surfline-proj-dev up --force-recreate --build",
+    "docker:build:prod": "docker-compose -f ./docker-compose/prod.yml -p surfline-prof-prod up --force-recreate --build",
     "docker:full:clean": "docker stop $(docker ps -aq) && docker rm $(docker ps -aq)"
   },
   "lint-staged": {
@@ -47,11 +45,18 @@
       "./node_modules/.bin/eslint --fix",
       "git add"
     ],
-    "*.{scss,css}": ["./node_modules/.bin/prettier --write", "git add"]
+    "*.{scss,css}": [
+      "./node_modules/.bin/prettier --write",
+      "git add"
+    ]
   },
   "jest": {
-    "collectCoverageFrom": ["client/src/**/*.{js,jsx}"],
-    "setupFiles": ["<rootDir>client/config/polyfills.js"],
+    "collectCoverageFrom": [
+      "client/src/**/*.{js,jsx}"
+    ],
+    "setupFiles": [
+      "<rootDir>client/config/polyfills.js"
+    ],
     "testMatch": [
       "<rootDir>/client/src/**/__tests__/**/*.js?(x)",
       "<rootDir>/client/src/**/?(*.)(spec|test).js?(x)"
@@ -63,7 +68,9 @@
       "^.+\\.css$": "<rootDir>/client/config/jest/cssTransform.js",
       "^(?!.*\\.(js|jsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
     },
-    "transformIgnorePatterns": ["[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"],
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"
+    ],
     "moduleNameMapper": {
       "^react-native$": "react-native-web"
     }

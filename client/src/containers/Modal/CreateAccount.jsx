@@ -2,6 +2,9 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+// Polyfill for using FormData on safari IE and other unsupported browsers
+import 'formdata-polyfill';
+
 // Components
 import ModalWrapper from '../../components/Modal';
 import CreateAccountView from '../../components/Modal/CreateAccount';
