@@ -30,7 +30,8 @@ class App extends Component {
 
   render() {
     const { store, Data, User, Maps, } = this.props;
-    const isLoading = Data.buoy.isLoading || Maps.isLoading || User.isLoading;
+    const isLoading =
+      !!Data.buoy.isLoading || !!Data.isLoading || !!Maps.isLoading || !!User.isLoading;
 
     return (
       <Fragment>
@@ -65,7 +66,6 @@ App.propTypes = {
 
 App.defaultProps = {
   store: {},
-  isLoading: false,
 };
 
 const mapDispatchToProps = dispatch => ({

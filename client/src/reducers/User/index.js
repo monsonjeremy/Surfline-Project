@@ -11,6 +11,9 @@ import {
   ADD_FAVORITE_SUCCESS,
   ADD_FAVORITE_FAILURE,
   ADD_FAVORITE_REQUEST,
+  REMOVE_FAVORITE_FAILURE,
+  REMOVE_FAVORITE_REQUEST,
+  REMOVE_FAVORITE_SUCCESS,
   CLEAR_ERRORS
 } from './actions';
 
@@ -25,7 +28,7 @@ const User = (
     case LOG_IN_REQUEST:
       return {
         ...state,
-        loading: true,
+        isLoading: true,
         loginRequested: true,
         modalError: null,
       };
@@ -34,7 +37,7 @@ const User = (
         ...state,
         user: action.user,
         loggedIn: action.loggedIn,
-        loading: false,
+        isLoading: false,
         modalError: null,
       };
     case LOG_IN_FAILURE:
@@ -43,35 +46,35 @@ const User = (
         user: null,
         loggedIn: false,
         loginRequested: false,
-        loading: false,
+        isLoading: false,
         modalError: action.errorMsg,
       };
     case LOG_OUT_REQUEST:
       return {
         ...state,
         logoutRequested: true,
-        loading: true,
+        isLoading: true,
         baseError: null,
       };
     case LOG_OUT_FAILURE:
       return {
         ...state,
         logoutRequested: false,
-        loading: false,
+        isLoading: false,
         baseError: action.errorMsg,
       };
     case LOG_OUT_SUCCESS:
       return {
         ...state,
         logoutRequested: false,
-        loading: false,
+        isLoading: false,
         user: null,
         loggedIn: false,
       };
     case CREATE_USER_REQUEST:
       return {
         ...state,
-        loginLoading: true,
+        isLoading: true,
         loginRequested: true,
         modalError: null,
       };
@@ -80,7 +83,7 @@ const User = (
         ...state,
         user: action.user,
         loggedIn: action.loggedIn,
-        loading: false,
+        isLoading: false,
       };
     case CREATE_USER_FAILURE:
       return {
@@ -88,19 +91,19 @@ const User = (
         user: null,
         loggedIn: false,
         loginRequested: false,
-        loading: false,
+        isLoading: false,
         modalError: action.errorMsg,
       };
     case ADD_FAVORITE_REQUEST:
       return {
         ...state,
-        loading: true,
+        isLoading: true,
         baseError: null,
       };
     case ADD_FAVORITE_SUCCESS:
       return {
         ...state,
-        loading: false,
+        isLoading: false,
         user: {
           ...state.user,
           favorites: [...state.user.favorites, action.buoyId],
@@ -109,7 +112,28 @@ const User = (
     case ADD_FAVORITE_FAILURE:
       return {
         ...state,
-        loading: false,
+        isLoading: false,
+        baseError: action.errorMsg,
+      };
+    case REMOVE_FAVORITE_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+        baseError: null,
+      };
+    case REMOVE_FAVORITE_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        user: {
+          ...state.user,
+          favorites: state.user.favorites.filter(buoyId => buoyId !== action.buoyId),
+        },
+      };
+    case REMOVE_FAVORITE_FAILURE:
+      return {
+        ...state,
+        isLoading: false,
         baseError: action.errorMsg,
       };
     case CLEAR_ERRORS:
