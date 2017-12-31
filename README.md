@@ -38,7 +38,7 @@ Now that docker is done building and running the code, you can see it live at ``
 
 Upon opening the app in the browser you'll see a scrollable sidebar on the left 1/3 of the screen which will contain the list of buoys and some call to action buttons (login, create account, favorite buoy, logout).  On the right 2/3 of the screen is google maps with markers denoting the different buoys. 
 
-You can either see the buoy readings in the sidebar, or you can click on the markers and see individual readings. You can also click the buoy containers in the sidebar to select and zoom onto the marker on the map. Favorite Buoys will show as green markers on the map, the currently selected buoy will show as a red marker with increased size, and the any other buoy will show as a blue marker.
+You can either see the buoy readings in the sidebar, or you can click on the markers and see individual readings. You can also click the buoy containers in the sidebar to select and zoom onto the marker on the map. Favorite Buoys will show as green markers on the map, the currently selected buoy will show as a red marker with increased size, and then any other buoy will show as a blue marker.
 
 ---
 
@@ -72,7 +72,7 @@ If users were off the table as part of the application, my solution would probab
 
 I've implemented the authentication using Bcrypt and express-sessions. I thought about using a drop in library like Passport or OAuth but I felt it added unecessary boilerplate and complexity considering this wasn't really the goal of the application.
 
-##### Removing Favorites
+##### Removing favorites
 
 As of writing this I have not implemented this feature as it is not outlined in the requirements. However even after submitting this i'll be continuing to work on it just for fun so it may have been merged in from another branch!
 
@@ -95,7 +95,7 @@ I felt that google maps was a cool addition to this project and was actually rea
 
 ##### Create-react-app
 
-For this project, I used a previous project as boiler plate and for file structure, scripts, etc... The project used create-react-app as a base and had the webpack configuration and build scripts pre built. This was also a time saver in that I didn't have to go write my own configuration and worry about ironing out different bugs related to that. The ejected Create-react-app is also pretty extensible and it's nice starting from a base that is built by the facebook team.
+For this project, I used a previous project as boiler plate for file structure, scripts, etc... The project used create-react-app as a base and had the webpack configuration and build scripts pre built. This was also a time saver in that I didn't have to go write my own configuration and worry about ironing out different bugs related to that. The ejected Create-react-app is also pretty extensible and it's nice starting from a base that is built by the facebook team.
 
 ##### Linting/Formatting
 
