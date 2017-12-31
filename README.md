@@ -91,7 +91,7 @@ This project I actually ended up using redux for all state (except error boundar
 
 ##### Google maps
 
-I felt that google maps was a cool addition to this project and was actually really fun to work with. I think it achieves a really cool user experience by allowing a user to see exactly where the buoys are rather than just knowing the lat/long. In this instance, in the interest of time, I used a drop in component from the library ```react-google-maps```. It made it a lot easier and less boilerplate but in a more production critical application, I might opt for handling this on my own depending on the amount of flexibility needed and some of the other pros and cons that may come with using a library. Overall though, i'm satisfied with the result and the library worked exactly as I wanted for this project.
+I felt that google maps was a cool addition to this project and was actually really fun to work with. I think it achieves a  cool user experience by allowing a user to see exactly where the buoys are rather than just knowing the lat/long. In this instance, in the interest of time, I used a drop in component from the library ```react-google-maps```. It made it a lot easier and less boilerplate but in a more production critical application, I might opt for handling this on my own depending on the amount of flexibility needed and some of the other pros and cons that may come with using a library. Overall though, i'm satisfied with the result and the library worked exactly as I wanted for this project.
 
 ##### Create-react-app
 
@@ -99,14 +99,14 @@ For this project, I used a previous project as boiler plate for file structure, 
 
 ##### Linting/Formatting
 
-I've become a huge fan of ESlint and prettier. Using them has been awesome. The way I have it set up in VSCode it does all the formatting and fixing on save which is super helpful for styling the code and avoid typo bugs and missing delimiters or things of that nature
+I've become a huge fan of ESlint and prettier. The way I have it set up in VSCode it does all the formatting and fixing on save which is super helpful for styling the code and avoid typo bugs and missing delimiters or things of that nature
 
 ##### Static Typing
 
-For this project I chose to stay away from using flow to help speed up the development a little bit. Generally i'm a fan of the static typing with Flow, although it can be slighlty painful to type higher-order components and functional style programming. For a small project like this one where only I was working on it and was concerned about time frame, it was something that just took a backseat.
+For this project I chose to stay away from using flow to help speed up the development a little bit. Generally i'm a fan of the static typing with Flow, although it can be slightly painful to type higher-order components and functional style programming. For a small project like this one where only I was working on it and was concerned about time frame, it was something that just took a backseat.
 
 ##### Directory Structure
 
-The client and server code in different sub-directories with their own package files. The root folder has a package file with linting dependencies. This was just a preference choice. I personally think it's nice to split the dependencies into their own package files. It also make's it faster when booting up the docker containers for local development, because the alternative ends up installing the entire list of dependencies for both the server and client containers.
+The client and server code are stored in different sub-directories with their own package files. The root folder has a package file with linting dependencies. This was just a preference choice. I personally think it's nice to split the dependencies into their own package files. It also makes it faster when booting up the docker containers for local development, because the alternative ends up installing the entire list of dependencies for both the server and client containers.
 
 
