@@ -110,3 +110,7 @@ For this project I chose to stay away from using flow to help speed up the devel
 The client and server code are stored in different sub-directories with their own package files. The root folder has a package file with linting dependencies. This was just a preference choice. I personally think it's nice to split the dependencies into their own package files. It also makes it faster when booting up the docker containers for local development, because the alternative ends up installing the entire list of dependencies for both the server and client containers.
 
 
+##### Responsiveness and Mobile support
+
+For this project, I've added responsive styling using media queries to optimize for different screen sizes and mobile. However I have not had a chance to validate functionality on an actual mobile device, only on the dev tools emulator. Theoretically it should work for almost all browsers and mobile devices.
+
