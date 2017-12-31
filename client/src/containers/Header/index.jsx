@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 // View
 import HeaderView from '../../components/Header';
@@ -26,21 +27,39 @@ class Header extends PureComponent {
     super(props);
 
     this.state = {};
+
+    this.handleCreateAccountClick = this.handleCreateAccountClick.bind(this);
+    this.handleSignInClick = this.handleSignInClick.bind(this);
+  }
+
+  handleCreateAccountClick() {
+    this.props.dispatchShowModal('CREATE_ACCOUNT');
+  }
+
+  handleSignInClick() {
+    this.props.dispatchShowModal('SIGN_IN');
   }
 
   render() {
-    return <HeaderView {...this.props} />;
+    const props = {
+      ...this.props,
+      handleCreateAccountClick: this.handleCreateAccountClick,
+      handleSignInClick: this.handleSignInClick,
+    };
+    return <HeaderView {...props} />;
   }
 }
 
-Header.propTypes = {};
+Header.propTypes = {
+  dispatchShowModal: PropTypes.func.isRequired,
+};
 
 Header.defaultProps = {};
 
 const mapStateToProps = state => ({
   ...state.User,
   userError: state.User.baseError,
-  dataError: state.Data.baseError,
+  dataError: state.Data.buoy.baseError,
 });
 
 const mapDispatchToProps = dispatch => ({

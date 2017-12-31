@@ -55,6 +55,24 @@ export function addFavoriteToUser(params) {
 }
 
 /**
+ * Function that returns a promise to hit the remove favorite API to remove a buoy ID from the users favorites
+ *
+ * @param {Object} params
+ * @param {string} params.userId
+ * @param {string} params.buoyId
+ * @returns {Promise} promise
+ */
+export function removeFavoriteFromUser(params) {
+  // Set withCredentials to allow for session tokens
+  const config = {
+    withCredentials: true,
+  };
+
+  // Return axios promise
+  return axios.post('/buoy/favorite/remove', params, config);
+}
+
+/**
  * Function that returns a promise to log a user out.
  * Returns 200 response and invalidates the session cookie
  *

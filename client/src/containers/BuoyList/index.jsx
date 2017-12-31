@@ -44,15 +44,21 @@ class BuoyList extends Component {
       const buoyData = this.props.buoy.data.buoys;
 
       return buoyData.map(buoy => {
+        // Define the props to be passed to <Buoy />
+        const props = {
+          ...buoy,
+        };
+
         // Not logged in so we don't have to worry about checking favorites (small optimization)
-        if (!this.props.user) return <Buoy key={buoy.buoyId} {...{ ...buoy, }} />;
+        if (!this.props.user) return <Buoy key={buoy.buoyId} {...props} />;
 
         // If we are on the favorites tab filter out non favorite buoys
         const showFavorites = this.props.filterFavorites;
         const isFavorite = this.props.user.favorites.indexOf(buoy.buoyId) !== -1;
 
         if (!showFavorites || (showFavorites && isFavorite)) {
-          return <Buoy key={buoy.buoyId} {...{ ...buoy, isFavorite, showFavorites, }} />;
+          props.isFavorite = isFavorite;
+          return <Buoy key={buoy.buoyId} {...props} />;
         }
 
         return null;

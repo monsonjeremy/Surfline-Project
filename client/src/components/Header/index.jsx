@@ -33,8 +33,8 @@ const Header = props => (
     <div className="sp-button-group">
       <button
         disabled={props.loggedIn}
-        onClick={() => props.dispatchShowModal('SIGN_IN')}
-        className={`sp-btn sp-btn-small ${props.loggedIn ? 'sp-btn-hide' : ''}`}
+        onClick={props.handleSignInClick}
+        className={`sp-btn sp-btn-small ${!props.loggedIn ? '' : 'sp-btn-hide'}`}
       >
         Sign In
       </button>
@@ -47,8 +47,8 @@ const Header = props => (
       </button>
       <button
         disabled={props.loggedIn}
-        onClick={() => props.dispatchShowModal('CREATE_ACCOUNT')}
-        className={`sp-btn sp-btn-small ${props.loggedIn ? 'sp-btn-hide' : ''}`}
+        onClick={props.handleCreateAccountClick}
+        className={`sp-btn sp-btn-small ${!props.loggedIn ? '' : 'sp-btn-hide'}`}
       >
         Create Account
       </button>
@@ -66,7 +66,8 @@ Header.propTypes = {
   }),
 
   // Functions and dispatchers
-  dispatchShowModal: PropTypes.func.isRequired,
+  handleCreateAccountClick: PropTypes.func.isRequired,
+  handleSignInClick: PropTypes.func.isRequired,
   dispatchLogoutUser: PropTypes.func.isRequired,
 };
 

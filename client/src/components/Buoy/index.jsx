@@ -22,12 +22,7 @@ import PropTypes from 'prop-types';
  *
  */
 const Buoy = props => (
-  <div
-    role="button"
-    onClick={event =>
-      props.dispatchSelectBuoy(event, props.buoyId, { lat: props.lat, lng: props.lng, }, 8)}
-    className={'buoy-container'}
-  >
+  <div role="button" onClick={props.buoyClickHandler} className={'buoy-container'}>
     <h3 className="buoy-title text-center">{props.title}</h3>
     <h3 className="buoy-id text-center">Station ID: {props.buoyId}</h3>
     <p className="buoy-lat-long">
@@ -37,30 +32,26 @@ const Buoy = props => (
       Buoy Link
     </a>
     <p className="buoy-readings" dangerouslySetInnerHTML={{ __html: props.readings, }} />
-    {!props.showFavorites && (
-      <button
-        disabled={props.isFavorite || !props.user}
-        className="sp-btn"
-        onClick={event => props.dispatchAddToFavorites(event, props.user.userId, props.buoyId)}
-      >
-        Favorite
-      </button>
-    )}
+    <button disabled={!props.user} className="sp-btn" onClick={props.favoriteClickHandler}>
+      {props.isFavorite ? 'Unfavorite' : 'Favorite'}
+    </button>
   </div>
 );
 
 Buoy.propTypes = {
+  // Props
   title: PropTypes.string.isRequired,
   buoyId: PropTypes.string.isRequired,
   readings: PropTypes.string.isRequired,
   link: PropTypes.string.isRequired,
   lat: PropTypes.number.isRequired,
   lng: PropTypes.number.isRequired,
-  showFavorites: PropTypes.bool,
   isFavorite: PropTypes.bool,
-  dispatchAddToFavorites: PropTypes.func.isRequired,
-  dispatchSelectBuoy: PropTypes.func.isRequired,
   user: PropTypes.instanceOf(Object),
+
+  // Functions and Dispatchers
+  favoriteClickHandler: PropTypes.func.isRequired,
+  buoyClickHandler: PropTypes.func.isRequired,
 };
 
 Buoy.defaultProps = {

@@ -1,6 +1,11 @@
 /* eslint-disable import/prefer-default-export */
 
-import { getBuoyDataService, parseXmlService, addFavoriteService } from '../services';
+import {
+  getBuoyDataService,
+  parseXmlService,
+  addFavoriteService,
+  removeFavoriteService
+} from '../services';
 
 /**
  * @description Get Buoy Data Controller will retrieve the buoy data from the endpoint,
@@ -57,4 +62,28 @@ export const getBuoyDataController = async () => {
  * @param {string} buoyId - The buoy ID to add to favorites
  * @returns {object} response - The response object
  */
-export const addFavoriteController = async (userId, buoyId) => addFavoriteService(userId, buoyId);
+export const addFavoriteController = async (userId, buoyId, req) => {
+  if (userId !== req.session.user.userId) {
+    const error = new Error("Hey, that's not your account...");
+    error.statusCode = 401;
+    throw error;
+  }
+  return addFavoriteService(userId, buoyId);
+};
+
+/**
+ * @description Remove Favorite Controller will take a given user ID and buoy ID and then remove the buoyID 
+ * from the users favorites
+ * 
+ * @param {string} userId - The user ID to update
+ * @param {string} buoyId - The buoy ID to add to favorites
+ * @returns {object} response - The response object
+ */
+export const removeFavoriteController = async (userId, buoyId, req) => {
+  if (userId !== req.session.user.userId) {
+    const error = new Error("Hey, that's not your account...");
+    error.statusCode = 401;
+    throw error;
+  }
+  return removeFavoriteService(userId, buoyId);
+};

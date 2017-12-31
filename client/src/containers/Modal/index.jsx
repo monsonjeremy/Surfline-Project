@@ -30,9 +30,9 @@ class Modal extends PureComponent {
   }
 
   // Method for hiding the modal when the semi-transparent background is clicked
-  handleBackgroundClick(e) {
+  handleBackgroundClick(event) {
     // Ensure current target was clicked (avoid event bubbling bugs)
-    if (e.target === e.currentTarget) this.props.dispatchHideModal();
+    if (event.target === event.currentTarget) this.props.dispatchHideModal();
   }
 
   // Logic for conditionally rendering modal content

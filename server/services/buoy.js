@@ -4,7 +4,7 @@ import axios from 'axios';
 import { parseString } from 'xml2js';
 
 // Models
-import { addNewFavorite } from '../models';
+import { addNewFavorite, removeFavorite } from '../models';
 
 /**
  * @description Service to fetch the RSS feed from the NDBC server. Since it does not have CORS enabled we have to proxy 
@@ -36,3 +36,10 @@ export const parseXmlService = xml =>
  * @return {Promise} Promise to add a new favorite to the user in the DB
  */
 export const addFavoriteService = (userId, buoyId) => addNewFavorite(userId, buoyId);
+
+/**
+ * @description Service to remove a favorite buoy for a given user.
+ * 
+ * @return {Promise} Promise to remove favorite from the user in the DB
+ */
+export const removeFavoriteService = (userId, buoyId) => removeFavorite(userId, buoyId);

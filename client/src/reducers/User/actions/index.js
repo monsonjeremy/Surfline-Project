@@ -5,7 +5,8 @@ import {
   signOutUser,
   createUser,
   fetchUserData,
-  addFavoriteToUser
+  addFavoriteToUser,
+  removeFavoriteFromUser
 } from '../../../lib';
 
 // Actions
@@ -48,7 +49,10 @@ export function logInUser(data) {
         dispatch(logInSuccess(response.data, true));
         dispatch(hideModal());
       })
-      .catch(err => dispatch(logInFailure(err.response.data)));
+      .catch(err => {
+        if (err.response) return dispatch(logInFailure(err.response.data));
+        return dispatch(logInFailure('Something went wrong'));
+      });
   };
 }
 
@@ -70,7 +74,10 @@ export function hydrateSession() {
           // hydrating session and user succeeded dispatch an action to set the user in the store
           .then(user => dispatch(logInSuccess(user.data, true)))
           // Login failed even though the session was valid, throw the error to the client
-          .catch(err => dispatch(logInFailure(err.response.data)));
+          .catch(err => {
+            if (err.response) return dispatch(logInFailure(err.response.data));
+            return dispatch(logInFailure('Something went wrong'));
+          });
       })
       .catch(() => {
         // Don't need to do anything here. Initial state is already logged out so we can ignore errors
@@ -131,7 +138,7 @@ export function createNewUser(data) {
       password: data.get('password'),
     };
 
-    // Attempt to sign in user with given information
+    // Attempt to create user with given information
     createUser(params)
       .then(response => {
         const user = response.data;
@@ -139,7 +146,10 @@ export function createNewUser(data) {
         dispatch(createUserSuccess(user, true));
         dispatch(hideModal());
       })
-      .catch(err => dispatch(createUserFailure(err.response.data)));
+      .catch(err => {
+        if (err.response) return dispatch(createUserFailure(err.response.data));
+        return dispatch(createUserFailure('Something went wrong'));
+      });
   };
 }
 
@@ -169,7 +179,6 @@ export function addFavorite(userId, buoyId) {
       buoyId,
     };
 
-    // Attempt to sign in user with given information
     addFavoriteToUser(params)
       .then(() => {
         // Adding favorite succeeded, dispatch an action to update the store to match
@@ -177,6 +186,45 @@ export function addFavorite(userId, buoyId) {
       })
       .catch(() =>
         dispatch(addFavoriteFailure('Something went wrong adding the favorite, please try again'))
+      );
+  };
+}
+
+export const REMOVE_FAVORITE_REQUEST = 'REMOVE_FAVORITE_REQUEST';
+export const removeFavoriteRequest = makeActionCreator(REMOVE_FAVORITE_REQUEST);
+
+export const REMOVE_FAVORITE_SUCCESS = 'REMOVE_FAVORITE_SUCCESS';
+export const removeFavoriteSuccess = makeActionCreator(REMOVE_FAVORITE_SUCCESS, 'buoyId');
+
+export const REMOVE_FAVORITE_FAILURE = 'REMOVE_FAVORITE_FAILURE';
+export const removeFavoriteFailure = makeActionCreator(REMOVE_FAVORITE_FAILURE, 'errorMsg');
+
+/**
+ * @description Function for dispatching and handling the remove favorite action
+ *
+ * @param {string} userId - userId to remove the favorite from
+ * @param {string} buoyId - The buoyId being removed
+ * 
+ * @return {function} dispatcher
+ */
+export function removeFavorite(userId, buoyId) {
+  return dispatch => {
+    dispatch(removeFavoriteRequest());
+
+    const params = {
+      userId,
+      buoyId,
+    };
+
+    removeFavoriteFromUser(params)
+      .then(() => {
+        // Removing favorite succeeded, dispatch an action to update the store to match
+        dispatch(removeFavoriteSuccess(buoyId));
+      })
+      .catch(() =>
+        dispatch(
+          removeFavoriteFailure('Something went wrong removing the favorite, please try again')
+        )
       );
   };
 }

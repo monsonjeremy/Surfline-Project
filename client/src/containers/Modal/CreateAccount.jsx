@@ -27,10 +27,15 @@ class CreateAccount extends PureComponent {
   constructor(props) {
     super(props);
 
-    this.createUser = this.createUser.bind(this);
+    this.handleCreateAccountClick = this.handleCreateAccountClick.bind(this);
+    this.handleSignInClick = this.handleSignInClick.bind(this);
   }
 
-  createUser(event) {
+  handleSignInClick() {
+    this.props.dispatchShowModal('SIGN_IN');
+  }
+
+  handleCreateAccountClick(event) {
     event.preventDefault();
     event.stopPropagation();
     const data = new FormData(event.target);
@@ -41,7 +46,8 @@ class CreateAccount extends PureComponent {
     // Define props to pass to <CreateAccountView />
     const createAccountProps = {
       ...this.props,
-      createUser: this.createUser,
+      handleCreateAccountClick: this.handleCreateAccountClick,
+      handleSignInClick: this.handleSignInClick,
       handleBackgroundClick: this.props.handleBackgroundClick,
     };
 
@@ -72,7 +78,4 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-// eslint-disable-next-line
-const mapStateToProps = state => ({});
-
-export default connect(mapStateToProps, mapDispatchToProps)(CreateAccount);
+export default connect(null, mapDispatchToProps)(CreateAccount);
