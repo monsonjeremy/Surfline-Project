@@ -74,7 +74,7 @@ I've implemented the authentication using Bcrypt and express-sessions. I thought
 
 ##### Removing favorites
 
-As of writing this I have not implemented this feature as it is not outlined in the requirements. However even after submitting this i'll be continuing to work on it just for fun so it may have been merged in from another branch!
+Although this was also not in the requirements this felt like a feature that just made sense. I felt that not adding this would just be cheaping out, and therefore a feature was born.
 
 ##### React Component/Container pattern
 
@@ -90,7 +90,7 @@ This project I actually ended up using redux for all state (except error boundar
 
 ##### Google maps
 
-I felt that google maps was a cool addition to this project and was actually really fun to work with. I think it achieves a  cool user experience by allowing a user to see exactly where the buoys are rather than just knowing the lat/long. In this instance, in the interest of time, I used a drop in component from the library ```react-google-maps```. It made it a lot easier and less boilerplate but in a more critical production application, I might opt for handling this on my own depending on the amount of flexibility needed and some of the other pros and cons that may come with using a library. Overall though, i'm satisfied with the result and the library worked exactly as I wanted for this project.
+Google maps was my favorite addition to this project and was actually really fun to work with. I think it achieves a great user experience by allowing a user to see exactly where the buoys are rather than just knowing the lat/long. In this instance, in the interest of time, I used a drop in component from the library ```react-google-maps```. It made it a lot easier and less boilerplate but in a more critical production application, I might opt for handling this on my own depending on the amount of flexibility needed and some of the other pros and cons that may come with using a library. Overall though, i'm satisfied with the result and the library worked exactly as I wanted for this project. As I continue work on this project beyond submitting it, the next feature I want to build is to allow a user to search locations on google maps and from there requery the RSS feed for the new latitude and longitude. Since I wanted to get the project completed in a timely manner I did not implement this at the moment.
 
 ##### Create-react-app
 
@@ -98,7 +98,7 @@ For this project, I used a previous project as boiler plate for file structure, 
 
 ##### Linting/Formatting
 
-I've become a huge fan of ESlint and prettier. The way I have it set up in VSCode it does all the formatting and fixing on save which is super helpful for styling the code and avoid typo bugs and missing delimiters or things of that nature.
+I've become a huge fan of ESLint and Prettier. The way I have it set up in VSCode it does all the formatting and fixing on save which is super helpful for styling the code and avoid typo bugs and missing delimiters or things of that nature.
 
 ##### Directory Structure
 
