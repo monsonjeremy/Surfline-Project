@@ -74,7 +74,14 @@ export const reloadSessionController = async req => {
  * @param {string} userId The userId to find
  * @return {object} user The user information to be used
  */
-export const getUserController = async userId => {
+export const getUserController = async (userId, req) => {
+  // Prevent people from getting user info for a different user than they are logged in for
+  if (userId !== req.session.user.userId) {
+    const error = new Error("Hey, that's not your account...");
+    error.statusCode = 401;
+    throw error;
+  }
+
   const user = await findUserService({ userId, });
 
   // Return the user information
@@ -87,7 +94,7 @@ export const getUserController = async userId => {
 
 /**
  * @description Create User Controller handles the logic for creating a user. It is given a username and password
- * and then it will await the password hashing function and then return a promise to create the user which will be
+ * andthen it will await the password hashing function and then return a promise to create the user which will be
  * consumed by the controller handler
  * @param {string} username The username for the given user
  * @param {string} password The password for the given user

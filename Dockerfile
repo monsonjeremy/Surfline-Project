@@ -1,5 +1,5 @@
 FROM node:8.8.1
-LABEL name="ForecastMeProd"
+LABEL name="Surfline Project"
 LABEL version="1.0"
 ENV NPM_CONFIG_LOGLEVEL verbose
 
@@ -28,7 +28,6 @@ RUN cd server && NODE_ENV=development npm install
 
 # Compile server code
 RUN npm run build:server:prod
-
 
 EXPOSE 80
 CMD ["npm", "run", "start:app:prod"]

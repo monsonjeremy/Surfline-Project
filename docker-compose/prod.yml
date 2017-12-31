@@ -1,7 +1,7 @@
 version: "3"
 
 services:
-  forecast-me:
+  app:
     build:
       context: ../
       dockerfile: Dockerfile

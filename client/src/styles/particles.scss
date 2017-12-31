@@ -151,7 +151,6 @@ span {
 
 a {
   font-size: inherit;
-  font-family: inherit;
   color: #d24d57;
 }
 
@@ -191,6 +190,7 @@ a {
 
 .error-page {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100vw;
@@ -243,6 +243,13 @@ a {
       border-right: 0px;
     }
   }
+}
+
+.sp-info-text {
+  font-size: 13px;
+}
+.sp-info-title {
+  text-align: center;
 }
 
 .sp-container {

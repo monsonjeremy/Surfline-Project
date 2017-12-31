@@ -36,7 +36,7 @@ const Buoy = props => (
     <a className="buoy-link" target="_blank" href={props.link}>
       Buoy Link
     </a>
-    <div className="buoy-readings" dangerouslySetInnerHTML={{ __html: props.readings, }} />
+    <p className="buoy-readings" dangerouslySetInnerHTML={{ __html: props.readings, }} />
     {!props.showFavorites && (
       <button
         disabled={props.isFavorite || !props.user}

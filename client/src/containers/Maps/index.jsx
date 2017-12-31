@@ -70,15 +70,16 @@ class Maps extends Component {
 
       return buoyData.map(buoy => {
         let visible = false;
+        let isFavorite = false;
         // Not logged in so we don't have to worry about checking favorites (small optimization)
         if (!this.props.user) {
           visible = true;
-        } else if (
-          !this.props.filterFavorites ||
-          (this.props.filterFavorites && this.props.user.favorites.indexOf(buoy.buoyId) !== -1)
-        ) {
-          // If on favorites tab filter out non favorite buoys, if not then all buoy markers visible
-          visible = true;
+        } else {
+          isFavorite = this.props.user.favorites.indexOf(buoy.buoyId) !== -1;
+          if (!this.props.filterFavorites || (this.props.filterFavorites && isFavorite)) {
+            // If on favorites tab filter out non favorite buoys, if not then all buoy markers visible
+            visible = true;
+          }
         }
 
         // Render the buoy with the given visibility and selected status
@@ -91,6 +92,7 @@ class Maps extends Component {
             position={{ lat: buoy.lat, lng: buoy.lng, }}
             buoyId={buoy.buoyId}
             readings={buoy.readings}
+            isFavorite={isFavorite}
             dispatchSelectBuoy={this.props.dispatchSelectBuoy}
           />
         );

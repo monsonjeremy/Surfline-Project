@@ -39,6 +39,6 @@ router.get('/logout', controllerHandler(logoutUser, req => [req], true));
 /**
  * Endpoint to handle getting user information by userId 
  */
-router.get('/:userId', controllerHandler(getUser, req => [req.params.userId], true));
+router.get('/:userId', controllerHandler(getUser, req => [req.params.userId, req], true));
 
 export default router;

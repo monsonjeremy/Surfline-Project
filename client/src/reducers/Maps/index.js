@@ -1,6 +1,6 @@
 import { UPDATE_MAP_CENTER, UPDATE_MAP_ZOOM, MAP_LOADED } from './actions';
 
-const Modal = (state = { center: { lat: 40, lng: -73, }, zoom: 8, isLoading: true, }, action) => {
+const Maps = (state = { center: { lat: 40, lng: -73, }, zoom: 8, isLoading: true, }, action) => {
   switch (action.type) {
     case UPDATE_MAP_ZOOM:
       return {
@@ -22,4 +22,4 @@ const Modal = (state = { center: { lat: 40, lng: -73, }, zoom: 8, isLoading: tru
   }
 };
 
-export default Modal;
+export default Maps;

@@ -3,7 +3,6 @@
 /**
  * Module dependencies.
  */
-// eslint-disable-next-line
 import 'babel-polyfill';
 
 const app = require('../routes/index');

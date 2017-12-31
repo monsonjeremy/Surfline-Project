@@ -22,6 +22,8 @@ class Modal extends PureComponent {
   constructor(props) {
     super(props);
 
+    this.state = {};
+
     // Bind functions to this context
     this.renderModal = this.renderModal.bind(this);
     this.handleBackgroundClick = this.handleBackgroundClick.bind(this);
