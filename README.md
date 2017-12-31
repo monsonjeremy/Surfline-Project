@@ -106,5 +106,5 @@ The client and server code are stored in different sub-directories with their ow
 
 ##### Responsiveness and Mobile support
 
-For this project, I've added responsive styling using media queries to optimize for different screen sizes and mobile. However since the application is not currently deployed anywhere, I haven't had a chance to give it a run on
+For this project, I've added responsive styling using media queries to optimize for different screen sizes and mobile. The application should work in almost all browsers and on mobile devices.
 
