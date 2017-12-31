@@ -31,9 +31,9 @@ class Buoy extends Component {
   // Function for the logic regarding click the favorite/unfavorite button
   favoriteClickHandler(event) {
     if (this.props.isFavorite) {
-      this.props.dispatchRemoveFavorite(event, this.props.user.userId, this.props.buoyId);
+      return this.props.dispatchRemoveFavorite(event, this.props.user.userId, this.props.buoyId);
     }
-    this.props.dispatchAddToFavorites(event, this.props.user.userId, this.props.buoyId);
+    return this.props.dispatchAddToFavorites(event, this.props.user.userId, this.props.buoyId);
   }
 
   // Function for the logic regarding clicking the <BuoyView /> container <div>
