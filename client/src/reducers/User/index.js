@@ -106,7 +106,7 @@ const User = (
         isLoading: false,
         user: {
           ...state.user,
-          favorites: [...state.user.favorites, action.buoyId],
+          favorites: { ...state.user.favorites, [action.buoyId]: true, },
         },
       };
     case ADD_FAVORITE_FAILURE:
@@ -127,7 +127,7 @@ const User = (
         isLoading: false,
         user: {
           ...state.user,
-          favorites: state.user.favorites.filter(buoyId => buoyId !== action.buoyId),
+          favorites: { ...state.user.favorites, [action.buoyId]: false, },
         },
       };
     case REMOVE_FAVORITE_FAILURE:

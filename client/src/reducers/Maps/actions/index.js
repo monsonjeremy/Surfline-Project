@@ -54,18 +54,28 @@ export function updateRadiusLatLng(radius, lat, lng) {
   return dispatch => {
     dispatch(updateRadiusLatLngRequest());
 
-    if (radius > 999999 || radius < 1) {
+    /*
+      Set the max radius to 500 for now. This avoids major performance hits from large object lookups.
+      ideally in a future state these lookups will be moved to a web worker or something so that we could
+      avoid blocking the event loop and pausing execution :(
+      
+      There are just so many markers and debugging and optimizing performance would be a more granular difficult
+      task than time allows for at the moment.
+    */
+    if (radius > 500 || radius < 1) {
       return dispatch(
         updateRadiusLatLngFailure('Radius invalid... Try a number between 1 and 999,999')
       );
     }
 
+    // check for valid lat values
     if (lat > 90 || lat < -90) {
       return dispatch(
         updateRadiusLatLngFailure('Latitude invalid... Try a number between -90 and 90')
       );
     }
 
+    // check for valid long values
     if (lng > 180 || lng < -180) {
       return dispatch(
         updateRadiusLatLngFailure('Longitude invalid... Try a number between -180 and 180')

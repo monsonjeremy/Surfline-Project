@@ -75,7 +75,7 @@ class Maps extends Component {
         if (!this.props.user) {
           visible = true;
         } else {
-          isFavorite = this.props.user.favorites.indexOf(buoy.buoyId) !== -1;
+          isFavorite = this.props.user.favorites[buoy.buoyId];
           if (!this.props.filterFavorites || (this.props.filterFavorites && isFavorite)) {
             // If on favorites tab filter out non favorite buoys, if not then all buoy markers visible
             visible = true;
@@ -134,7 +134,7 @@ Maps.propTypes = {
     isLoading: PropTypes.bool,
   }).isRequired,
   user: PropTypes.shape({
-    favorites: PropTypes.arrayOf(PropTypes.string),
+    favorites: PropTypes.instanceOf(Object),
   }),
   center: PropTypes.shape({
     lat: PropTypes.number,

@@ -1,21 +1,25 @@
 import mongoose from 'mongoose';
 
-const UserSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    unique: true,
-    required: true,
-    trim: true,
+/*
+  Use an object for the favorties since this will have a faster lookup performance than an array
+  https://jsperf.com/array-indexof-vs-object-key-lookup2
+*/
+const UserSchema = new mongoose.Schema(
+  {
+    username: {
+      type: String,
+      unique: true,
+      required: true,
+      trim: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    favorites: { type: mongoose.Schema.Types.Mixed, default: {}, },
   },
-  password: {
-    type: String,
-    required: true,
-  },
-  favorites: {
-    type: [String],
-    default: [],
-  },
-});
+  { minimize: false, }
+);
 
 export const User = mongoose.model('User', UserSchema);
 
@@ -40,7 +44,7 @@ export function findUser(username, userId) {
  * @return {Promise} promise
  */
 export function addNewFavorite(userId, buoyId) {
-  return User.update({ _id: userId, }, { $push: { favorites: buoyId, }, }).exec();
+  return User.update({ _id: userId, }, { $set: { [`favorites.${buoyId}`]: true, }, }).exec();
 }
 
 /**
@@ -52,5 +56,5 @@ export function addNewFavorite(userId, buoyId) {
  * @return {Promise} promise
  */
 export function removeFavorite(userId, buoyId) {
-  return User.update({ _id: userId, }, { $pull: { favorites: buoyId, }, }).exec();
+  return User.update({ _id: userId, }, { $set: { [`favorites.${buoyId}`]: false, }, }).exec();
 }
