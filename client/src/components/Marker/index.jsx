@@ -35,7 +35,7 @@ const CustomMarker = props => (
         // When we close the info window, we can assume the user no longer wants that buoy selected.
         // Dispatch an action to set selected buoy to null
         <InfoWindow onCloseClick={props.handleCloseClick}>
-          <div>
+          <div className="sp-info-window">
             <h3 className="sp-info-title">Station ID: {props.buoyId}</h3>
             <button
               disabled={!props.user}
