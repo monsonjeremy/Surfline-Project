@@ -335,16 +335,22 @@ a {
   border: 0;
   padding: 7px 0;
   background-color: #ebebeb;
-  border-bottom: 1px solid #ccc;
 
   &:focus {
     outline: none;
   }
 }
 
+.sp-label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10px;
+  font-weight: 300;
+  color: #333;
+}
+
 .focus-border {
   width: 100%;
-  height: 2px;
+  height: 1px;
   background: linear-gradient(to right, red 50%, transparent 50%);
   background-color: rgba(0, 0, 0, 0.3);
   background-size: 200% 100%;
@@ -354,4 +360,8 @@ a {
 
 .sp-input:focus ~ .focus-border {
   background-position: 0 0;
+}
+
+.sp-form-container {
+  padding: 15px;
 }

@@ -109,9 +109,9 @@ export function hydrateUserSession() {
  *
  * @returns {Promise} promise
  */
-export function fetchBuoyData() {
+export function fetchBuoyData(params) {
   // Return axios promise
-  return axios.get('/buoy/data');
+  return axios.post('/buoy/data', params);
 }
 
 /**

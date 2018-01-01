@@ -29,6 +29,11 @@ class Marker extends Component {
   }
 
   render() {
+    // If it's not visible, shortcut and don't render it
+    if (!this.props.visible) {
+      return null;
+    }
+
     // The path for the custom marker icon on the map
     const markerPath = `M256,0C153.755,0,70.573,83.182,70.573,185.426c0,126.888,165.939,313.167,173.004,321.035
 c6.636,7.391,18.222,7.378,24.846,0c7.065-7.868,173.004-194.147,173.004-321.035C441.425,83.182,358.244,0,256,0z M256,278.719

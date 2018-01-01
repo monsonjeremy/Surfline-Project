@@ -20,9 +20,11 @@ import '../../styles/Header/Header.css';
  */
 const Header = props => (
   <div className="sp-container header-container">
-    {(props.userError || props.dataError) && (
+    {(props.userError || props.dataError || props.mapsError) && (
       <div className="sp-header-error">
-        <span className="sp-error-msg">{props.userError || props.dataError}</span>
+        <span className="sp-error-msg">
+          {props.userError || props.dataError || props.mapsError}
+        </span>
       </div>
     )}
     {props.loggedIn ? (
@@ -61,6 +63,7 @@ Header.propTypes = {
   loggedIn: PropTypes.bool.isRequired,
   userError: PropTypes.string,
   dataError: PropTypes.string,
+  mapsError: PropTypes.string,
   user: PropTypes.shape({
     username: PropTypes.string,
   }),
@@ -72,6 +75,7 @@ Header.propTypes = {
 };
 
 Header.defaultProps = {
+  mapsError: null,
   userError: null,
   dataError: null,
   user: null,

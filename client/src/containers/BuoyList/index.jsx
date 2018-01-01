@@ -35,7 +35,10 @@ class BuoyList extends Component {
   }
 
   componentDidMount() {
-    this.props.dispatchFetchBuoyData();
+    const lat = this.props.center.lat;
+    const lng = this.props.center.lng;
+    const radius = this.props.radius;
+    this.props.dispatchFetchBuoyData(lat, lng, radius);
   }
 
   renderBuoys() {
@@ -93,7 +96,12 @@ BuoyList.propTypes = {
   user: PropTypes.shape({
     favorites: PropTypes.arrayOf(PropTypes.string),
   }),
+  center: PropTypes.shape({
+    lat: PropTypes.number,
+    lng: PropTypes.number,
+  }).isRequired,
   filterFavorites: PropTypes.bool.isRequired,
+  radius: PropTypes.number.isRequired,
 };
 
 BuoyList.defaultProps = {
@@ -101,14 +109,15 @@ BuoyList.defaultProps = {
 };
 
 const mapDispatchToProps = dispatch => ({
-  dispatchFetchBuoyData: () => {
-    dispatch(hydrateBuoyData());
+  dispatchFetchBuoyData: (lat, lng, radius) => {
+    dispatch(hydrateBuoyData(lat, lng, radius));
   },
 });
 
 const mapStateToProps = state => ({
   ...state.Data,
   ...state.User,
+  ...state.Maps,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(BuoyList);

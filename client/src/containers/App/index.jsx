@@ -1,10 +1,9 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 // components
 import AppView from '../../components/App';
-import Loader from '../../components/Loader';
 
 // actions
 import { hydrateSession } from '../../reducers/User/actions';
@@ -29,16 +28,9 @@ class App extends Component {
   }
 
   render() {
-    const { store, Data, User, Maps, } = this.props;
-    const isLoading =
-      !!Data.buoy.isLoading || !!Data.isLoading || !!Maps.isLoading || !!User.isLoading;
+    const { store, } = this.props;
 
-    return (
-      <Fragment>
-        {isLoading && <Loader />}
-        <AppView store={store} />
-      </Fragment>
-    );
+    return <AppView store={store} />;
   }
 }
 
@@ -51,17 +43,6 @@ App.propTypes = {
     Symbol: PropTypes.func,
   }).isRequired,
   dispatchHydrateSession: PropTypes.func.isRequired,
-  Data: PropTypes.shape({
-    buoy: PropTypes.shape({
-      isLoading: PropTypes.bool,
-    }),
-  }).isRequired,
-  User: PropTypes.shape({
-    isLoading: PropTypes.bool,
-  }).isRequired,
-  Maps: PropTypes.shape({
-    isLoading: PropTypes.bool,
-  }).isRequired,
 };
 
 App.defaultProps = {

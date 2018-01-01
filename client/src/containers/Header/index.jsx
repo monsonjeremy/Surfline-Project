@@ -60,6 +60,7 @@ const mapStateToProps = state => ({
   ...state.User,
   userError: state.User.baseError,
   dataError: state.Data.buoy.baseError,
+  mapsError: state.Maps.baseError,
 });
 
 const mapDispatchToProps = dispatch => ({

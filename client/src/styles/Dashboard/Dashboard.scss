@@ -1,3 +1,15 @@
 .instruction-sub-text {
   padding: 5px 20px;
 }
+
+.sp-input.range-changer {
+  width: 90%;
+  & ~ .focus-border {
+    width: 90%;
+    margin-bottom: 10px;
+  }
+}
+
+.lat-lng-radius-btn {
+  margin-bottom: 15px;
+}

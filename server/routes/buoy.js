@@ -11,7 +11,10 @@ const router = express.Router();
 /**
  * Endpoint to handle fetching and parsing the RSS Feed buoy data
  */
-router.get('/data', controllerHandler(getBuoyData, () => []));
+router.post(
+  '/data',
+  controllerHandler(getBuoyData, req => [req.body.lat, req.body.lng, req.body.radius])
+);
 
 /**
  * Endpoint to add a new favorite to a given user

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withScriptjs, withGoogleMap, GoogleMap } from 'react-google-maps';
+import { MarkerClusterer } from 'react-google-maps/lib/components/addons/MarkerClusterer';
 
 // Custom styles for the map
 import mapStyles from './MapStyle.json';
@@ -38,7 +39,9 @@ const Maps = withScriptjs(
       }}
       onZoomChanged={props.handleZoomChange}
     >
-      {props.children}
+      <MarkerClusterer averageCenter defaultMaxZoom={6} enableRetinaIcons gridSize={40}>
+        {props.children}
+      </MarkerClusterer>
     </GoogleMap>
   ))
 );

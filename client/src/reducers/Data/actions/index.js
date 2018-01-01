@@ -19,21 +19,31 @@ export const SELECT_BUOY = 'SELECT_BUOY';
 export const selectBuoy = makeActionCreator(SELECT_BUOY, 'buoyId');
 
 /**
- * Function for dispatching the a request to hydrate the session
- *
+ * Function for dispatching a request to hydrate the buoy data
+ * 
+ * @param {number} lat - latitude to query data for
+ * @param {number} lng - longitude to query data for
+ * @param {number} radius - radius to query data for
  * @return {function} dispatcher
  */
-export function hydrateBuoyData() {
+export function hydrateBuoyData(lat, lng, radius) {
   return dispatch => {
     dispatch(buoyDataRequest());
+
+    const params = {
+      lat,
+      lng,
+      radius,
+    };
     // Make a request to the endpoint for the buoy data
-    fetchBuoyData()
+    fetchBuoyData(params)
       .then(response => {
         // Now that we are given an XML response, we need to parse it and send the relevant data to the store
         dispatch(buoyDataSuccess(response.data, true));
       })
-      .catch(() => {
-        dispatch(buoyDataFailure('Something went wrong fetching the buoy data'));
+      .catch(err => {
+        if (err.response) return dispatch(buoyDataFailure(err.response.data));
+        return dispatch(buoyDataFailure('Something went wrong fetching the buoy data'));
       });
   };
 }

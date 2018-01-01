@@ -86,7 +86,7 @@ This was a pattern I have used in previous projects and really enjoyed. The mode
 
 ##### Redux usage
 
-This project I actually ended up using redux for all state (except error boundary container). As mentioned above, it's easy to reason about state changes and logic when redux is used properly and I believe it makes the code more readable. It also makes it easier than having to refactor when sibling components want to access each others state and data.
+This project I actually ended up using redux for pretty much all state (except error boundary container and dashboard container). As mentioned above, it's easy to reason about state changes and logic when redux is used properly and I believe it makes the code more readable. It also makes it easier than having to refactor when sibling components want to access each others state and data.
 
 ##### Google maps
 

@@ -22,6 +22,64 @@ const Dashboard = props => (
     <p className={'instruction-sub-text text-center'}>
       Click a marker on the map, or click a box below to select a buoy and center it on the map.
     </p>
+    <form className="sp-form-container" id="lat-lng-radius" onSubmit={props.handleFormSubmit}>
+      <fieldset>
+        <label className="sp-label" htmlFor="latitude">
+          Latitude (South is negative):
+        </label>
+        <input
+          onChange={props.handleFormEnable}
+          className="sp-input"
+          type="number"
+          placeholder="Latitude"
+          defaultValue={props.center.lat}
+          name="latitude"
+          step="any"
+          required
+        />
+        <div className="focus-border" />
+      </fieldset>
+      <fieldset>
+        <label className="sp-label" htmlFor="longitude">
+          Longitude (West is negative):
+        </label>
+        <input
+          onChange={props.handleFormEnable}
+          className="sp-input"
+          type="number"
+          placeholder="Longitude"
+          defaultValue={props.center.lng}
+          name="longitude"
+          step="any"
+          required
+        />
+        <div className="focus-border" />
+      </fieldset>
+      <fieldset>
+        <label className="sp-label" htmlFor="radius">
+          Radius:
+        </label>
+        <input
+          onChange={props.handleFormEnable}
+          className="sp-input"
+          type="number"
+          placeholder="Radius"
+          defaultValue={props.radius}
+          step="any"
+          name="radius"
+          required
+        />
+        <div className="focus-border" />
+      </fieldset>
+    </form>
+    <button
+      type="submit"
+      disabled={!props.formSubmitEnabled}
+      form="lat-lng-radius"
+      className={`sp-btn sp-btn-small lat-lng-radius-btn`}
+    >
+      Update
+    </button>
     <div className={'sp-button-group'}>
       <button
         className={`sp-btn ${props.filterFavorites ? '' : 'sp-btn-selected'}`}
@@ -42,11 +100,22 @@ const Dashboard = props => (
 );
 
 Dashboard.propTypes = {
+  // Props
   children: PropTypes.node,
-  dispatchShowAllBuoys: PropTypes.func.isRequired,
-  dispatchShowFavBuoys: PropTypes.func.isRequired,
   filterFavorites: PropTypes.bool.isRequired,
   loggedIn: PropTypes.bool.isRequired,
+  formSubmitEnabled: PropTypes.bool.isRequired,
+  radius: PropTypes.number.isRequired,
+  center: PropTypes.shape({
+    lat: PropTypes.number,
+    lng: PropTypes.number,
+  }).isRequired,
+
+  // Functions and dispatchers
+  dispatchShowAllBuoys: PropTypes.func.isRequired,
+  dispatchShowFavBuoys: PropTypes.func.isRequired,
+  handleFormSubmit: PropTypes.func.isRequired,
+  handleFormEnable: PropTypes.func.isRequired,
 };
 
 Dashboard.defaultProps = {

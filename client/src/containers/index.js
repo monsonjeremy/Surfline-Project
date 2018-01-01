@@ -7,3 +7,4 @@ export { default as Buoy } from './Buoy';
 export { default as Dashboard } from './Dashboard';
 export { default as Maps } from './Maps';
 export { default as Marker } from './Marker';
+export { default as Loader } from './Loader';

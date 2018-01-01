@@ -2,6 +2,7 @@
 
 import axios from 'axios';
 import { parseString } from 'xml2js';
+import { DOMParser } from 'xmldom';
 
 // Models
 import { addNewFavorite, removeFavorite } from '../models';
@@ -12,8 +13,24 @@ import { addNewFavorite, removeFavorite } from '../models';
 
  * @return {Promise} Promise - A promise to fetch the RSS feed
  */
-export const getBuoyDataService = () =>
-  axios.get('http://www.ndbc.noaa.gov/rss/ndbc_obs_search.php?lat=40N&lon=73W&radius=100');
+export const getBuoyDataService = (lat, lng, radius) => {
+  // Check if latitude is north or south
+  if (lat >= 0) {
+    lat = `${lat}N`;
+  } else {
+    lat = `${Math.abs(lat)}S`;
+  }
+  // Check if latitude is west or east
+  if (lng >= 0) {
+    lng = `${lng}E`;
+  } else {
+    lng = `${Math.abs(lng)}W`;
+  }
+
+  return axios.get(
+    `http://www.ndbc.noaa.gov/rss/ndbc_obs_search.php?lat=${lat}&lon=${lng}&radius=${radius}`
+  );
+};
 
 /**
  * @description Service to parse the XML data returned from the feed.
@@ -21,14 +38,15 @@ export const getBuoyDataService = () =>
  * @return {Promise} Promise to parse the XML
  */
 export const parseXmlService = xml =>
-  new Promise((resolve, reject) =>
-    parseString(xml.data, (err, result) => {
+  new Promise((resolve, reject) => {
+    const xmlSerialized = new DOMParser().parseFromString(xml.data, 'text/xml');
+    parseString(xmlSerialized, (err, result) => {
       if (err) {
         return reject(err);
       }
       return resolve(result);
-    })
-  );
+    });
+  });
 
 /**
  * @description Service to add a new favorite buoy to a given user.

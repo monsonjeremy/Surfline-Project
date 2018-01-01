@@ -12,7 +12,11 @@ import PropTypes from 'prop-types';
  */
 const CreateAccount = props => (
   <div className="sp-modal-form">
-    <form className="sp-form-container" onSubmit={props.handleCreateAccountClick}>
+    <form
+      className="sp-form-container"
+      id="create-account"
+      onSubmit={props.handleCreateAccountClick}
+    >
       <fieldset>
         <input
           className="sp-input"
@@ -38,7 +42,9 @@ const CreateAccount = props => (
       </fieldset>
       <br />
       <div className="sp-button-group">
-        <button className="sp-btn sp-btn-lrg">Submit</button>
+        <button type="submit" form="create-account" className="sp-btn sp-btn-lrg">
+          Submit
+        </button>
         <button className="sp-btn sp-btn-lrg" role="menuitem" onClick={props.handleSignInClick}>
           Sign In
         </button>

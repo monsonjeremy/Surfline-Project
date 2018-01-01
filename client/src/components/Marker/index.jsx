@@ -26,7 +26,6 @@ const CustomMarker = props => (
   <Marker
     clickable
     options={{ icon: props.icon, }}
-    animation={google.maps.Animation.DROP}
     onClick={props.handleMarkerClick}
     position={props.position}
     visible={props.visible}

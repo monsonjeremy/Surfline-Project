@@ -1,5 +1,8 @@
 import { makeActionCreator } from '../../../lib';
 
+// Actions
+import { hydrateBuoyData } from '../../Data/actions';
+
 export const UPDATE_MAP_ZOOM = 'UPDATE_MAP_ZOOM';
 export const updateMapZoom = makeActionCreator(UPDATE_MAP_ZOOM, 'zoom');
 
@@ -21,5 +24,55 @@ export function updateMapCenterAndZoom(center, zoom) {
   return dispatch => {
     dispatch(updateMapZoom(zoom));
     dispatch(updateMapCenter(center));
+  };
+}
+
+export const UPDATE_RADIUS_LAT_LNG_REQUEST = 'UPDATE_RADIUS_LAT_LNG_REQUEST';
+export const updateRadiusLatLngRequest = makeActionCreator(UPDATE_RADIUS_LAT_LNG_REQUEST);
+
+export const UPDATE_RADIUS_LAT_LNG_SUCCESS = 'UPDATE_RADIUS_LAT_LNG_SUCCESS';
+export const updateRadiusLatLngSuccess = makeActionCreator(
+  UPDATE_RADIUS_LAT_LNG_SUCCESS,
+  'radius',
+  'lat',
+  'lng'
+);
+
+export const UPDATE_RADIUS_LAT_LNG_FAILURE = 'UPDATE_RADIUS_LAT_LNG_FAILURE';
+export const updateRadiusLatLngFailure = makeActionCreator(UPDATE_RADIUS_LAT_LNG_FAILURE, 'errMsg');
+
+/**
+ * Function for dispatching an action to update the radius and lat long values then re-query the data from the RSS Feed
+ * 
+ * @param {number} radius - new radius
+ * @param {number} lat - latitude to query data for
+ * @param {number} lng - longitude to query data for 
+ * 
+ * @return {function} dispatcher
+ */
+export function updateRadiusLatLng(radius, lat, lng) {
+  return dispatch => {
+    dispatch(updateRadiusLatLngRequest());
+
+    if (radius > 999999 || radius < 1) {
+      return dispatch(
+        updateRadiusLatLngFailure('Radius invalid... Try a number between 1 and 999,999')
+      );
+    }
+
+    if (lat > 90 || lat < -90) {
+      return dispatch(
+        updateRadiusLatLngFailure('Latitude invalid... Try a number between -90 and 90')
+      );
+    }
+
+    if (lng > 180 || lng < -180) {
+      return dispatch(
+        updateRadiusLatLngFailure('Longitude invalid... Try a number between -180 and 180')
+      );
+    }
+
+    dispatch(updateRadiusLatLngSuccess(radius, lat, lng));
+    return dispatch(hydrateBuoyData(lat, lng, radius));
   };
 }
