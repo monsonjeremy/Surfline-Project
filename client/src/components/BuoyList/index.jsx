@@ -14,15 +14,19 @@ import '../../styles/BuoyList/BuoyList.css';
  *
  */
 const BuoyList = props => (
-  <div className={'buoy-list-container sp-container'}>{props.children}</div>
+  <div className={'buoy-list-container sp-container'}>
+    {props.hasFavorites ? props.children : <h3>You currently have no favorites.</h3>}
+  </div>
 );
 
 BuoyList.propTypes = {
   children: PropTypes.node,
+  hasFavorites: PropTypes.bool,
 };
 
 BuoyList.defaultProps = {
   children: null,
+  hasFavorites: false,
 };
 
 export default BuoyList;

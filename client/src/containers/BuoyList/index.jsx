@@ -71,7 +71,19 @@ class BuoyList extends Component {
   }
 
   render() {
-    return <BuoyListView {...this.props}>{this.renderBuoys()}</BuoyListView>;
+    const buoyChildren = this.renderBuoys();
+
+    // If there are buyos to be rendered then the user has favorites so we can set a flag to not display "You have no favroites"
+    let hasFavorites = false;
+
+    if (buoyChildren) hasFavorites = buoyChildren.filter(buoy => buoy !== null).length > 0;
+
+    const props = {
+      ...this.props,
+      hasFavorites,
+    };
+
+    return <BuoyListView {...props}>{this.renderBuoys()}</BuoyListView>;
   }
 }
 
