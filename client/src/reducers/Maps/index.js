@@ -1,6 +1,7 @@
 import {
   UPDATE_MAP_CENTER,
   UPDATE_MAP_ZOOM,
+  UPDATE_MAP_BOUNDS,
   MAP_LOADED,
   UPDATE_RADIUS_LAT_LNG_FAILURE,
   UPDATE_RADIUS_LAT_LNG_REQUEST,
@@ -8,7 +9,14 @@ import {
 } from './actions';
 
 const Maps = (
-  state = { center: { lat: 40, lng: -73, }, zoom: 8, radius: 100, isLoading: true, baseError: null, },
+  state = {
+    center: { lat: 40, lng: -73, },
+    bounds: null,
+    zoom: 8,
+    radius: 100,
+    isLoading: true,
+    baseError: null,
+  },
   action
 ) => {
   switch (action.type) {
@@ -17,10 +25,18 @@ const Maps = (
         ...state,
         zoom: action.zoom,
       };
+    case UPDATE_MAP_BOUNDS:
+      return {
+        ...state,
+        bounds: action.bounds,
+      };
     case UPDATE_MAP_CENTER:
       return {
         ...state,
-        center: action.center,
+        center: {
+          ...state.center,
+          ...action.center,
+        },
       };
     case MAP_LOADED:
       return {

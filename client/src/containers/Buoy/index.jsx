@@ -28,19 +28,31 @@ class Buoy extends Component {
     this.buoyClickHandler = this.buoyClickHandler.bind(this);
   }
 
-  // Function for the logic regarding click the favorite/unfavorite button
+  /**
+   * @description Function for the logic regarding click the favorite/unfavorite button
+   * 
+   * @param {*} event 
+   */
   favoriteClickHandler(event) {
+    // Stop event propagation so that we also click the div underneath
+    event.stopPropagation();
+
     if (this.props.isFavorite) {
-      return this.props.dispatchRemoveFavorite(event, this.props.user.userId, this.props.buoyId);
+      return this.props.dispatchRemoveFavorite(this.props.user.userId, this.props.buoyId);
     }
-    return this.props.dispatchAddToFavorites(event, this.props.user.userId, this.props.buoyId);
+    return this.props.dispatchAddToFavorites(this.props.user.userId, this.props.buoyId);
   }
 
-  // Function for the logic regarding clicking the <BuoyView /> container <div>
+  /**
+   * @description Function for the logic regarding clicking the <BuoyView /> container <div>
+   * 
+   * @param {*} event 
+   */
   buoyClickHandler(event) {
+    event.stopPropagation();
     const center = { lat: this.props.lat, lng: this.props.lng, };
     const zoom = 8;
-    this.props.dispatchSelectBuoy(event, this.props.buoyId, center, zoom);
+    this.props.dispatchSelectBuoy(this.props.buoyId, center, zoom);
   }
 
   render() {
@@ -76,16 +88,13 @@ Buoy.defaultProps = {
 };
 
 const mapDispatchToProps = dispatch => ({
-  dispatchAddToFavorites: (event, userId, buoyId) => {
-    event.stopPropagation();
+  dispatchAddToFavorites: (userId, buoyId) => {
     dispatch(addFavorite(userId, buoyId));
   },
-  dispatchRemoveFavorite: (event, userId, buoyId) => {
-    event.stopPropagation();
+  dispatchRemoveFavorite: (userId, buoyId) => {
     dispatch(removeFavorite(userId, buoyId));
   },
   dispatchSelectBuoy: (event, buoyId, center, zoom) => {
-    event.stopPropagation();
     dispatch(selectBuoy(buoyId));
     dispatch(updateMapCenterAndZoom(center, zoom));
   },

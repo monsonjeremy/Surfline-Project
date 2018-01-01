@@ -5,6 +5,10 @@ import PropTypes from 'prop-types';
 // Views
 import MarkerView from '../../components/Marker';
 
+// Actions
+import { addFavorite, removeFavorite } from '../../reducers/User/actions';
+import { updateMapCenterAndZoom } from '../../reducers/Maps/actions';
+
 /**
  * @description Marker container connects the markers to the store and passes down relevant state
  * @param {object} props - Component props
@@ -18,14 +22,35 @@ class Marker extends Component {
 
     this.handleCloseClick = this.handleCloseClick.bind(this);
     this.handleMarkerClick = this.handleMarkerClick.bind(this);
+    this.handleFavoriteClick = this.handleFavoriteClick.bind(this);
   }
 
   handleCloseClick() {
     this.props.dispatchSelectBuoy(null);
   }
 
+  /**
+   * @description This function is used to set a new zoom and center when a marker is clicked
+   */
   handleMarkerClick() {
-    this.props.handleMarkerClick(this.props.position, this.props.buoyId);
+    this.props.dispatchSelectBuoy(this.props.buoyId);
+
+    // zoom to 8 when selecting a buoy
+    const zoom = 8;
+    this.props.dispatchUpdateMapCenterAndZoom(this.props.position, zoom);
+  }
+
+  /**
+   * @description Function for the logic regarding click the favorite/unfavorite button
+   */
+  handleFavoriteClick(event) {
+    // Stop event propagation so that we also click the div underneath
+    event.stopPropagation();
+
+    if (this.props.isFavorite) {
+      return this.props.dispatchRemoveFavorite(this.props.user.userId, this.props.buoyId);
+    }
+    return this.props.dispatchAddToFavorites(this.props.user.userId, this.props.buoyId);
   }
 
   render() {
@@ -59,6 +84,7 @@ c-51.442,0-93.292-41.851-93.292-93.293S204.559,92.134,256,92.134s93.291,41.851,9
       icon,
       handleCloseClick: this.handleCloseClick,
       handleMarkerClick: this.handleMarkerClick,
+      handleFavoriteClick: this.handleFavoriteClick,
     };
 
     return <MarkerView {...props} />;
@@ -76,18 +102,37 @@ Marker.propTypes = {
   isFavorite: PropTypes.bool.isRequired,
   readings: PropTypes.string.isRequired,
   buoyId: PropTypes.string.isRequired,
+  user: PropTypes.shape({
+    userId: PropTypes.string,
+  }),
 
   // Functions and dispatchers
   dispatchSelectBuoy: PropTypes.func.isRequired,
+  dispatchUpdateMapCenterAndZoom: PropTypes.func.isRequired,
   handleMarkerClick: PropTypes.func.isRequired,
+  dispatchAddToFavorites: PropTypes.func.isRequired,
+  dispatchRemoveFavorite: PropTypes.func.isRequired,
 };
 
 Marker.defaultProps = {
   selected: false,
+  user: null,
 };
+
+const mapDispatchToProps = dispatch => ({
+  dispatchAddToFavorites: (userId, buoyId) => {
+    dispatch(addFavorite(userId, buoyId));
+  },
+  dispatchUpdateMapCenterAndZoom: (center, zoom) => {
+    dispatch(updateMapCenterAndZoom(center, zoom));
+  },
+  dispatchRemoveFavorite: (userId, buoyId) => {
+    dispatch(removeFavorite(userId, buoyId));
+  },
+});
 
 const mapStateToProps = state => ({
   ...state.User,
 });
 
-export default connect(mapStateToProps)(Marker);
+export default connect(mapStateToProps, mapDispatchToProps)(Marker);

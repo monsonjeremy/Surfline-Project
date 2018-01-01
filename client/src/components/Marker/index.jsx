@@ -37,6 +37,13 @@ const CustomMarker = props => (
         <InfoWindow onCloseClick={props.handleCloseClick}>
           <div>
             <h3 className="sp-info-title">Station ID: {props.buoyId}</h3>
+            <button
+              disabled={!props.user}
+              className="sp-btn sp-btn-small buoy-favorite-btn"
+              onClick={props.handleFavoriteClick}
+            >
+              {props.isFavorite ? 'Unfavorite' : 'Favorite'}
+            </button>
             <p className="sp-info-text" dangerouslySetInnerHTML={{ __html: props.readings, }} />
           </div>
         </InfoWindow>
@@ -63,10 +70,17 @@ CustomMarker.propTypes = {
   visible: PropTypes.bool.isRequired,
   readings: PropTypes.string.isRequired,
   buoyId: PropTypes.string.isRequired,
+  isFavorite: PropTypes.bool.isRequired,
+  user: PropTypes.instanceOf(Object),
 
   // Functions and dispatchers
   handleMarkerClick: PropTypes.func.isRequired,
   handleCloseClick: PropTypes.func.isRequired,
+  handleFavoriteClick: PropTypes.func.isRequired,
+};
+
+CustomMarker.defaultProps = {
+  user: null,
 };
 
 export default CustomMarker;

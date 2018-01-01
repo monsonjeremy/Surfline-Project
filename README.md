@@ -72,10 +72,6 @@ If users were off the table as part of the application, my solution would probab
 
 I've implemented the authentication using Bcrypt and express-sessions. I thought about using a drop in library like Passport or OAuth but I felt it added unecessary boilerplate and complexity considering this wasn't really the goal of the application.
 
-##### Removing favorites
-
-Although this was also not in the requirements this felt like a feature that just made sense. I felt that not adding this would just be cheaping out, and therefore a feature was born.
-
 ##### React Component/Container pattern
 
 The component/container pattern that I used in this project was a pattern for components and containers that I had seen different places and wanted to try. Essentially all the logic and store connection happens in the container and the component is sort of a dummy view that just renders the HTML and handles conditional renders. This was my first time using this pattern and I ended up really liking it and would use it again. It does have a little more boilerplate, but I do like having the seperation of concerns and being able to centralize similar logic.
@@ -90,7 +86,7 @@ This project I actually ended up using redux for pretty much all state (except e
 
 ##### Google maps
 
-Google maps was my favorite addition to this project and was actually really fun to work with. I think it achieves a great user experience by allowing a user to see exactly where the buoys are rather than just knowing the lat/long. In this instance, in the interest of time, I used a drop in component from the library ```react-google-maps```. It made it a lot easier and less boilerplate but in a more critical production application, I might opt for handling this on my own depending on the amount of flexibility needed and some of the other pros and cons that may come with using a library. Overall though, i'm satisfied with the result and the library worked exactly as I wanted for this project. As I continue work on this project beyond submitting it, the next feature I want to build is to allow a user to search locations on google maps and from there requery the RSS feed for the new latitude and longitude. Since I wanted to get the project completed in a timely manner I did not implement this at the moment.
+Google maps was my favorite addition to this project and was actually really fun to work with. I think it achieves a great user experience by allowing a user to see exactly where the buoys are rather than just knowing the lat/long. In this instance, in the interest of time, I used a drop in component from the library ```react-google-maps```. It made it a lot easier and less boilerplate but in a more critical production application, I might opt for handling this on my own depending on the amount of flexibility needed and some of the other pros and cons that may come with using a library. Overall though, i'm satisfied with the result and the library worked exactly as I wanted for this project.
 
 ##### Create-react-app
 

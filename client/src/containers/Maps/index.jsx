@@ -1,14 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { MarkerClusterer } from 'react-google-maps/lib/components/addons/MarkerClusterer';
 
 // Views
 import MapsView from '../../components/Maps';
-import { Marker } from '../';
+import { Marker, SearchBox } from '../';
 
 // Action
 import { selectBuoy } from '../../reducers/Data/actions';
-import { updateMapZoom, updateMapCenterAndZoom, mapLoaded } from '../../reducers/Maps/actions';
+import {
+  updateMapZoom,
+  mapLoaded,
+  updateMapBounds,
+  updateRadiusLatLng
+} from '../../reducers/Maps/actions';
 
 const googleMapsUrl =
   'https://maps.googleapis.com/maps/api/js?key=AIzaSyDDtJVfn4LB_ExnDJgqisAUR_8rf_XMbg4&v=3.exp&libraries=geometry,drawing,places';
@@ -25,31 +31,27 @@ class Maps extends Component {
   constructor(props) {
     super(props);
 
-    this.handleMarkerClick = this.handleMarkerClick.bind(this);
     this.renderMarkers = this.renderMarkers.bind(this);
     this.handleZoomChange = this.handleZoomChange.bind(this);
+    this.handleBoundsChanged = this.handleBoundsChanged.bind(this);
     this.handleMapLoad = this.handleMapLoad.bind(this);
   }
 
   /**
-   * @description This function is used to set a new zoom and center when a marker is clicked
-   * 
-   * @param {object} center - The object containing the latitude and longitude
-   * @param {number} latLong.lat - The latitude
-   * @param {number} latLong.lng - The longitude
+   * @description - There are some weird side effects to tracking zoom with redux and using the onZoomChange prop for the Maps component
+   * For example, we click a cluster marker the zoom changes and triggers another zoom change before the first zoom has completed
+   * which ends up making us zoom back out after the initial zoom. I haven't found a fix yet but have been exploring debouncing, althought
+   * I could not get that solution to work.
    */
-  handleMarkerClick(center, buoyId) {
-    this.props.dispatchSelectBuoy(buoyId);
-    // zoom to 8 when selecting a buoy
-    const zoom = 8;
-    this.props.dispatchUpdateMapCenterAndZoom(center, zoom);
+  handleZoomChange() {
+    this.props.dispatchUpdateMapZoom(this.map.getZoom());
   }
 
   /**
-   * @description When the zoom changes we want to update the state each time so we can dynamically zoom on actions
-  */
-  handleZoomChange() {
-    this.props.dispatchUpdateMapZoom(this.map.getZoom());
+   * @description Handle the event where the bounds of the map change to control the bias for places API
+   */
+  handleBoundsChanged() {
+    this.props.dispatchUpdateMapBounds(this.map.getBounds());
   }
 
   /**
@@ -110,10 +112,16 @@ class Maps extends Component {
         mapElement={<div style={{ height: `100%`, }} />}
         center={this.props.center}
         handleZoomChange={this.handleZoomChange}
+        handleBoundsChanged={this.handleBoundsChanged}
         handleMapLoad={this.handleMapLoad}
+        handleSearchBoxMounted={this.handleSearchBoxMount}
+        handlePlacesChanged={this.handlePlacesChanged}
         zoom={this.props.zoom}
       >
-        {this.renderMarkers()}
+        <SearchBox />
+        <MarkerClusterer averageCenter defaultMaxZoom={6} enableRetinaIcons gridSize={40}>
+          {this.renderMarkers()}
+        </MarkerClusterer>
       </MapsView>
     );
   }
@@ -140,14 +148,15 @@ Maps.propTypes = {
     lat: PropTypes.number,
     lng: PropTypes.number,
   }).isRequired,
+
   zoom: PropTypes.number.isRequired,
   filterFavorites: PropTypes.bool.isRequired,
   selectedBuoy: PropTypes.string,
 
   // Funcs and dispatchers
   dispatchSelectBuoy: PropTypes.func.isRequired,
-  dispatchUpdateMapCenterAndZoom: PropTypes.func.isRequired,
   dispatchUpdateMapZoom: PropTypes.func.isRequired,
+  dispatchUpdateMapBounds: PropTypes.func.isRequired,
   dispatchMapLoaded: PropTypes.func.isRequired,
 };
 
@@ -156,19 +165,21 @@ Maps.defaultProps = {
   selectedBuoy: null,
 };
 
-// eslint-disable-next-line
 const mapDispatchToProps = dispatch => ({
   dispatchSelectBuoy: buoyId => {
     dispatch(selectBuoy(buoyId));
   },
-  dispatchUpdateMapCenterAndZoom: (center, zoom) => {
-    dispatch(updateMapCenterAndZoom(center, zoom));
-  },
   dispatchUpdateMapZoom: zoom => {
     dispatch(updateMapZoom(zoom));
   },
+  dispatchUpdateMapBounds: bounds => {
+    dispatch(updateMapBounds(bounds));
+  },
   dispatchMapLoaded: () => {
     dispatch(mapLoaded());
+  },
+  dispatchUpdateRadiusLatLng: (radius, lat, lng) => {
+    dispatch(updateRadiusLatLng(radius, lat, lng));
   },
 });
 

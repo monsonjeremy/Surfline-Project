@@ -12,7 +12,6 @@ const Data = (
     filterFavorites: false,
     buoy: {
       isLoading: false,
-      isRequested: false,
     },
     selectedBuoy: null,
   },
@@ -25,7 +24,6 @@ const Data = (
         isLoading: true,
         buoy: {
           ...state.buoy,
-          isRequested: true,
           baseError: null,
         },
       };
@@ -35,7 +33,6 @@ const Data = (
         isLoading: false,
         buoy: {
           ...state.buoy,
-          isRequested: false,
           data: action.data,
         },
       };
@@ -45,7 +42,6 @@ const Data = (
         isLoading: false,
         buoy: {
           ...state.buoy,
-          isRequested: false,
           data: null,
           baseError: action.errorMsg,
         },

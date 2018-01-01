@@ -25,6 +25,13 @@ const Buoy = props => (
   <div role="button" onClick={props.buoyClickHandler} className={'buoy-container'}>
     <h3 className="buoy-title text-center">{props.title}</h3>
     <h3 className="buoy-id text-center">Station ID: {props.buoyId}</h3>
+    <button
+      disabled={!props.user}
+      className="sp-btn sp-btn-small buoy-favorite-btn"
+      onClick={props.favoriteClickHandler}
+    >
+      {props.isFavorite ? 'Unfavorite' : 'Favorite'}
+    </button>
     <p className="buoy-lat-long">
       Latitude: {props.lat} | Longitude: {props.lng}
     </p>
@@ -32,9 +39,6 @@ const Buoy = props => (
       Buoy Link
     </a>
     <p className="buoy-readings" dangerouslySetInnerHTML={{ __html: props.readings, }} />
-    <button disabled={!props.user} className="sp-btn" onClick={props.favoriteClickHandler}>
-      {props.isFavorite ? 'Unfavorite' : 'Favorite'}
-    </button>
   </div>
 );
 

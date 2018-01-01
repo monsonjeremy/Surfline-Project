@@ -6,6 +6,9 @@ import { hydrateBuoyData } from '../../Data/actions';
 export const UPDATE_MAP_ZOOM = 'UPDATE_MAP_ZOOM';
 export const updateMapZoom = makeActionCreator(UPDATE_MAP_ZOOM, 'zoom');
 
+export const UPDATE_MAP_BOUNDS = 'UPDATE_MAP_BOUNDS';
+export const updateMapBounds = makeActionCreator(UPDATE_MAP_BOUNDS, 'bounds');
+
 export const UPDATE_MAP_CENTER = 'UPDATE_MAP_CENTER';
 export const updateMapCenter = makeActionCreator(UPDATE_MAP_CENTER, 'center');
 
@@ -61,8 +64,10 @@ export function updateRadiusLatLng(radius, lat, lng) {
       
       There are just so many markers and debugging and optimizing performance would be a more granular difficult
       task than time allows for at the moment.
+
+      Allow 999,999 so that we can maximize and show all favorites in the world
     */
-    if (radius > 500 || radius < 1) {
+    if ((radius > 500 || radius < 1) && radius !== 999999) {
       return dispatch(
         updateRadiusLatLngFailure('Radius invalid... Try a number between 1 and 999,999')
       );
@@ -82,6 +87,7 @@ export function updateRadiusLatLng(radius, lat, lng) {
       );
     }
 
+    console.log({ radius, lat, lng, });
     dispatch(updateRadiusLatLngSuccess(radius, lat, lng));
     return dispatch(hydrateBuoyData(lat, lng, radius));
   };

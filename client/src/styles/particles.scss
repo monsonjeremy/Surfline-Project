@@ -201,6 +201,10 @@ a {
   display: flex;
 }
 
+.sp-hr {
+  width: 70%;
+}
+
 .sp-nav-link {
   font-family: 'Montserrat', sans-serif;
   font-size: 18px;
@@ -243,6 +247,10 @@ a {
       border-right: 0px;
     }
   }
+}
+
+.sp-info-window {
+  text-align: center;
 }
 
 .sp-info-text {
@@ -326,7 +334,7 @@ a {
 
 .sp-input {
   font-family: 'Montserrat', sans-serif;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 300;
   color: #333;
   width: 100%;
