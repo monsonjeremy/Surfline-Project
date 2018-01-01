@@ -67,7 +67,15 @@ export const getBuoyDataController = async (lat, lng, radius) => {
         lng: parseFloat(longitude),
       };
     })
+    // Filter out ship observations
     .filter(buoy => buoy.link !== 'http://www.ndbc.noaa.gov/ship_obs.php');
+
+  // If there are no buoys left after filtering out the ship observations, throw error
+  if (buoys.length === 0) {
+    const error = new Error('No buoys found for given lat, long, and radius...');
+    error.statusCode = 400;
+    throw error;
+  }
 
   return {
     lastUpdated: data.lastBuildDate[0],
