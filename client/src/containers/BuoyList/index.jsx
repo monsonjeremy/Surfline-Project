@@ -57,7 +57,7 @@ class BuoyList extends Component {
 
         // If we are on the favorites tab filter out non favorite buoys
         const showFavorites = this.props.filterFavorites;
-        const isFavorite = this.props.user.favorites[buoy.buoyId];
+        const isFavorite = !!this.props.user.favorites[buoy.buoyId];
 
         if (!showFavorites || (showFavorites && isFavorite)) {
           props.isFavorite = isFavorite;

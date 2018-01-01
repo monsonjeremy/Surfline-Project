@@ -75,7 +75,7 @@ class Maps extends Component {
         if (!this.props.user) {
           visible = true;
         } else {
-          isFavorite = this.props.user.favorites[buoy.buoyId];
+          isFavorite = !!this.props.user.favorites[buoy.buoyId];
           if (!this.props.filterFavorites || (this.props.filterFavorites && isFavorite)) {
             // If on favorites tab filter out non favorite buoys, if not then all buoy markers visible
             visible = true;
