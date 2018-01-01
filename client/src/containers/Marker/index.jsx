@@ -109,7 +109,6 @@ Marker.propTypes = {
   // Functions and dispatchers
   dispatchSelectBuoy: PropTypes.func.isRequired,
   dispatchUpdateMapCenterAndZoom: PropTypes.func.isRequired,
-  handleMarkerClick: PropTypes.func.isRequired,
   dispatchAddToFavorites: PropTypes.func.isRequired,
   dispatchRemoveFavorite: PropTypes.func.isRequired,
 };
