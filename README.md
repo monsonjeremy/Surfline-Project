@@ -104,3 +104,6 @@ The client and server code are stored in different sub-directories with their ow
 
 For this project, I've added responsive styling using media queries to optimize for different screen sizes and mobile. The application should work in almost all browsers and on mobile devices.
 
+##### Going forward
+
+Moving forward with this project, I'd love to refactor the client to use GraphQL and the Apollo tool chain. I think it would be really cool to use features like subscription, pagination, and prefetching. I think this would be especially powerful with the RSS feed to be able to push updates live the client when the RSS feed gets new data. Along with exploring GraphQL I would like to build a more specific API for getting current readings for only buoys that the user has favorites. Currently handling this on the client side by filtering out buoys that are not favorites causes a performance hit when deciding whether or not to render hundreds of markers. I think moving this logic to the node server would make more sense. 
