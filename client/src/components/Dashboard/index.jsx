@@ -17,7 +17,7 @@ import '../../styles/Dashboard/Dashboard.css';
  * @returns {<Dashboard />}
  */
 const Dashboard = props => (
-  <div className={'sp-container sp-gray-bg'}>
+  <div className={'sp-container sp-gray-bg dashboard-container'}>
     <hr className="sp-hr" />
     <h3 className={'instruction-sub-text text-center'}>
       Click a marker on the map or click a box in the list below to select a buoy
