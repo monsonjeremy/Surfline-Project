@@ -8,6 +8,10 @@ WORKDIR /server
 
 # Copy server files over and install dependencies
 COPY ./server/ ./
+
+# Install dependencies for rebuilding bcrypt, then run npm install, then rebuild bcrypt
+# This avoids a segmentation fault when using the alpine node image
+# Reference: https://github.com/kelektiv/node.bcrypt.js/issues/528
 RUN apk --no-cache add --virtual native-deps \
   git g++ gcc libgcc libstdc++ linux-headers make python && \
   npm install node-gyp -g &&\
