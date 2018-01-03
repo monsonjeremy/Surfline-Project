@@ -1,4 +1,4 @@
-FROM node:8.8.1
+FROM node:8.8.1-alpine
 LABEL name="Surfline Project"
 LABEL version="1.0"
 ENV NPM_CONFIG_LOGLEVEL verbose
@@ -24,7 +24,13 @@ RUN cd client && npm install && npm run build
 # Copy server files over and install dependencies and compile server code
 COPY ./server/ /app/server
 COPY ./.eslintrc.json /app/server
+
+# Install dependencies for rebuilding bcrypt, then run npm install, then rebuild bcrypt
+# This avoids a segmentation fault when using the alpine node image
+# Reference: https://github.com/kelektiv/node.bcrypt.js/issues/528
+RUN apk --no-cache add --virtual build-deps build-base python
 RUN cd server && NODE_ENV=development npm install
+RUN cd server && NODE_ENV=development npm rebuild bcrypt --build-from-source
 
 # Compile server code
 RUN npm run build:server:prod
