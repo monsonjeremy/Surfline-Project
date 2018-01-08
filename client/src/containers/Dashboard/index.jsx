@@ -133,6 +133,9 @@ const mapStateToProps = state => ({
   ...state.Data,
   ...state.User,
   ...state.Maps,
+  userError: state.User.baseError,
+  dataError: state.Data.buoy.baseError,
+  mapsError: state.Maps.baseError,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
