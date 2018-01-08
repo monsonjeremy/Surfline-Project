@@ -17,6 +17,9 @@ import { updateRadiusLatLng } from '../../reducers/Maps/actions';
  *              buoys and passes them to the view
  *
  * @param {object} props - Component props
+ * @param {boolean} props.dataError - Error message for data actions
+ * @param {boolean} props.userError - Error message for user actions
+ * @param {boolean} props.mapsError - Error message for maps actions
  * @param {node} props.children - Children
  *
  * @returns {<Dashboard />}

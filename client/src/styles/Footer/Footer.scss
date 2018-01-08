@@ -1,6 +1,6 @@
 @import '../variables.scss';
 
-.header-container.sp-container {
+.footer-container.sp-container {
   padding-bottom: 5px;
   padding-top: 5px;
   position: fixed;
@@ -43,19 +43,4 @@
       transform: translateX(30vw);
     }
   }
-}
-
-.sp-header-error {
-  background-color: rgba(210, 77, 87, 1);
-  padding: 10px;
-  color: white;
-  width: 100%;
-  text-align: center;
-  margin-bottom: 10px;
-}
-
-.sp-error-msg {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 13px;
-  font-weight: 300;
 }

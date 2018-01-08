@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // Styles
-import '../../styles/Header/Header.css';
+import '../../styles/Footer/Footer.css';
 
 /**
- * @description Header component represents the view for the Header container which 
+ * @description Footer component represents the view for the Footer container which 
  * contains logic for showing the login/create account modals and logging a user out.
  *
  * @param {object} props - Props
@@ -16,10 +16,10 @@ import '../../styles/Header/Header.css';
  * @param {object} props.user - User object
  * @param {string} props.user.username - Current user's username
  * 
- * @returns {<Header />}
+ * @returns {<Footer />}
  */
-const Header = props => (
-  <div className="sp-container header-container">
+const Footer = props => (
+  <div className="sp-container footer-container">
     <div className={props.loggedInStyle}>
       <h3 className="text-center">Logged in as {props.user ? props.user.username : ''}</h3>
       <button
@@ -52,7 +52,7 @@ const Header = props => (
   </div>
 );
 
-Header.propTypes = {
+Footer.propTypes = {
   // Props
   loggedIn: PropTypes.bool.isRequired,
   loggedInStyle: PropTypes.string.isRequired,
@@ -67,8 +67,8 @@ Header.propTypes = {
   dispatchLogoutUser: PropTypes.func.isRequired,
 };
 
-Header.defaultProps = {
+Footer.defaultProps = {
   user: null,
 };
 
-export default Header;
+export default Footer;
