@@ -3,7 +3,17 @@ import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
 
 // containers
-import { ErrorBoundary, Footer, Modal, BuoyList, Dashboard, Maps, Loader } from '../../containers';
+import {
+  ErrorBoundary,
+  Footer,
+  Modal,
+  BuoyList,
+  Dashboard,
+  Maps,
+  Loader,
+  SearchBox,
+  Markers
+} from '../../containers';
 
 /**
  * @description App component represents Surfline Project application
@@ -24,7 +34,10 @@ const App = ({ store, }) => (
           </Dashboard>
           <Footer />
         </div>
-        <Maps />
+        <Maps>
+          <SearchBox />
+          <Markers />
+        </Maps>
       </div>
     </ErrorBoundary>
   </Provider>

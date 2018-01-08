@@ -8,6 +8,7 @@ import MarkerView from '../../components/Marker';
 // Actions
 import { addFavorite, removeFavorite } from '../../reducers/User/actions';
 import { updateMapCenterAndZoom } from '../../reducers/Maps/actions';
+import { selectBuoy } from '../../reducers/Data/actions/index';
 
 /**
  * @description Marker container connects the markers to the store and passes down relevant state
@@ -102,7 +103,7 @@ Marker.propTypes = {
     lat: PropTypes.number,
     lng: PropTypes.number,
   }).isRequired,
-  visible: PropTypes.bool.isRequired,
+  visible: PropTypes.bool,
   isFavorite: PropTypes.bool.isRequired,
   readings: PropTypes.string.isRequired,
   buoyId: PropTypes.string.isRequired,
@@ -120,6 +121,7 @@ Marker.propTypes = {
 Marker.defaultProps = {
   selected: false,
   user: null,
+  visible: false,
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -131,6 +133,9 @@ const mapDispatchToProps = dispatch => ({
   },
   dispatchRemoveFavorite: (userId, buoyId) => {
     dispatch(removeFavorite(userId, buoyId));
+  },
+  dispatchSelectBuoy: buoyId => {
+    dispatch(selectBuoy(buoyId));
   },
 });
 
