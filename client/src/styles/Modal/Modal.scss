@@ -1,7 +1,7 @@
 .sp-modal-bg {
   display: flex;
   position: fixed;
-  z-index: 2;
+  z-index: 10;
   left: 0;
   top: 0;
   width: 100%;
@@ -19,7 +19,7 @@
   background-color: #ebebeb;
   margin: auto;
   padding: 20px 50px;
-  height: 60vh;
+  height: auto;
   border: 1px solid #888;
   @media (min-width: 600px) {
     width: 80%;
