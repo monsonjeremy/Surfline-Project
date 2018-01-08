@@ -25,6 +25,9 @@ class Marker extends Component {
     this.handleFavoriteClick = this.handleFavoriteClick.bind(this);
   }
 
+  /**
+   * @description This function is used to handle the case where a user closes an info box
+   */
   handleCloseClick() {
     this.props.dispatchSelectBuoy(null);
   }
@@ -33,11 +36,12 @@ class Marker extends Component {
    * @description This function is used to set a new zoom and center when a marker is clicked
    */
   handleMarkerClick() {
-    this.props.dispatchSelectBuoy(this.props.buoyId);
-
     // zoom to 8 when selecting a buoy
     const zoom = 8;
     this.props.dispatchUpdateMapCenterAndZoom(this.props.position, zoom);
+
+    // Select the buoy
+    this.props.dispatchSelectBuoy(this.props.buoyId);
   }
 
   /**
