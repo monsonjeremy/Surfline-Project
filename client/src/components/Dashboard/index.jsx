@@ -18,7 +18,29 @@ import '../../styles/Dashboard/Dashboard.css';
  */
 const Dashboard = props => (
   <div className={'sp-container sp-gray-bg dashboard-container'}>
-    <hr className="sp-hr" />
+    {(props.userError || props.dataError || props.mapsError) && (
+      <div className="sp-header-error">
+        <span className="sp-error-msg">
+          {props.userError || props.dataError || props.mapsError}
+        </span>
+      </div>
+    )}
+    <div className={'sp-button-group'}>
+      <button
+        className={`sp-btn ${props.filterFavorites ? '' : 'sp-btn-selected'}`}
+        onClick={props.handleShowAllBuoys}
+      >
+        All Buoys
+      </button>
+      <button
+        disabled={!props.loggedIn}
+        className={`sp-btn ${props.filterFavorites ? 'sp-btn-selected' : ''}`}
+        onClick={props.handleShowFavBuoys}
+      >
+        Favorites
+      </button>
+    </div>
+    <hr />
     <h3 className={'instruction-sub-text text-center'}>
       Click a marker on the map or click a box in the list below to select a buoy
       {props.user ? ', see readings, and favorite.' : ' and see readings.'}
@@ -81,21 +103,6 @@ const Dashboard = props => (
     >
       Update
     </button>
-    <div className={'sp-button-group'}>
-      <button
-        className={`sp-btn ${props.filterFavorites ? '' : 'sp-btn-selected'}`}
-        onClick={props.handleShowAllBuoys}
-      >
-        All Buoys
-      </button>
-      <button
-        disabled={!props.loggedIn}
-        className={`sp-btn ${props.filterFavorites ? 'sp-btn-selected' : ''}`}
-        onClick={props.handleShowFavBuoys}
-      >
-        Favorites
-      </button>
-    </div>
     {props.children}
   </div>
 );
@@ -112,6 +119,9 @@ Dashboard.propTypes = {
     lng: PropTypes.number,
   }).isRequired,
   user: PropTypes.instanceOf(Object),
+  userError: PropTypes.string,
+  dataError: PropTypes.string,
+  mapsError: PropTypes.string,
 
   // Functions and dispatchers
   handleFormSubmit: PropTypes.func.isRequired,
@@ -123,6 +133,9 @@ Dashboard.propTypes = {
 Dashboard.defaultProps = {
   children: null,
   user: null,
+  mapsError: null,
+  userError: null,
+  dataError: null,
 };
 
 export default Dashboard;
