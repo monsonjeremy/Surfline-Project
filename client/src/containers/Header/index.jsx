@@ -41,26 +41,43 @@ class Header extends PureComponent {
   }
 
   render() {
+    // Apply default styles to the footer
+    let loggedInStyle = 'translate-content-wrapper logged-in ';
+    let loggedOutStyle = 'translate-content-wrapper logged-out ';
+
+    // If the user logs in, animate the components accordingly
+    if (this.props.loggedIn) {
+      loggedInStyle += 'translate-right';
+      loggedOutStyle += 'translate-right';
+    }
+
+    // Create the props object
     const props = {
       ...this.props,
       handleCreateAccountClick: this.handleCreateAccountClick,
       handleSignInClick: this.handleSignInClick,
+      loggedInStyle,
+      loggedOutStyle,
     };
+
     return <HeaderView {...props} />;
   }
 }
 
 Header.propTypes = {
+  // Props
+  loggedIn: PropTypes.bool,
+
+  // Functions and dispatchers
   dispatchShowModal: PropTypes.func.isRequired,
 };
 
-Header.defaultProps = {};
+Header.defaultProps = {
+  loggedIn: false,
+};
 
 const mapStateToProps = state => ({
   ...state.User,
-  userError: state.User.baseError,
-  dataError: state.Data.buoy.baseError,
-  mapsError: state.Maps.baseError,
 });
 
 const mapDispatchToProps = dispatch => ({
