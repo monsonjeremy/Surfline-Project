@@ -56,7 +56,7 @@ class Dashboard extends Component {
     if (!lng) lng = this.props.center.lng;
 
     // Dispatch
-    this.props.dispatchUpdateRadiusLatLng(radius, lat, lng);
+    this.props.dispatchUpdateRadiusLatLng(radius, lat, lng, this.props.filterFavorites);
   }
 
   /**
@@ -73,17 +73,21 @@ class Dashboard extends Component {
   /**
    * @description When the user hits show all buoys, keep the current center but reset the radius to default (100)
    */
-  handleShowAllBuoys() {
-    const radius = 100;
-    this.props.dispatchShowAllBuoys(this.props.center.lat, this.props.center.lng, radius);
+  async handleShowAllBuoys() {
+    await this.props.dispatchShowAllBuoys();
+    const { lat, lng, } = this.props.center;
+    const { radius, filterFavorites, } = this.props;
+    this.props.dispatchUpdateRadiusLatLng(radius, lat, lng, filterFavorites);
   }
 
   /**
    * @description When the user hits show fav buoys, keep the current center but max out the radius so we can get ALL their favorites
    */
-  handleShowFavBuoys() {
-    const radius = 999999;
-    this.props.dispatchShowFavBuoys(this.props.center.lat, this.props.center.lng, radius);
+  async handleShowFavBuoys() {
+    await this.props.dispatchShowFavBuoys();
+    const { lat, lng, } = this.props.center;
+    const { radius, filterFavorites, } = this.props;
+    this.props.dispatchUpdateRadiusLatLng(radius, lat, lng, filterFavorites);
   }
 
   render() {
@@ -107,6 +111,7 @@ Dashboard.propTypes = {
     lng: PropTypes.number,
   }).isRequired,
   radius: PropTypes.number.isRequired,
+  filterFavorites: PropTypes.bool,
 
   // Functions and dispatchers
   dispatchUpdateRadiusLatLng: PropTypes.func.isRequired,
@@ -116,19 +121,18 @@ Dashboard.propTypes = {
 
 Dashboard.defaultProps = {
   children: null,
+  filterFavorites: false,
 };
 
 const mapDispatchToProps = dispatch => ({
-  dispatchShowAllBuoys: (lat, lng, radius) => {
-    dispatch(updateRadiusLatLng(radius, lat, lng));
+  dispatchShowAllBuoys: async () => {
     dispatch(showAllBuoys());
   },
-  dispatchShowFavBuoys: (lat, lng, radius) => {
-    dispatch(updateRadiusLatLng(radius, lat, lng));
+  dispatchShowFavBuoys: async () => {
     dispatch(showFavBuoys());
   },
-  dispatchUpdateRadiusLatLng: (radius, lat, lng) => {
-    dispatch(updateRadiusLatLng(radius, lat, lng));
+  dispatchUpdateRadiusLatLng: (radius, lat, lng, favoritesOnly) => {
+    dispatch(updateRadiusLatLng(radius, lat, lng, favoritesOnly));
   },
 });
 

@@ -13,7 +13,13 @@ const router = express.Router();
  */
 router.post(
   '/data',
-  controllerHandler(getBuoyData, req => [req.body.lat, req.body.lng, req.body.radius])
+  controllerHandler(getBuoyData, req => [
+    req.body.lat,
+    req.body.lng,
+    req.body.radius,
+    req.body.favoritesOnly,
+    req
+  ])
 );
 
 /**

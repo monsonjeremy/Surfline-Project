@@ -1,6 +1,8 @@
 .sp-modal-bg {
-  display: flex;
   position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   z-index: 10;
   left: 0;
   top: 0;
@@ -17,9 +19,8 @@
   justify-content: center;
   flex-direction: column;
   background-color: #ebebeb;
-  margin: auto;
-  padding: 20px 50px;
   height: auto;
+  padding: 20px 50px;
   border: 1px solid #888;
   @media (min-width: 600px) {
     width: 80%;
@@ -46,6 +47,7 @@
 .sp-modal-header {
   width: 100%;
 }
+
 .sp-modal-title {
   margin: 20px;
   text-decoration: underline;

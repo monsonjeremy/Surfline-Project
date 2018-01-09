@@ -37,6 +37,7 @@ const Maps = withScriptjs(
         streetViewControl: false,
       }}
       onZoomChanged={props.handleZoomChange}
+      onClick={props.handleMapClick}
       onBoundsChanged={props.handleBoundsChanged}
     >
       {props.children}
@@ -49,6 +50,7 @@ Maps.propTypes = {
   handleZoomChange: PropTypes.func.isRequired,
   handleBoundsChanged: PropTypes.func.isRequired,
   handleMapLoad: PropTypes.func.isRequired,
+  handleMapClick: PropTypes.func.isRequired,
 };
 
 Maps.defaultProps = {

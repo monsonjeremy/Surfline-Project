@@ -8,7 +8,7 @@ import FooterView from '../../components/Footer';
 // actions
 import { hideModal, dispatchShowModal } from '../../reducers/Modal/actions';
 import { logOutUser } from '../../reducers/User/actions';
-import { showAllBuoys } from '../../reducers/Data/actions';
+import { showAllBuoys, hydrateBuoyData } from '../../reducers/Data/actions';
 
 /**
  * @description Footer handles logic for buttons on the NavBar and their text
@@ -28,6 +28,7 @@ class Footer extends PureComponent {
 
     this.handleCreateAccountClick = this.handleCreateAccountClick.bind(this);
     this.handleSignInClick = this.handleSignInClick.bind(this);
+    this.handleSignOutClick = this.handleSignOutClick.bind(this);
   }
 
   handleCreateAccountClick() {
@@ -36,6 +37,13 @@ class Footer extends PureComponent {
 
   handleSignInClick() {
     this.props.dispatchShowModal('SIGN_IN');
+  }
+
+  handleSignOutClick() {
+    const { lat, lng, } = this.props.center;
+    const { radius, } = this.props;
+    const filterFavorites = false;
+    this.props.dispatchLogoutUser(lat, lng, radius, filterFavorites);
   }
 
   render() {
@@ -54,6 +62,7 @@ class Footer extends PureComponent {
       ...this.props,
       handleCreateAccountClick: this.handleCreateAccountClick,
       handleSignInClick: this.handleSignInClick,
+      handleSignOutClick: this.handleSignOutClick,
       loggedInStyle,
       loggedOutStyle,
     };
@@ -65,9 +74,15 @@ class Footer extends PureComponent {
 Footer.propTypes = {
   // Props
   loggedIn: PropTypes.bool,
+  center: PropTypes.shape({
+    lat: PropTypes.number,
+    lng: PropTypes.number,
+  }).isRequired,
+  radius: PropTypes.number.isRequired,
 
   // Functions and dispatchers
   dispatchShowModal: PropTypes.func.isRequired,
+  dispatchLogoutUser: PropTypes.func.isRequired,
 };
 
 Footer.defaultProps = {
@@ -76,6 +91,8 @@ Footer.defaultProps = {
 
 const mapStateToProps = state => ({
   ...state.User,
+  ...state.Data,
+  ...state.Maps,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -85,9 +102,10 @@ const mapDispatchToProps = dispatch => ({
   dispatchShowModal: modalType => {
     dispatch(dispatchShowModal(modalType));
   },
-  dispatchLogoutUser: () => {
-    dispatch(logOutUser());
-    dispatch(showAllBuoys());
+  dispatchLogoutUser: async (lat, lng, radius, favoritesOnly) => {
+    await dispatch(logOutUser());
+    await dispatch(showAllBuoys());
+    dispatch(hydrateBuoyData(lat, lng, radius, favoritesOnly));
   },
 });
 

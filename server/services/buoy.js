@@ -61,3 +61,59 @@ export const addFavoriteService = (userId, buoyId) => addNewFavorite(userId, buo
  * @return {Promise} Promise to remove favorite from the user in the DB
  */
 export const removeFavoriteService = (userId, buoyId) => removeFavorite(userId, buoyId);
+
+/**
+ * @description Service to normalize the buoy data so that it can be returned to the client.
+ * 
+ * @param {object} data - The unnormalized buoy data returned by the RSS feed
+ * @param {object} userFavorites - The object containing the users favorites
+ * 
+ * @return {Array[Buoys]} An array of normalized buoy data
+ */
+export const normalizeBuoyDataService = (data, userFavorites) =>
+  data.item.map(buoy => {
+    // Parsing the different strings in the XML to create a clean JSON object
+    const splitTitle = buoy.title[0].split('-');
+
+    // Parse out the station ID and keep the rest as the title
+    const [id, title] = [splitTitle[0], splitTitle.slice(1).join(' - ')];
+    const buoyId = id.trim().split(' ')[1];
+
+    // Determine whether or not the buoy is a favorite
+    const isFavorite = !!userFavorites[buoyId];
+
+    // Get rid of all the '\n      ' strings in the reading
+    const readings = buoy.description[0].replace(/\n {8}/g, '');
+
+    const lastUpdated = buoy.pubDate[0];
+    const link = buoy.link[0];
+    const [latitude, longitude] = buoy['georss:point'][0].split(' ');
+
+    return {
+      title,
+      lastUpdated,
+      buoyId,
+      readings,
+      link,
+      isFavorite,
+      lat: parseFloat(latitude),
+      lng: parseFloat(longitude),
+    };
+  });
+
+/**
+ * @description Service to filter out unneeded buoy data so that it can then be returned to the client
+ * 
+ * @param {Array[object]} data - The normalized buoy data
+ * @param {boolean} favoritesOnly - Boolean flag for determining if we should filter out non favorites
+ * 
+ * @return {Array[Buoys]} An array of normalized buoy data with uneeded data filtered out
+ */
+export const filterBuoyDataService = (data, favoritesOnly) =>
+  // Filter out ship observations and if onlyFavorites filter out non favorites as well
+  data.filter(buoy => {
+    if (favoritesOnly) {
+      return buoy.link !== 'http://www.ndbc.noaa.gov/ship_obs.php' && buoy.isFavorite;
+    }
+    return buoy.link !== 'http://www.ndbc.noaa.gov/ship_obs.php';
+  });

@@ -35,10 +35,10 @@ class BuoyList extends Component {
   }
 
   componentDidMount() {
-    const lat = this.props.center.lat;
-    const lng = this.props.center.lng;
+    const { lat, lng, } = this.props.center;
     const radius = this.props.radius;
-    this.props.dispatchFetchBuoyData(lat, lng, radius);
+    const favoritesOnly = this.props.filterFavorites;
+    this.props.dispatchFetchBuoyData(lat, lng, radius, favoritesOnly);
   }
 
   renderBuoys() {
@@ -46,26 +46,7 @@ class BuoyList extends Component {
     if (!this.props.buoy.isLoading && this.props.buoy.data) {
       const buoyData = this.props.buoy.data.buoys;
 
-      return buoyData.map(buoy => {
-        // Define the props to be passed to <Buoy />
-        const props = {
-          ...buoy,
-        };
-
-        // Not logged in so we don't have to worry about checking favorites (small optimization)
-        if (!this.props.user) return <Buoy key={buoy.buoyId} {...props} />;
-
-        // If we are on the favorites tab filter out non favorite buoys
-        const showFavorites = this.props.filterFavorites;
-        const isFavorite = !!this.props.user.favorites[buoy.buoyId];
-
-        if (!showFavorites || (showFavorites && isFavorite)) {
-          props.isFavorite = isFavorite;
-          return <Buoy key={buoy.buoyId} {...props} />;
-        }
-
-        return null;
-      });
+      return buoyData.map(buoy => <Buoy key={buoy.buoyId} {...buoy} />);
     }
     return null;
   }
@@ -121,8 +102,8 @@ BuoyList.defaultProps = {
 };
 
 const mapDispatchToProps = dispatch => ({
-  dispatchFetchBuoyData: (lat, lng, radius) => {
-    dispatch(hydrateBuoyData(lat, lng, radius));
+  dispatchFetchBuoyData: (lat, lng, radius, favoritesOnly) => {
+    dispatch(hydrateBuoyData(lat, lng, radius, favoritesOnly));
   },
 });
 

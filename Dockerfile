@@ -24,15 +24,14 @@ COPY ./.eslintrc.json /app/server
 # Install all the dependencies (we'll do this all inline with "&& \" because it reduces the build times and footprint of docker)
 # We also only do this for PROD since we aren't worried about the footprint locally. This is more used in regards to reducing build times
 # See link for more info on the run command and how it creates a container for EACH run command: https://docs.docker.com/engine/reference/commandline/run/#parent-command
-RUN npm install && \
+# The first line installs dependencies for rebuilding bcrypt, then run npm install, then rebuild bcrypt. This avoids a segmentation fault when using the alpine node image
+# Reference: https://github.com/kelektiv/node.bcrypt.js/issues/528
+RUN apk --no-cache add --virtual build-deps build-base python && \
+  npm install && \
   cd client && \
   npm install && \
   npm run build && \
   cd .. && \
-  # Install dependencies for rebuilding bcrypt, then run npm install, then rebuild bcrypt
-  # This avoids a segmentation fault when using the alpine node image
-  # Reference: https://github.com/kelektiv/node.bcrypt.js/issues/528
-  apk --no-cache add --virtual build-deps build-base python && \
   cd server && \
   NODE_ENV=development npm install && \
   NODE_ENV=development npm rebuild bcrypt --build-from-source && \

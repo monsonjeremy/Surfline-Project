@@ -24,7 +24,7 @@ const Footer = props => (
       <h3 className="text-center">Logged in as {props.user ? props.user.username : ''}</h3>
       <button
         disabled={!props.loggedIn}
-        onClick={props.dispatchLogoutUser}
+        onClick={props.handleSignOutClick}
         className={`sp-btn sp-btn-small`}
       >
         Logout
@@ -64,7 +64,7 @@ Footer.propTypes = {
   // Functions and dispatchers
   handleCreateAccountClick: PropTypes.func.isRequired,
   handleSignInClick: PropTypes.func.isRequired,
-  dispatchLogoutUser: PropTypes.func.isRequired,
+  handleSignOutClick: PropTypes.func.isRequired,
 };
 
 Footer.defaultProps = {
