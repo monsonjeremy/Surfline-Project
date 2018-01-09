@@ -95,8 +95,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch(removeFavorite(userId, buoyId));
   },
   dispatchSelectBuoy: (buoyId, center, zoom) => {
-    dispatch(selectBuoy(buoyId));
     dispatch(updateMapCenterAndZoom(center, zoom));
+    dispatch(selectBuoy(buoyId));
   },
 });
 

@@ -8,6 +8,7 @@ import MarkerView from '../../components/Marker';
 // Actions
 import { addFavorite, removeFavorite } from '../../reducers/User/actions';
 import { updateMapCenterAndZoom } from '../../reducers/Maps/actions';
+import { selectBuoy } from '../../reducers/Data/actions/index';
 
 /**
  * @description Marker container connects the markers to the store and passes down relevant state
@@ -25,6 +26,9 @@ class Marker extends Component {
     this.handleFavoriteClick = this.handleFavoriteClick.bind(this);
   }
 
+  /**
+   * @description This function is used to handle the case where a user closes an info box
+   */
   handleCloseClick() {
     this.props.dispatchSelectBuoy(null);
   }
@@ -33,11 +37,12 @@ class Marker extends Component {
    * @description This function is used to set a new zoom and center when a marker is clicked
    */
   handleMarkerClick() {
-    this.props.dispatchSelectBuoy(this.props.buoyId);
-
     // zoom to 8 when selecting a buoy
     const zoom = 8;
     this.props.dispatchUpdateMapCenterAndZoom(this.props.position, zoom);
+
+    // Select the buoy
+    this.props.dispatchSelectBuoy(this.props.buoyId);
   }
 
   /**
@@ -98,7 +103,7 @@ Marker.propTypes = {
     lat: PropTypes.number,
     lng: PropTypes.number,
   }).isRequired,
-  visible: PropTypes.bool.isRequired,
+  visible: PropTypes.bool,
   isFavorite: PropTypes.bool.isRequired,
   readings: PropTypes.string.isRequired,
   buoyId: PropTypes.string.isRequired,
@@ -116,6 +121,7 @@ Marker.propTypes = {
 Marker.defaultProps = {
   selected: false,
   user: null,
+  visible: false,
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -127,6 +133,9 @@ const mapDispatchToProps = dispatch => ({
   },
   dispatchRemoveFavorite: (userId, buoyId) => {
     dispatch(removeFavorite(userId, buoyId));
+  },
+  dispatchSelectBuoy: buoyId => {
+    dispatch(selectBuoy(buoyId));
   },
 });
 

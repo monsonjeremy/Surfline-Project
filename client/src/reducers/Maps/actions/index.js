@@ -87,7 +87,6 @@ export function updateRadiusLatLng(radius, lat, lng) {
       );
     }
 
-    console.log({ radius, lat, lng, });
     dispatch(updateRadiusLatLngSuccess(radius, lat, lng));
     return dispatch(hydrateBuoyData(lat, lng, radius));
   };
