@@ -4,7 +4,8 @@ import {
   getBuoyDataService,
   parseXmlService,
   addFavoriteService,
-  removeFavoriteService
+  removeFavoriteService,
+  findUserService
 } from '../services';
 
 /**
@@ -13,10 +14,23 @@ import {
  * 
  * @param {number} lat - latitude to get data for
  * @param {number} lng - longitude to get data for
+ * @param {number} radius - radius to get data for
+ * @param {boolean} favoritesOnly - whether or not the user is asking for favorites
  * 
  * @returns {object} response
  */
-export const getBuoyDataController = async (lat, lng, radius) => {
+export const getBuoyDataController = async (lat, lng, radius, favoritesOnly, req) => {
+  // If the user is authenticated then fetch his favorites, otherwise just use placeholder values
+  let userFavorites = {};
+  let user = {};
+  if (req.session.user) {
+    user = await findUserService({ userId: req.session.user.userId, });
+    userFavorites = user.favorites;
+  }
+
+  // If the user is asking for favorites, then we need the radius to be 999,999
+  if (favoritesOnly) radius = 999999;
+
   // Hit the RSS feed endpoint
   const xml = await getBuoyDataService(lat, lng, radius);
 
@@ -50,6 +64,9 @@ export const getBuoyDataController = async (lat, lng, radius) => {
       const [id, title] = [splitTitle[0], splitTitle.slice(1).join(' - ')];
       const buoyId = id.trim().split(' ')[1];
 
+      // Determine whether or not the buoy is a favorite
+      const isFavorite = !!userFavorites[buoyId];
+
       // Get rid of all the '\n      ' strings in the reading
       const readings = buoy.description[0].replace(/\n {8}/g, '');
 
@@ -63,16 +80,25 @@ export const getBuoyDataController = async (lat, lng, radius) => {
         buoyId,
         readings,
         link,
+        isFavorite,
         lat: parseFloat(latitude),
         lng: parseFloat(longitude),
       };
     })
-    // Filter out ship observations
-    .filter(buoy => buoy.link !== 'http://www.ndbc.noaa.gov/ship_obs.php');
+    // Filter out ship observations and if onlyFavorites filter out non favorites as well
+    .filter(buoy => {
+      if (favoritesOnly) {
+        return buoy.link !== 'http://www.ndbc.noaa.gov/ship_obs.php' && buoy.isFavorite;
+      }
+      return buoy.link !== 'http://www.ndbc.noaa.gov/ship_obs.php';
+    });
 
   // If there are no buoys left after filtering out the ship observations, throw error
   if (buoys.length === 0) {
-    const error = new Error('No buoys found for given lat, long, and radius...');
+    let error = new Error('No buoys found for given lat, long, and radius...');
+    if (favoritesOnly) {
+      error = new Error('You currently have no favorites...');
+    }
     error.statusCode = 400;
     throw error;
   }
