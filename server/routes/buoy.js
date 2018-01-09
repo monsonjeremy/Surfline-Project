@@ -17,7 +17,7 @@ router.post(
     req.body.lat,
     req.body.lng,
     req.body.radius,
-    req.body.favorites,
+    req.body.favoritesOnly,
     req
   ])
 );

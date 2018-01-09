@@ -5,7 +5,9 @@ import {
   parseXmlService,
   addFavoriteService,
   removeFavoriteService,
-  findUserService
+  findUserService,
+  normalizeBuoyDataService,
+  filterBuoyDataService
 } from '../services';
 
 /**
@@ -55,43 +57,8 @@ export const getBuoyDataController = async (lat, lng, radius, favoritesOnly, req
     throw error;
   }
 
-  const buoys = data.item
-    .map(buoy => {
-      // Parsing the different strings in the XML to create a clean JSON object
-      const splitTitle = buoy.title[0].split('-');
-
-      // Parse out the station ID and keep the rest as the title
-      const [id, title] = [splitTitle[0], splitTitle.slice(1).join(' - ')];
-      const buoyId = id.trim().split(' ')[1];
-
-      // Determine whether or not the buoy is a favorite
-      const isFavorite = !!userFavorites[buoyId];
-
-      // Get rid of all the '\n      ' strings in the reading
-      const readings = buoy.description[0].replace(/\n {8}/g, '');
-
-      const lastUpdated = buoy.pubDate[0];
-      const link = buoy.link[0];
-      const [latitude, longitude] = buoy['georss:point'][0].split(' ');
-
-      return {
-        title,
-        lastUpdated,
-        buoyId,
-        readings,
-        link,
-        isFavorite,
-        lat: parseFloat(latitude),
-        lng: parseFloat(longitude),
-      };
-    })
-    // Filter out ship observations and if onlyFavorites filter out non favorites as well
-    .filter(buoy => {
-      if (favoritesOnly) {
-        return buoy.link !== 'http://www.ndbc.noaa.gov/ship_obs.php' && buoy.isFavorite;
-      }
-      return buoy.link !== 'http://www.ndbc.noaa.gov/ship_obs.php';
-    });
+  // Filter and normalize the buoy data so that we can return relevant and proper data to the client
+  const buoys = filterBuoyDataService(normalizeBuoyDataService(data, userFavorites), favoritesOnly);
 
   // If there are no buoys left after filtering out the ship observations, throw error
   if (buoys.length === 0) {
