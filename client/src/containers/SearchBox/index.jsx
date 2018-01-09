@@ -51,9 +51,9 @@ class SearchBox extends Component {
     }));
 
     const nextCenter = get(nextMarkers, '0', this.props.center);
-
+    const { radius, filterFavorites, } = this.props;
     this.props.dispatchUpdateMapCenterAndZoom(nextCenter, 8);
-    this.props.dispatchUpdateRadiusLatLng(this.props.radius, nextCenter.lat, nextCenter.lng);
+    this.props.dispatchUpdateRadiusLatLng(radius, nextCenter.lat, nextCenter.lng, filterFavorites);
   }
 
   render() {
@@ -70,6 +70,7 @@ class SearchBox extends Component {
 SearchBox.propTypes = {
   // Props
   radius: PropTypes.number.isRequired,
+  filterFavorites: PropTypes.bool.isRequired,
   center: PropTypes.shape({
     lat: PropTypes.number,
     lng: PropTypes.number,
@@ -94,8 +95,8 @@ const mapDispatchToProps = dispatch => ({
   dispatchUpdateMapCenterAndZoom: (center, zoom) => {
     dispatch(updateMapCenterAndZoom(center, zoom));
   },
-  dispatchUpdateRadiusLatLng: (radius, lat, lng) => {
-    dispatch(updateRadiusLatLng(radius, lat, lng));
+  dispatchUpdateRadiusLatLng: (radius, lat, lng, favoritesOnly) => {
+    dispatch(updateRadiusLatLng(radius, lat, lng, favoritesOnly));
   },
 });
 

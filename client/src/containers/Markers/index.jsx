@@ -28,33 +28,18 @@ class Markers extends Component {
     if (!this.props.buoy.isLoading && this.props.buoy.data) {
       const buoyData = this.props.buoy.data.buoys;
 
-      return buoyData.map(buoy => {
-        let visible = false;
-        let isFavorite = false;
-        // Not logged in so we don't have to worry about checking favorites (small optimization)
-        if (!this.props.user) {
-          visible = true;
-        } else {
-          isFavorite = !!this.props.user.favorites[buoy.buoyId];
-          if (!this.props.filterFavorites || (this.props.filterFavorites && isFavorite)) {
-            // If on favorites tab filter out non favorite buoys, if not then all buoy markers visible
-            visible = true;
-          }
-        }
-
+      return buoyData.map(buoy => (
         // Render the buoy with the given visibility and selected status
-        return (
-          <Marker
-            key={buoy.buoyId}
-            visible={visible}
-            selected={buoy.buoyId === this.props.selectedBuoy}
-            position={{ lat: buoy.lat, lng: buoy.lng, }}
-            buoyId={buoy.buoyId}
-            readings={buoy.readings}
-            isFavorite={isFavorite}
-          />
-        );
-      });
+        <Marker
+          key={buoy.buoyId}
+          visible
+          selected={buoy.buoyId === this.props.selectedBuoy}
+          position={{ lat: buoy.lat, lng: buoy.lng, }}
+          buoyId={buoy.buoyId}
+          readings={buoy.readings}
+          isFavorite={buoy.isFavorite}
+        />
+      ));
     }
     return null;
   }
@@ -84,10 +69,6 @@ Markers.propTypes = {
     }),
     isLoading: PropTypes.bool,
   }).isRequired,
-  user: PropTypes.shape({
-    favorites: PropTypes.instanceOf(Object),
-  }),
-  filterFavorites: PropTypes.bool.isRequired,
   selectedBuoy: PropTypes.string,
 };
 

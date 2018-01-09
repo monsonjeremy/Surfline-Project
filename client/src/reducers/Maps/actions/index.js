@@ -53,12 +53,12 @@ export const updateRadiusLatLngFailure = makeActionCreator(UPDATE_RADIUS_LAT_LNG
  * 
  * @return {function} dispatcher
  */
-export function updateRadiusLatLng(radius, lat, lng) {
+export function updateRadiusLatLng(radius, lat, lng, favoritesOnly) {
   return dispatch => {
     dispatch(updateRadiusLatLngRequest());
 
     /*
-      Set the max radius to 500 for now. This avoids major performance hits from large object lookups.
+      Set the max radius to 1500 for now. This avoids major performance hits from large object lookups.
       ideally in a future state these lookups will be moved to a web worker or something so that we could
       avoid blocking the event loop and pausing execution :(
       
@@ -67,9 +67,9 @@ export function updateRadiusLatLng(radius, lat, lng) {
 
       Allow 999,999 so that we can maximize and show all favorites in the world
     */
-    if ((radius > 500 || radius < 1) && radius !== 999999) {
+    if (radius > 1500 || radius < 1) {
       return dispatch(
-        updateRadiusLatLngFailure('Radius invalid... Try a number between 1 and 999,999')
+        updateRadiusLatLngFailure('Radius invalid... Try a number between 1 and 1,500')
       );
     }
 
@@ -88,6 +88,6 @@ export function updateRadiusLatLng(radius, lat, lng) {
     }
 
     dispatch(updateRadiusLatLngSuccess(radius, lat, lng));
-    return dispatch(hydrateBuoyData(lat, lng, radius));
+    return dispatch(hydrateBuoyData(lat, lng, radius, favoritesOnly));
   };
 }

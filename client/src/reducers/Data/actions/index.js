@@ -24,9 +24,10 @@ export const selectBuoy = makeActionCreator(SELECT_BUOY, 'buoyId');
  * @param {number} lat - latitude to query data for
  * @param {number} lng - longitude to query data for
  * @param {number} radius - radius to query data for
+ * @param {boolean} favoritesOnly - boolean flag for determining if we should fetch only favorites
  * @return {function} dispatcher
  */
-export function hydrateBuoyData(lat, lng, radius) {
+export function hydrateBuoyData(lat, lng, radius, favoritesOnly) {
   return dispatch => {
     dispatch(buoyDataRequest());
 
@@ -34,6 +35,7 @@ export function hydrateBuoyData(lat, lng, radius) {
       lat,
       lng,
       radius,
+      favoritesOnly,
     };
     // Make a request to the endpoint for the buoy data
     fetchBuoyData(params)

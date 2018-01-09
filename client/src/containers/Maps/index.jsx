@@ -55,7 +55,6 @@ class Maps extends Component {
     this.map = map;
   }
 
-
   /**
    * @description This function is used to handle the case where a user clicks on the map. In this case we want to close the selected buoy tooltip
    */
@@ -67,7 +66,7 @@ class Maps extends Component {
     return (
       <MapsView
         googleMapURL={googleMapsUrl}
-        loadingElement={<div style={{ height: `100%`, }} />}
+        loadingElement={<div className="maps-container" style={{ height: `100%`, }} />}
         containerElement={<div className="maps-container" />}
         mapElement={<div style={{ height: `100%`, }} />}
         center={this.props.center}
