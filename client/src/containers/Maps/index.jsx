@@ -7,6 +7,7 @@ import MapsView from '../../components/Maps';
 
 // Action
 import { updateMapZoom, mapLoaded, updateMapBounds } from '../../reducers/Maps/actions';
+import { selectBuoy } from '../../reducers/Data/actions/index';
 
 const googleMapsUrl =
   'https://maps.googleapis.com/maps/api/js?key=AIzaSyDDtJVfn4LB_ExnDJgqisAUR_8rf_XMbg4&v=3.exp&libraries=geometry,drawing,places';
@@ -26,6 +27,7 @@ class Maps extends Component {
     this.handleZoomChange = this.handleZoomChange.bind(this);
     this.handleBoundsChanged = this.handleBoundsChanged.bind(this);
     this.handleMapLoad = this.handleMapLoad.bind(this);
+    this.handleMapClick = this.handleMapClick.bind(this);
   }
 
   /**
@@ -53,6 +55,14 @@ class Maps extends Component {
     this.map = map;
   }
 
+
+  /**
+   * @description This function is used to handle the case where a user clicks on the map. In this case we want to close the selected buoy tooltip
+   */
+  handleMapClick() {
+    this.props.dispatchSelectBuoy(null);
+  }
+
   render() {
     return (
       <MapsView
@@ -61,6 +71,7 @@ class Maps extends Component {
         containerElement={<div className="maps-container" />}
         mapElement={<div style={{ height: `100%`, }} />}
         center={this.props.center}
+        handleMapClick={this.handleMapClick}
         handleZoomChange={this.handleZoomChange}
         handleBoundsChanged={this.handleBoundsChanged}
         handleMapLoad={this.handleMapLoad}
@@ -87,6 +98,7 @@ Maps.propTypes = {
   dispatchUpdateMapZoom: PropTypes.func.isRequired,
   dispatchUpdateMapBounds: PropTypes.func.isRequired,
   dispatchMapLoaded: PropTypes.func.isRequired,
+  dispatchSelectBuoy: PropTypes.func.isRequired,
 };
 
 Maps.defaultProps = {
@@ -104,6 +116,9 @@ const mapDispatchToProps = dispatch => ({
   },
   dispatchMapLoaded: () => {
     dispatch(mapLoaded());
+  },
+  dispatchSelectBuoy: buoyId => {
+    dispatch(selectBuoy(buoyId));
   },
 });
 
