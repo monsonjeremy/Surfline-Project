@@ -13,6 +13,7 @@ services:
       - ../client/public:/src/public/
     ports:
       - "3005:3005"
+      - "1337:1337"
     links:
       - server
     depends_on:

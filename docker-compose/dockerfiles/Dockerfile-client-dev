@@ -11,5 +11,5 @@ COPY ./client/ ./
 COPY ./.eslintrc.json ./
 RUN npm install
 
-EXPOSE 3006
+EXPOSE 3005
 CMD ["npm", "start"]
